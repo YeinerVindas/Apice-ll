@@ -459,5 +459,12 @@ namespace GUI
         }
 
         #endregion
+
+        private void button3_Click(object sender, EventArgs e)
+        {
+            this.Hide();
+            FrmSesion frm = new FrmSesion(IdEstudiate_Materia, nombreMateria);
+            frm.Show();
+        }
     }
 }

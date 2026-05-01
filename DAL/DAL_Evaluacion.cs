@@ -90,5 +90,20 @@ namespace DAL
         }
 
         #endregion
+
+        #region 🔹 Validaciones
+        public decimal ObtenerPorcentajeAcumulado(int idEstudiante, int idMateria)
+        {
+            // Reutilizamos el método ListadoRubro que ya existe en Utilities
+            DataTable dt = ListadoRubro("", "USP_Obtener_Porcentaje_Acumulado", idEstudiante, idMateria);
+
+            if (dt.Rows.Count > 0 && dt.Rows[0]["Acumulado"] != DBNull.Value)
+            {
+                return Convert.ToDecimal(dt.Rows[0]["Acumulado"]);
+            }
+            return 0;
+        }
+
+        #endregion
     }
 }

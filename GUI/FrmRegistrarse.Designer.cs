@@ -1,7 +1,6 @@
 ﻿using System.Drawing.Printing;
 using System.Windows.Forms;
 using System.Xml.Linq;
-using static System.Net.Mime.MediaTypeNames;
 
 namespace WinFormsApp1
 {

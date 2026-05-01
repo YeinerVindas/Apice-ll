@@ -2,6 +2,6 @@
   <Project Path="BL/BL.csproj" />
   <Project Path="DAL/DAL.csproj" />
   <Project Path="ET/ET.csproj" />
-  <Project Path="GUI/GUI.csproj" />
+  <Project Path="GUI/GUII.csproj" />
   <Project Path="Utilities/Utilities.csproj" />
 </Solution>

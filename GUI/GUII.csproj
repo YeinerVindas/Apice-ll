@@ -26,9 +26,7 @@
     <Compile Update="FrmRegistrarse.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Update="FrmNotas.cs">
-      <SubType>Form</SubType>
-    </Compile>
+    <Compile Update="FrmNotas.cs" />
   </ItemGroup>
 
 </Project>

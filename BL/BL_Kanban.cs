@@ -44,6 +44,11 @@ namespace BL
             return datos.EliminarTarea(IdMateria);
         }
 
+        public static string ActualizarEstadoTarea(int idTarea, string nuevoEstado)
+        {
+            DAL_Kanban datos = new DAL_Kanban();
+            return datos.ActualizarEstadoTarea(idTarea, nuevoEstado);
+        }
         #endregion
     }
 }

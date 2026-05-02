@@ -53,11 +53,16 @@
             DGVgestionarRubros = new DataGridView();
             btnHorario = new Button();
             label4 = new Label();
+            groupBox2 = new GroupBox();
+            label9 = new Label();
+            label8 = new Label();
+            button3 = new Button();
             ((System.ComponentModel.ISupportInitialize)pictureBoxLogo).BeginInit();
             ((System.ComponentModel.ISupportInitialize)dgvMateriasNotas).BeginInit();
             pnlAgregarRubro.SuspendLayout();
             pnlGestionarRubro.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)DGVgestionarRubros).BeginInit();
+            groupBox2.SuspendLayout();
             SuspendLayout();
             // 
             // button1
@@ -68,10 +73,9 @@
             button1.FlatStyle = FlatStyle.Flat;
             button1.Font = new Font("MS Reference Sans Serif", 9F, FontStyle.Bold, GraphicsUnit.Point, 0);
             button1.ForeColor = SystemColors.HighlightText;
-            button1.Location = new Point(13, 342);
-            button1.Margin = new Padding(3, 4, 3, 4);
+            button1.Location = new Point(11, 256);
             button1.Name = "button1";
-            button1.Size = new Size(280, 120);
+            button1.Size = new Size(245, 90);
             button1.TabIndex = 47;
             button1.UseVisualStyleBackColor = true;
             // 
@@ -83,10 +87,9 @@
             btnKanban.FlatStyle = FlatStyle.Flat;
             btnKanban.Font = new Font("MS Reference Sans Serif", 9F, FontStyle.Bold, GraphicsUnit.Point, 0);
             btnKanban.ForeColor = SystemColors.HighlightText;
-            btnKanban.Location = new Point(13, 203);
-            btnKanban.Margin = new Padding(3, 4, 3, 4);
+            btnKanban.Location = new Point(11, 152);
             btnKanban.Name = "btnKanban";
-            btnKanban.Size = new Size(280, 100);
+            btnKanban.Size = new Size(245, 75);
             btnKanban.TabIndex = 46;
             btnKanban.UseVisualStyleBackColor = true;
             btnKanban.Click += btnKanban_Click;
@@ -96,9 +99,10 @@
             pictureBoxLogo.BackColor = Color.Transparent;
             pictureBoxLogo.BackgroundImageLayout = ImageLayout.Zoom;
             pictureBoxLogo.Image = Properties.Resources.Captura_de_pantalla_2026_04_22_183054;
-            pictureBoxLogo.Location = new Point(30, 12);
+            pictureBoxLogo.Location = new Point(26, 9);
+            pictureBoxLogo.Margin = new Padding(3, 2, 3, 2);
             pictureBoxLogo.Name = "pictureBoxLogo";
-            pictureBoxLogo.Size = new Size(223, 169);
+            pictureBoxLogo.Size = new Size(195, 127);
             pictureBoxLogo.SizeMode = PictureBoxSizeMode.Zoom;
             pictureBoxLogo.TabIndex = 45;
             pictureBoxLogo.TabStop = false;
@@ -108,10 +112,9 @@
             agregarRubroBTN.BackgroundImage = Properties.Resources.Captura_de_pantalla_2026_04_22_084415;
             agregarRubroBTN.Font = new Font("MS Reference Sans Serif", 9F, FontStyle.Bold, GraphicsUnit.Point, 0);
             agregarRubroBTN.ForeColor = SystemColors.HighlightText;
-            agregarRubroBTN.Location = new Point(15, 296);
-            agregarRubroBTN.Margin = new Padding(3, 4, 3, 4);
+            agregarRubroBTN.Location = new Point(13, 222);
             agregarRubroBTN.Name = "agregarRubroBTN";
-            agregarRubroBTN.Size = new Size(146, 53);
+            agregarRubroBTN.Size = new Size(128, 40);
             agregarRubroBTN.TabIndex = 44;
             agregarRubroBTN.Text = "Agregar Rubro";
             agregarRubroBTN.UseVisualStyleBackColor = true;
@@ -120,10 +123,10 @@
             // label7
             // 
             label7.AutoSize = true;
-            label7.Location = new Point(589, 179);
+            label7.Location = new Point(515, 134);
             label7.Margin = new Padding(2, 0, 2, 0);
             label7.Name = "label7";
-            label7.Size = new Size(501, 20);
+            label7.Size = new Size(417, 15);
             label7.TabIndex = 52;
             label7.Text = "\u001f\u001f\u001f\u001f\u001f\u001f\u001f\u001f\u001f\u001f\u001f\u001f\u001f\u001f\u001f\u001f\u001f\u001f\u001f\u001f\u001f\u001f\u001f\u001f\u001f\u001f\u001f\u001f\u001f\u001f\u001f\u001f\u001f\u001f\u001f\u001f\u001f\u001f\u001f\u001f\u001f\u001f\u001f\u001f\u001f\u001f\u001f\u001f\u001f\u001f\u001f\u001f\u001f\u001f\u001f\u001f\u001f\u001f\u001f\u001f__________________________________________________________________________________";
             // 
@@ -131,10 +134,10 @@
             // 
             label6.AutoSize = true;
             label6.Font = new Font("MS Reference Sans Serif", 24F, FontStyle.Bold);
-            label6.Location = new Point(737, 132);
+            label6.Location = new Point(645, 99);
             label6.Margin = new Padding(2, 0, 2, 0);
             label6.Name = "label6";
-            label6.Size = new Size(202, 49);
+            label6.Size = new Size(162, 40);
             label6.TabIndex = 51;
             label6.Text = "Materias";
             // 
@@ -142,11 +145,11 @@
             // 
             dgvMateriasNotas.BackgroundColor = Color.WhiteSmoke;
             dgvMateriasNotas.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            dgvMateriasNotas.Location = new Point(746, 214);
+            dgvMateriasNotas.Location = new Point(653, 160);
             dgvMateriasNotas.Margin = new Padding(2);
             dgvMateriasNotas.Name = "dgvMateriasNotas";
             dgvMateriasNotas.RowHeadersWidth = 62;
-            dgvMateriasNotas.Size = new Size(182, 692);
+            dgvMateriasNotas.Size = new Size(159, 519);
             dgvMateriasNotas.TabIndex = 50;
             dgvMateriasNotas.CellClick += dgvMateriasNotas_CellClick;
             // 
@@ -163,11 +166,9 @@
             pnlAgregarRubro.Controls.Add(btnEditarCuenta);
             pnlAgregarRubro.Controls.Add(btnCancelarCuenta);
             pnlAgregarRubro.ForeColor = SystemColors.Control;
-            pnlAgregarRubro.Location = new Point(384, 288);
-            pnlAgregarRubro.Margin = new Padding(3, 4, 3, 4);
+            pnlAgregarRubro.Location = new Point(336, 216);
             pnlAgregarRubro.Name = "pnlAgregarRubro";
-            pnlAgregarRubro.Padding = new Padding(3, 4, 3, 4);
-            pnlAgregarRubro.Size = new Size(272, 325);
+            pnlAgregarRubro.Size = new Size(238, 244);
             pnlAgregarRubro.TabIndex = 53;
             pnlAgregarRubro.TabStop = false;
             pnlAgregarRubro.Text = "Rubro";
@@ -177,51 +178,54 @@
             // 
             label14.AutoSize = true;
             label14.BackColor = SystemColors.ActiveCaptionText;
-            label14.Location = new Point(77, 170);
+            label14.Location = new Point(67, 128);
             label14.Name = "label14";
-            label14.Size = new Size(106, 20);
+            label14.Size = new Size(83, 15);
             label14.TabIndex = 22;
             label14.Text = "Nota obtenida";
             // 
             // txtNotaObtenida
             // 
-            txtNotaObtenida.Location = new Point(68, 202);
+            txtNotaObtenida.Location = new Point(60, 152);
+            txtNotaObtenida.Margin = new Padding(3, 2, 3, 2);
             txtNotaObtenida.Name = "txtNotaObtenida";
-            txtNotaObtenida.Size = new Size(125, 27);
+            txtNotaObtenida.Size = new Size(110, 23);
             txtNotaObtenida.TabIndex = 21;
             // 
             // label13
             // 
             label13.AutoSize = true;
             label13.BackColor = SystemColors.ActiveCaptionText;
-            label13.Location = new Point(77, 104);
+            label13.Location = new Point(67, 78);
             label13.Name = "label13";
-            label13.Size = new Size(116, 20);
+            label13.Size = new Size(93, 15);
             label13.TabIndex = 20;
             label13.Text = "Valor Porcentual";
             // 
             // txtValorPorcentual
             // 
-            txtValorPorcentual.Location = new Point(69, 130);
+            txtValorPorcentual.Location = new Point(60, 98);
+            txtValorPorcentual.Margin = new Padding(3, 2, 3, 2);
             txtValorPorcentual.Name = "txtValorPorcentual";
-            txtValorPorcentual.Size = new Size(125, 27);
+            txtValorPorcentual.Size = new Size(110, 23);
             txtValorPorcentual.TabIndex = 19;
             // 
             // label17
             // 
             label17.AutoSize = true;
             label17.BackColor = SystemColors.ActiveCaptionText;
-            label17.Location = new Point(98, 37);
+            label17.Location = new Point(86, 28);
             label17.Name = "label17";
-            label17.Size = new Size(64, 20);
+            label17.Size = new Size(51, 15);
             label17.TabIndex = 18;
             label17.Text = "Nombre";
             // 
             // txtNombreRubro
             // 
-            txtNombreRubro.Location = new Point(69, 58);
+            txtNombreRubro.Location = new Point(60, 44);
+            txtNombreRubro.Margin = new Padding(3, 2, 3, 2);
             txtNombreRubro.Name = "txtNombreRubro";
-            txtNombreRubro.Size = new Size(125, 27);
+            txtNombreRubro.Size = new Size(110, 23);
             txtNombreRubro.TabIndex = 17;
             // 
             // btnEditarCuenta
@@ -229,10 +233,9 @@
             btnEditarCuenta.BackgroundImage = Properties.Resources.verde_claro;
             btnEditarCuenta.Font = new Font("MS Reference Sans Serif", 9F, FontStyle.Bold, GraphicsUnit.Point, 0);
             btnEditarCuenta.ForeColor = SystemColors.HighlightText;
-            btnEditarCuenta.Location = new Point(144, 253);
-            btnEditarCuenta.Margin = new Padding(3, 4, 3, 4);
+            btnEditarCuenta.Location = new Point(126, 190);
             btnEditarCuenta.Name = "btnEditarCuenta";
-            btnEditarCuenta.Size = new Size(103, 47);
+            btnEditarCuenta.Size = new Size(90, 35);
             btnEditarCuenta.TabIndex = 16;
             btnEditarCuenta.Text = "Guardar";
             btnEditarCuenta.UseVisualStyleBackColor = true;
@@ -243,10 +246,9 @@
             btnCancelarCuenta.BackgroundImage = Properties.Resources.verde_claro;
             btnCancelarCuenta.Font = new Font("MS Reference Sans Serif", 9F, FontStyle.Bold, GraphicsUnit.Point, 0);
             btnCancelarCuenta.ForeColor = SystemColors.HighlightText;
-            btnCancelarCuenta.Location = new Point(15, 253);
-            btnCancelarCuenta.Margin = new Padding(3, 4, 3, 4);
+            btnCancelarCuenta.Location = new Point(13, 190);
             btnCancelarCuenta.Name = "btnCancelarCuenta";
-            btnCancelarCuenta.Size = new Size(103, 47);
+            btnCancelarCuenta.Size = new Size(90, 35);
             btnCancelarCuenta.TabIndex = 15;
             btnCancelarCuenta.Text = "Cancelar";
             btnCancelarCuenta.UseVisualStyleBackColor = true;
@@ -261,10 +263,9 @@
             BtnSalir.FlatStyle = FlatStyle.Flat;
             BtnSalir.Font = new Font("MS Reference Sans Serif", 9F, FontStyle.Bold, GraphicsUnit.Point, 0);
             BtnSalir.ForeColor = SystemColors.HighlightText;
-            BtnSalir.Location = new Point(1490, 27);
-            BtnSalir.Margin = new Padding(3, 4, 3, 4);
+            BtnSalir.Location = new Point(1304, 20);
             BtnSalir.Name = "BtnSalir";
-            BtnSalir.Size = new Size(57, 56);
+            BtnSalir.Size = new Size(50, 42);
             BtnSalir.TabIndex = 54;
             BtnSalir.UseVisualStyleBackColor = false;
             BtnSalir.Click += BtnSalir_Click;
@@ -280,11 +281,9 @@
             pnlGestionarRubro.Controls.Add(agregarRubroBTN);
             pnlGestionarRubro.Controls.Add(DGVgestionarRubros);
             pnlGestionarRubro.ForeColor = SystemColors.Control;
-            pnlGestionarRubro.Location = new Point(686, 304);
-            pnlGestionarRubro.Margin = new Padding(3, 4, 3, 4);
+            pnlGestionarRubro.Location = new Point(600, 228);
             pnlGestionarRubro.Name = "pnlGestionarRubro";
-            pnlGestionarRubro.Padding = new Padding(3, 4, 3, 4);
-            pnlGestionarRubro.Size = new Size(736, 371);
+            pnlGestionarRubro.Size = new Size(644, 278);
             pnlGestionarRubro.TabIndex = 55;
             pnlGestionarRubro.TabStop = false;
             pnlGestionarRubro.Text = "Gestionar Rubros";
@@ -295,10 +294,9 @@
             SalirGestionRubrosbtn.BackgroundImage = Properties.Resources.Captura_de_pantalla_2026_04_22_084415;
             SalirGestionRubrosbtn.Font = new Font("MS Reference Sans Serif", 9F, FontStyle.Bold, GraphicsUnit.Point, 0);
             SalirGestionRubrosbtn.ForeColor = SystemColors.HighlightText;
-            SalirGestionRubrosbtn.Location = new Point(486, 307);
-            SalirGestionRubrosbtn.Margin = new Padding(3, 4, 3, 4);
+            SalirGestionRubrosbtn.Location = new Point(425, 230);
             SalirGestionRubrosbtn.Name = "SalirGestionRubrosbtn";
-            SalirGestionRubrosbtn.Size = new Size(30, 31);
+            SalirGestionRubrosbtn.Size = new Size(26, 23);
             SalirGestionRubrosbtn.TabIndex = 56;
             SalirGestionRubrosbtn.Text = "X";
             SalirGestionRubrosbtn.UseVisualStyleBackColor = true;
@@ -309,10 +307,9 @@
             btnEliminarRubro.BackgroundImage = Properties.Resources.Captura_de_pantalla_2026_04_22_084415;
             btnEliminarRubro.Font = new Font("MS Reference Sans Serif", 9F, FontStyle.Bold, GraphicsUnit.Point, 0);
             btnEliminarRubro.ForeColor = SystemColors.HighlightText;
-            btnEliminarRubro.Location = new Point(319, 296);
-            btnEliminarRubro.Margin = new Padding(3, 4, 3, 4);
+            btnEliminarRubro.Location = new Point(279, 222);
             btnEliminarRubro.Name = "btnEliminarRubro";
-            btnEliminarRubro.Size = new Size(146, 53);
+            btnEliminarRubro.Size = new Size(128, 40);
             btnEliminarRubro.TabIndex = 55;
             btnEliminarRubro.Text = "Eliminar Rubro";
             btnEliminarRubro.UseVisualStyleBackColor = true;
@@ -323,10 +320,9 @@
             btnEditarRubro.BackgroundImage = Properties.Resources.Captura_de_pantalla_2026_04_22_084415;
             btnEditarRubro.Font = new Font("MS Reference Sans Serif", 9F, FontStyle.Bold, GraphicsUnit.Point, 0);
             btnEditarRubro.ForeColor = SystemColors.HighlightText;
-            btnEditarRubro.Location = new Point(167, 296);
-            btnEditarRubro.Margin = new Padding(3, 4, 3, 4);
+            btnEditarRubro.Location = new Point(146, 222);
             btnEditarRubro.Name = "btnEditarRubro";
-            btnEditarRubro.Size = new Size(146, 53);
+            btnEditarRubro.Size = new Size(128, 40);
             btnEditarRubro.TabIndex = 54;
             btnEditarRubro.Text = "Editar Rubro";
             btnEditarRubro.UseVisualStyleBackColor = true;
@@ -337,21 +333,20 @@
             NombreMateria.AutoSize = true;
             NombreMateria.BackColor = Color.Transparent;
             NombreMateria.Font = new Font("MS Reference Sans Serif", 24F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            NombreMateria.Location = new Point(269, 18);
+            NombreMateria.Location = new Point(235, 14);
             NombreMateria.Margin = new Padding(2, 0, 2, 0);
             NombreMateria.Name = "NombreMateria";
-            NombreMateria.Size = new Size(202, 49);
+            NombreMateria.Size = new Size(162, 40);
             NombreMateria.TabIndex = 53;
             NombreMateria.Text = "Materias";
             // 
             // DGVgestionarRubros
             // 
             DGVgestionarRubros.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            DGVgestionarRubros.Location = new Point(6, 75);
-            DGVgestionarRubros.Margin = new Padding(3, 4, 3, 4);
+            DGVgestionarRubros.Location = new Point(5, 56);
             DGVgestionarRubros.Name = "DGVgestionarRubros";
             DGVgestionarRubros.RowHeadersWidth = 51;
-            DGVgestionarRubros.Size = new Size(724, 213);
+            DGVgestionarRubros.Size = new Size(634, 160);
             DGVgestionarRubros.TabIndex = 0;
             DGVgestionarRubros.CellClick += DGVgestionarRubros_CellClick;
             // 
@@ -364,10 +359,9 @@
             btnHorario.FlatStyle = FlatStyle.Flat;
             btnHorario.Font = new Font("MS Reference Sans Serif", 9F, FontStyle.Bold, GraphicsUnit.Point, 0);
             btnHorario.ForeColor = SystemColors.HighlightText;
-            btnHorario.Location = new Point(331, 27);
-            btnHorario.Margin = new Padding(3, 4, 3, 4);
+            btnHorario.Location = new Point(290, 20);
             btnHorario.Name = "btnHorario";
-            btnHorario.Size = new Size(57, 56);
+            btnHorario.Size = new Size(50, 42);
             btnHorario.TabIndex = 56;
             btnHorario.UseVisualStyleBackColor = false;
             btnHorario.Click += btnHorario_Click;
@@ -377,18 +371,67 @@
             label4.AutoSize = true;
             label4.BackColor = Color.Transparent;
             label4.Font = new Font("MS Reference Sans Serif", 13.8F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            label4.Location = new Point(384, 42);
+            label4.Location = new Point(336, 32);
             label4.Name = "label4";
-            label4.Size = new Size(104, 28);
+            label4.Size = new Size(88, 24);
             label4.TabIndex = 60;
             label4.Text = "Horario";
             // 
+            // groupBox2
+            // 
+            groupBox2.BackColor = Color.AliceBlue;
+            groupBox2.BackgroundImage = Properties.Resources.verde_oscuro;
+            groupBox2.Controls.Add(label9);
+            groupBox2.Controls.Add(label8);
+            groupBox2.Controls.Add(button3);
+            groupBox2.ForeColor = SystemColors.Control;
+            groupBox2.Location = new Point(356, 478);
+            groupBox2.Name = "groupBox2";
+            groupBox2.Size = new Size(238, 250);
+            groupBox2.TabIndex = 71;
+            groupBox2.TabStop = false;
+            groupBox2.Text = "Recordatorio";
+            groupBox2.Visible = false;
+            // 
+            // label9
+            // 
+            label9.AutoSize = true;
+            label9.BackColor = Color.Transparent;
+            label9.Font = new Font("MS Reference Sans Serif", 13.8F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            label9.Location = new Point(75, 113);
+            label9.Name = "label9";
+            label9.Size = new Size(88, 24);
+            label9.TabIndex = 61;
+            label9.Text = "Horario";
+            // 
+            // label8
+            // 
+            label8.AutoSize = true;
+            label8.BackColor = SystemColors.ActiveCaptionText;
+            label8.Location = new Point(66, 232);
+            label8.Name = "label8";
+            label8.Size = new Size(0, 15);
+            label8.TabIndex = 22;
+            // 
+            // button3
+            // 
+            button3.BackgroundImage = Properties.Resources.verde_claro;
+            button3.Font = new Font("MS Reference Sans Serif", 9F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            button3.ForeColor = SystemColors.HighlightText;
+            button3.Location = new Point(75, 172);
+            button3.Name = "button3";
+            button3.Size = new Size(90, 35);
+            button3.TabIndex = 16;
+            button3.Text = "Aceptar";
+            button3.UseVisualStyleBackColor = true;
+            // 
             // FrmNotas
             // 
-            AutoScaleDimensions = new SizeF(8F, 20F);
+            AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             BackgroundImage = Properties.Resources.Presentación_diapositivas_cosmética_natural_negocio_elegante_minimalista_beige;
-            ClientSize = new Size(1602, 1004);
+            ClientSize = new Size(1402, 753);
+            Controls.Add(groupBox2);
             Controls.Add(label4);
             Controls.Add(btnHorario);
             Controls.Add(pnlGestionarRubro);
@@ -400,6 +443,7 @@
             Controls.Add(button1);
             Controls.Add(btnKanban);
             Controls.Add(pictureBoxLogo);
+            Margin = new Padding(3, 2, 3, 2);
             Name = "FrmNotas";
             Text = "FrmNotas";
             Load += FrmNotas_Load;
@@ -410,6 +454,8 @@
             pnlGestionarRubro.ResumeLayout(false);
             pnlGestionarRubro.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)DGVgestionarRubros).EndInit();
+            groupBox2.ResumeLayout(false);
+            groupBox2.PerformLayout();
             ResumeLayout(false);
             PerformLayout();
         }
@@ -440,5 +486,9 @@
         private Button SalirGestionRubrosbtn;
         private Button btnHorario;
         private Label label4;
+        private GroupBox groupBox2;
+        private Label label9;
+        private Label label8;
+        private Button button3;
     }
 }

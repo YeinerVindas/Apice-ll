@@ -410,6 +410,8 @@ namespace GUII
             MoverTareaPendiente.Controls.Add(label5);
             MoverTareaPendiente.ForeColor = SystemColors.Control;
             MoverTareaPendiente.Location = new Point(342, 693);
+            MoverTareaPendiente.Location = new Point(425, 920);
+            MoverTareaPendiente.Margin = new Padding(3, 4, 3, 4);
             MoverTareaPendiente.Name = "MoverTareaPendiente";
             MoverTareaPendiente.Size = new Size(115, 71);
             MoverTareaPendiente.TabIndex = 65;
@@ -464,6 +466,11 @@ namespace GUII
             MoverTareaEnProceso.Location = new Point(755, 683);
             MoverTareaEnProceso.Name = "MoverTareaEnProceso";
             MoverTareaEnProceso.Size = new Size(191, 71);
+            MoverTareaEnProceso.Location = new Point(868, 877);
+            MoverTareaEnProceso.Margin = new Padding(3, 4, 3, 4);
+            MoverTareaEnProceso.Name = "MoverTareaEnProceso";
+            MoverTareaEnProceso.Padding = new Padding(3, 4, 3, 4);
+            MoverTareaEnProceso.Size = new Size(209, 95);
             MoverTareaEnProceso.TabIndex = 66;
             MoverTareaEnProceso.TabStop = false;
             MoverTareaEnProceso.Text = "Mover tarea";

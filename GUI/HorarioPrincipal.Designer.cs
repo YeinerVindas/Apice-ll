@@ -430,6 +430,7 @@ namespace GUI
             button3.TabIndex = 17;
             button3.Text = "Comenzar Sesión de estudio\r\n";
             button3.UseVisualStyleBackColor = true;
+            button3.Click += button3_Click;
             // 
             // btnEliminarMateria
             // 

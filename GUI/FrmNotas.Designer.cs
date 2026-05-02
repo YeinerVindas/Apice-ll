@@ -124,6 +124,9 @@
             // 
             label7.AutoSize = true;
             label7.Location = new Point(515, 134);
+            label7.BackColor = Color.Transparent;
+            label7.ForeColor = SystemColors.GrayText;
+            label7.Location = new Point(606, 196);
             label7.Margin = new Padding(2, 0, 2, 0);
             label7.Name = "label7";
             label7.Size = new Size(417, 15);
@@ -135,6 +138,10 @@
             label6.AutoSize = true;
             label6.Font = new Font("MS Reference Sans Serif", 24F, FontStyle.Bold);
             label6.Location = new Point(645, 99);
+            label6.BackColor = Color.Transparent;
+            label6.Font = new Font("MS Reference Sans Serif", 30F, FontStyle.Bold);
+            label6.ForeColor = Color.CadetBlue;
+            label6.Location = new Point(713, 154);
             label6.Margin = new Padding(2, 0, 2, 0);
             label6.Name = "label6";
             label6.Size = new Size(162, 40);
@@ -143,13 +150,18 @@
             // 
             // dgvMateriasNotas
             // 
-            dgvMateriasNotas.BackgroundColor = Color.WhiteSmoke;
+            dgvMateriasNotas.BackgroundColor = Color.LightCyan;
             dgvMateriasNotas.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             dgvMateriasNotas.Location = new Point(653, 160);
             dgvMateriasNotas.Margin = new Padding(2);
             dgvMateriasNotas.Name = "dgvMateriasNotas";
             dgvMateriasNotas.RowHeadersWidth = 62;
             dgvMateriasNotas.Size = new Size(159, 519);
+            dgvMateriasNotas.Location = new Point(405, 232);
+            dgvMateriasNotas.Margin = new Padding(2);
+            dgvMateriasNotas.Name = "dgvMateriasNotas";
+            dgvMateriasNotas.RowHeadersWidth = 62;
+            dgvMateriasNotas.Size = new Size(824, 478);
             dgvMateriasNotas.TabIndex = 50;
             dgvMateriasNotas.CellClick += dgvMateriasNotas_CellClick;
             // 
@@ -167,6 +179,7 @@
             pnlAgregarRubro.Controls.Add(btnCancelarCuenta);
             pnlAgregarRubro.ForeColor = SystemColors.Control;
             pnlAgregarRubro.Location = new Point(336, 216);
+            pnlAgregarRubro.Location = new Point(459, 423);
             pnlAgregarRubro.Name = "pnlAgregarRubro";
             pnlAgregarRubro.Size = new Size(238, 244);
             pnlAgregarRubro.TabIndex = 53;
@@ -282,6 +295,7 @@
             pnlGestionarRubro.Controls.Add(DGVgestionarRubros);
             pnlGestionarRubro.ForeColor = SystemColors.Control;
             pnlGestionarRubro.Location = new Point(600, 228);
+            pnlGestionarRubro.Location = new Point(795, 367);
             pnlGestionarRubro.Name = "pnlGestionarRubro";
             pnlGestionarRubro.Size = new Size(644, 278);
             pnlGestionarRubro.TabIndex = 55;
@@ -360,6 +374,7 @@
             btnHorario.Font = new Font("MS Reference Sans Serif", 9F, FontStyle.Bold, GraphicsUnit.Point, 0);
             btnHorario.ForeColor = SystemColors.HighlightText;
             btnHorario.Location = new Point(290, 20);
+            btnHorario.Location = new Point(321, 31);
             btnHorario.Name = "btnHorario";
             btnHorario.Size = new Size(50, 42);
             btnHorario.TabIndex = 56;
@@ -372,6 +387,7 @@
             label4.BackColor = Color.Transparent;
             label4.Font = new Font("MS Reference Sans Serif", 13.8F, FontStyle.Bold, GraphicsUnit.Point, 0);
             label4.Location = new Point(336, 32);
+            label4.Location = new Point(368, 40);
             label4.Name = "label4";
             label4.Size = new Size(88, 24);
             label4.TabIndex = 60;

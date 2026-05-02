@@ -198,6 +198,7 @@ namespace GUII
         {
             Seleccionar_Tarea(DGVtareasPendientes);
             MoverTareaPendiente.Location = panel1.Location;
+            MoverTareaPendiente.Location = MoverTareaEnProceso.Location;
             MoverTareaPendiente.Visible = true;
 
         }

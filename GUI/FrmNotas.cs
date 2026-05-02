@@ -75,14 +75,84 @@ namespace GUII
 
         private void Formato_Materia(DataGridView DGV)
         {
-            if (DGV.Columns.Count == 0) return;
+            if (DGV.Columns.Count == 0) return; // Sale si el control no tiene columnas cargadas
 
-            DGV.Columns[0].Width = 100;
-            DGV.Columns[0].HeaderText = "MATERIA";
-            DGV.Columns[1].Visible = false;
-            DGV.Columns[2].Visible = false;
+            // --- Configuración Global de Estilos ---
+            DGV.ColumnHeadersDefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter; // Centra texto de cabeceras
+            DGV.EnableHeadersVisualStyles = false; // Permite que los cambios de color manuales funcionen
+            DGV.ColumnHeadersDefaultCellStyle.BackColor = Color.LightBlue; // Aplica fondo azul claro a cabeceras
+            DGV.DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter; // Centra texto en todas las celdas
+            DGV.RowsDefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter; // Asegura centrado en las filas
+
+            // --- Manejo de la Columna de Botón "Ver" ---
+            if (!DGV.Columns.Contains("btnNotas")) // Si no existe la columna de botón, la crea
+            {
+                var btnCol = new DataGridViewButtonColumn // Inicializa nueva columna tipo botón
+                {
+                    Name = "btnNotas", // Identificador interno
+                    HeaderText = "NOTAS", // Título de la columna
+                    Text = "Ver", // Texto que dirá el botón
+                    UseColumnTextForButtonValue = true, // Fuerza a que todos los botones digan "Ver"
+                    Width = 120 // Define ancho inicial
+                };
+                int insertIndex = Math.Min(1, DGV.Columns.Count); // Calcula posición (índice 1 o final)
+                DGV.Columns.Insert(insertIndex, btnCol); // Inserta la columna en la posición calculada
+            }
+            else // Si la columna ya existe, solo actualiza sus propiedades
+            {
+                var existing = DGV.Columns["btnNotas"] as DataGridViewButtonColumn; // Referencia la columna existente
+                if (existing != null)
+                {
+                    existing.HeaderText = "NOTAS"; // Actualiza encabezado
+                    existing.Text = "Ver"; // Actualiza texto del botón
+                    existing.UseColumnTextForButtonValue = true; // Asegura texto uniforme
+                    existing.Width = 120; // Asegura ancho
+                    existing.Visible = true; // Se asegura que sea visible
+                }
+            }
+
+            // --- Formato de la Columna de Nombre de Materia ---
+            if (DGV.Columns.Contains("nombre")) // Si existe la columna técnica "nombre"
+            {
+                DGV.Columns["nombre"].HeaderText = "MATERIA"; // Renombra a "MATERIA"
+                DGV.Columns["nombre"].Width = 100; // Define ancho fijo
+            }
+            else // Si no la encuentra por nombre, asume que es la primera (índice 0)
+            {
+                DGV.Columns[0].HeaderText = "MATERIA";
+                DGV.Columns[0].Width = 100;
+            }
+
+            // --- Ocultar columnas de IDs (Información técnica no visible) ---
+            string[] idColumnNames = new[] { "IdMateria", "ID_Materia", "IdEstudiante", "ID_Estudiante", "Id" };
+            foreach (var idName in idColumnNames) // Itera sobre la lista de nombres posibles
+            {
+                if (DGV.Columns.Contains(idName)) // Si encuentra la columna en el DGV
+                    DGV.Columns[idName].Visible = false; // La oculta de la vista del usuario
+            }
+
+            // --- Configuración de Ajuste de Tamaño (Layout) ---
+            DGV.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.None; // Desactiva ajuste automático para controlar manualmente el tamaño de cada columna
+
+            foreach (DataGridViewColumn col in DGV.Columns) // Recorre todas las columnas una por una
+            {
+                if (!col.Visible) continue; // Salta el proceso si la columna está oculta
+
+                col.HeaderCell.Style.Alignment = DataGridViewContentAlignment.MiddleCenter; // Centra cabecera de esta col
+                col.DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter; // Centra celdas de esta col
+
+                if (col.Name == "btnNotas") // Configuración específica para el botón
+                {
+                    col.AutoSizeMode = DataGridViewAutoSizeColumnMode.None; // Ancho manual
+                    col.Width = 380; // Define un ancho específico de 380px
+                }
+                else // Configuración para las demás columnas visibles
+                {
+                    col.AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill; // Hace que se estiren para llenar el grid
+                    col.MinimumWidth = 60; // Evita que desaparezcan si se reduce la ventana
+                }
+            }
         }
-
         private void Formato_Rubro()
         {
             if (DGVgestionarRubros.Columns.Count < 4) return;
@@ -195,7 +265,7 @@ namespace GUII
         {
             if (ValidarCampos())
             {
-                string rpta = BL_Evaluacion.GuardarEva(EstadoGuarda, new ET.ET_Evaluacion
+                ET.ET_Evaluacion objetoEva = new ET.ET_Evaluacion
                 {
                     ID = IdRubro,
                     ID_Materia = IdMateria,
@@ -203,12 +273,21 @@ namespace GUII
                     NombreRubro = txtNombreRubro.Text,
                     ValorPorcentual = Convert.ToDecimal(txtValorPorcentual.Text),
                     CalificacionObtenida = Convert.ToDecimal(txtNotaObtenida.Text),
-                });
+                };
 
-                pnlAgregarRubro.Visible = false;
-                RefrescarVista();
-                agregarRubroBTN.Enabled = true;
-                MessageBox.Show(rpta);
+                string rpta = BL_Evaluacion.GuardarEva(EstadoGuarda, objetoEva);
+
+                if (rpta.Trim().ToUpper() == "OK")
+                {
+                    pnlAgregarRubro.Visible = false;
+                    RefrescarVista();
+                    agregarRubroBTN.Enabled = true;
+                    MessageBox.Show("Guardado con éxito");
+                }
+                else
+                {
+                    MessageBox.Show(rpta, "Error de Validación", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                }
             }
         }
 
@@ -301,5 +380,7 @@ namespace GUII
         }
 
         #endregion
+
+
     }
 }

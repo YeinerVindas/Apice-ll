@@ -83,6 +83,16 @@ namespace GUII.Properties {
         /// <summary>
         ///   Busca un recurso adaptado de tipo System.Drawing.Bitmap.
         /// </summary>
+        public static System.Drawing.Bitmap Captura_de_pantalla_2026_04_23_0826164 {
+            get {
+                object obj = ResourceManager.GetObject("Captura de pantalla 2026-04-23 0826164", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Busca un recurso adaptado de tipo System.Drawing.Bitmap.
+        /// </summary>
         public static System.Drawing.Bitmap Captura_de_pantalla_2026_04_23_215949 {
             get {
                 object obj = ResourceManager.GetObject("Captura de pantalla 2026-04-23 215949", resourceCulture);
@@ -103,6 +113,26 @@ namespace GUII.Properties {
         /// <summary>
         ///   Busca un recurso adaptado de tipo System.Drawing.Bitmap.
         /// </summary>
+        public static System.Drawing.Bitmap fondo_negro {
+            get {
+                object obj = ResourceManager.GetObject("fondo negro", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Busca un recurso adaptado de tipo System.Drawing.Bitmap.
+        /// </summary>
+        public static System.Drawing.Bitmap incio {
+            get {
+                object obj = ResourceManager.GetObject("incio", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Busca un recurso adaptado de tipo System.Drawing.Bitmap.
+        /// </summary>
         public static System.Drawing.Bitmap loguito {
             get {
                 object obj = ResourceManager.GetObject("loguito", resourceCulture);
@@ -113,9 +143,59 @@ namespace GUII.Properties {
         /// <summary>
         ///   Busca un recurso adaptado de tipo System.Drawing.Bitmap.
         /// </summary>
+        public static System.Drawing.Bitmap pausa {
+            get {
+                object obj = ResourceManager.GetObject("pausa", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Busca un recurso adaptado de tipo System.Drawing.Bitmap.
+        /// </summary>
+        public static System.Drawing.Bitmap pausa_removebg_preview {
+            get {
+                object obj = ResourceManager.GetObject("pausa-removebg-preview", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Busca un recurso adaptado de tipo System.Drawing.Bitmap.
+        /// </summary>
+        public static System.Drawing.Bitmap Pausa_sin_fondo {
+            get {
+                object obj = ResourceManager.GetObject("Pausa sin fondo", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Busca un recurso adaptado de tipo System.Drawing.Bitmap.
+        /// </summary>
+        public static System.Drawing.Bitmap Pausa_sin_fondo1 {
+            get {
+                object obj = ResourceManager.GetObject("Pausa sin fondo1", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Busca un recurso adaptado de tipo System.Drawing.Bitmap.
+        /// </summary>
         public static System.Drawing.Bitmap Presentación_diapositivas_cosmética_natural_negocio_elegante_minimalista_beige {
             get {
                 object obj = ResourceManager.GetObject("Presentación diapositivas cosmética natural negocio elegante minimalista beige", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Busca un recurso adaptado de tipo System.Drawing.Bitmap.
+        /// </summary>
+        public static System.Drawing.Bitmap Reloj {
+            get {
+                object obj = ResourceManager.GetObject("Reloj", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }

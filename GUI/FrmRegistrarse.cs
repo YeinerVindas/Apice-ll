@@ -49,6 +49,9 @@ namespace WinFormsApp1
                                 "Éxito",
                                 MessageBoxButtons.OK,
                                 MessageBoxIcon.Information);
+                this.Hide();
+                LogIn frm = new LogIn();
+                frm.Show();
             }
             else
             {

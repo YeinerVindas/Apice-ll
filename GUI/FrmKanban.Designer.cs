@@ -106,7 +106,6 @@ namespace GUII
             BtnKanban.Size = new Size(280, 100);
             BtnKanban.TabIndex = 42;
             BtnKanban.UseVisualStyleBackColor = true;
-
             // 
             // pictureBoxLogo
             // 
@@ -401,7 +400,7 @@ namespace GUII
             MoverTareaPendiente.Controls.Add(button2);
             MoverTareaPendiente.Controls.Add(label5);
             MoverTareaPendiente.ForeColor = SystemColors.Control;
-            MoverTareaPendiente.Location = new Point(391, 924);
+            MoverTareaPendiente.Location = new Point(425, 920);
             MoverTareaPendiente.Margin = new Padding(3, 4, 3, 4);
             MoverTareaPendiente.Name = "MoverTareaPendiente";
             MoverTareaPendiente.Padding = new Padding(3, 4, 3, 4);
@@ -441,11 +440,11 @@ namespace GUII
             MoverTareaEnProceso.Controls.Add(button1);
             MoverTareaEnProceso.Controls.Add(label6);
             MoverTareaEnProceso.ForeColor = SystemColors.Control;
-            MoverTareaEnProceso.Location = new Point(867, 934);
+            MoverTareaEnProceso.Location = new Point(868, 877);
             MoverTareaEnProceso.Margin = new Padding(3, 4, 3, 4);
             MoverTareaEnProceso.Name = "MoverTareaEnProceso";
             MoverTareaEnProceso.Padding = new Padding(3, 4, 3, 4);
-            MoverTareaEnProceso.Size = new Size(175, 95);
+            MoverTareaEnProceso.Size = new Size(209, 95);
             MoverTareaEnProceso.TabIndex = 66;
             MoverTareaEnProceso.TabStop = false;
             MoverTareaEnProceso.Text = "Mover tarea";

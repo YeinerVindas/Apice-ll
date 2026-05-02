@@ -1,84 +1,45 @@
-﻿using ET;
+﻿using System;
 using System.Data;
-using System.Data.SqlClient;
 using Microsoft.Data.SqlClient;
+using ET;
 using Utilities;
 
 namespace DAL
 {
     public class DAL_Materia : DAL_utilities
     {
-        #region 🔹 Listados por Día
-
-        public DataTable ListadoMateriaLunes(string cTexto, int IdEstudiate_Materia)
+        // Método unificado que reemplaza a los 7 anteriores
+        public DataTable ListarMaterias(int idEstudiante, string dia = "Todos", string filtro = "")
         {
-            return Listado(cTexto, "USP_Listado_materias_lunes", IdEstudiate_Materia);
-        }
+            // Usamos el nuevo SP único
+            // Nota: Aquí 'Listado' ya usa el parámetro 'idEstudiante' corregido
 
-        public DataTable ListadoMateriaMartes(string cTexto, int IdEstudiate_Materia)
-        {
-            return Listado(cTexto, "USP_Listado_materias_martes", IdEstudiate_Materia);
-        }
+            // Si necesitas pasar el parámetro @DiaSemana a través de la utilidad Listado, 
+            // podrías necesitar una sobrecarga o usar el método 'Comprobar' que acepta parámetros libres.
 
-        public DataTable ListadoMateriaMiercoles(string cTexto, int IdEstudiate_Materia)
-        {
-            return Listado(cTexto, "USP_Listado_materias_miercoles", IdEstudiate_Materia);
-        }
-
-        public DataTable ListadoMateriaJueves(string cTexto, int IdEstudiate_Materia)
-        {
-            return Listado(cTexto, "USP_Listado_materias_jueves", IdEstudiate_Materia);
-        }
-
-        public DataTable ListadoMateriaViernes(string cTexto, int IdEstudiate_Materia)
-        {
-            return Listado(cTexto, "USP_Listado_materias_viernes", IdEstudiate_Materia);
-        }
-
-        public DataTable ListadoMateriaSabado(string cTexto, int IdEstudiate_Materia)
-        {
-            return Listado(cTexto, "USP_Listado_materias_sabado", IdEstudiate_Materia);
-        }
-
-        public DataTable ListadoMateriaDomingo(string cTexto, int IdEstudiate_Materia)
-        {
-            return Listado(cTexto, "USP_Listado_materias_domingo", IdEstudiate_Materia);
-        }
-
-        #endregion
-
-        #region 🔹 Gestión de Materias
-
-        public DataTable ListadoGestionMaterias(string cTexto, int IdEstudiate_Materia)
-        {
-            return Listado(cTexto, "USP_Listado_GestionarMateria", IdEstudiate_Materia);
-        }
-
-        public string GuardarMT(int nOpcion, ET_Materia mt)
-        {
             SqlParameter[] parametros = {
-                new SqlParameter("@nOpcion", SqlDbType.Int) { Value = nOpcion },
-                new SqlParameter("@ID_materia", SqlDbType.Int) { Value = mt.ID },
-                new SqlParameter("@ID_Estudiante", SqlDbType.Int) { Value = mt.ID_Estudiante },
-                new SqlParameter("@Nombre", SqlDbType.VarChar) { Value = mt.Nombre },
-                new SqlParameter("@HoraInicio", SqlDbType.VarChar) { Value = mt.HoraInicio },
-                new SqlParameter("@HoraFinal", SqlDbType.VarChar) { Value = mt.HoraFinal },
-                new SqlParameter("@Prioridad", SqlDbType.VarChar) { Value = mt.Prioridad },
-                new SqlParameter("@DiaSemana", SqlDbType.VarChar) { Value = mt.DiaSemana }
+                new SqlParameter("@cTexto", filtro),
+                new SqlParameter("@idEstudiante", idEstudiante),
+                new SqlParameter("@DiaSemana", dia)
             };
 
-            return Guardar("USP_Guardar_Materia", parametros);
+            return this.Comprobar("USP_Listado_Materias_Por_Filtro", parametros);
         }
 
-        public string EliminarMT(int IdMateria)
+        public string GuardarMateria(ET_Materia mt, int opcion)
         {
             SqlParameter[] parametros = {
-                new SqlParameter("@nIdMateria", SqlDbType.Int) { Value = IdMateria }
+                new SqlParameter("@nOpcion", opcion),
+                new SqlParameter("@IdMateria", mt.IdMateria),
+                new SqlParameter("@idEstudiante", mt.IdEstudiante), // Nombre corregido
+                new SqlParameter("@Nombre", mt.Nombre),
+                new SqlParameter("@HoraInicio", mt.HoraInicio),
+                new SqlParameter("@HoraFinal", mt.HoraFinal),
+                new SqlParameter("@Prioridad", mt.Prioridad),
+                new SqlParameter("@DiaSemana", mt.DiaSemana)
             };
 
-            return Guardar("USP_Eliminar_mt", parametros);
+            return this.Guardar("USP_Guardar_Materia", parametros);
         }
-
-        #endregion
     }
 }

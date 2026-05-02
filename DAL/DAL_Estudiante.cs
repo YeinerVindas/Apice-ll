@@ -1,6 +1,6 @@
 ﻿using ET;
+using System;
 using System.Data;
-using System.Data.SqlClient;
 using Microsoft.Data.SqlClient;
 using Utilities;
 
@@ -8,80 +8,53 @@ namespace DAL
 {
     public class DAL_Estudiante : DAL_utilities
     {
-        #region 🔹 Listados
+        #region 🔹 Gestión de Estudiante (CRUD)
 
-        public DataTable ListadoES(string ctexto)
+        // Método simplificado usando la herencia de DAL_utilities
+        public DataTable ListadoEstudiantes(string ctexto)
         {
-            SqlDataReader Resultado;
-            DataTable Tabla = new DataTable();
-            SqlConnection SqlCon = new SqlConnection();
-
-            try
-            {
-                SqlCon = Conexion.GetInstancia().CrearConexion();
-
-                SqlCommand comando = new SqlCommand("USP_Listado_es", SqlCon);
-                comando.CommandType = CommandType.StoredProcedure;
-                comando.Parameters.Add("@cTexto", SqlDbType.VarChar).Value = ctexto;
-
-                SqlCon.Open();
-                Resultado = comando.ExecuteReader();
-                Tabla.Load(Resultado);
-
-                return Tabla;
-            }
-            catch (Exception ex)
-            {
-                throw ex;
-            }
-            finally
-            {
-                if (SqlCon.State == ConnectionState.Open) SqlCon.Close();
-            }
+            // Usamos 0 o un ID genérico si el SP no requiere filtrar por un ID específico de estudiante para el listado global
+            return this.Listado(ctexto, "USP_Listado_es", 0);
         }
 
-        #endregion
-
-        #region 🔹 Gestión de Estudiante
-
-        public string GuardarES(int nOpcion, ET_Estudiante es)
+        public string GuardarEstudiante(int nOpcion, ET_Estudiante es)
         {
             SqlParameter[] parametros = {
-                new SqlParameter("@nOpcion", SqlDbType.Int) { Value = nOpcion },
-                new SqlParameter("@ID", SqlDbType.Int) { Value = es.ID },
-                new SqlParameter("@Nombre", SqlDbType.VarChar) { Value = es.Nombre },
-                new SqlParameter("@Correo", SqlDbType.VarChar) { Value = es.Correo },
-                new SqlParameter("@Contrasena", SqlDbType.VarChar) { Value = es.Contrasena },
-                new SqlParameter("@FechaConexion", SqlDbType.DateTime) { Value = es.FechaConexion },
-                new SqlParameter("@RachaActual", SqlDbType.VarChar) { Value = es.RachaActual }
+                new SqlParameter("@nOpcion", nOpcion),
+                new SqlParameter("@idEstudiante", es.ID), // Estandarizado a idEstudiante
+                new SqlParameter("@Nombre", es.Nombre),
+                new SqlParameter("@Correo", es.Correo),
+                new SqlParameter("@Contrasena", es.Contrasena),
+                new SqlParameter("@FechaConexion", es.FechaConexion),
+                new SqlParameter("@RachaActual", es.RachaActual)
             };
 
             return Guardar("USP_Guardar_es", parametros);
         }
 
-        public string EliminarES(int IdMateria)
+        public string EliminarEstudiante(int idEstudiante)
         {
             SqlParameter[] parametros = {
-                new SqlParameter("@nIdMateria", SqlDbType.Int) { Value = IdMateria }
+                new SqlParameter("@idEstudiante", idEstudiante)
             };
 
-            return Guardar("USP_Eliminar_mt", parametros);
+            return Guardar("USP_Eliminar_es", parametros); // Cambiado a SP de estudiante
         }
 
         #endregion
 
-
+        #region 🔹 Seguridad y Autenticación
 
         public DataTable ComprobarLogIn(string correo, string contrasena)
         {
             SqlParameter[] parametros = {
-                new SqlParameter("@correo", SqlDbType.VarChar) { Value = correo },
-                new SqlParameter("@contrasena", SqlDbType.VarChar) { Value = contrasena }
+                new SqlParameter("@correo", correo),
+                new SqlParameter("@contrasena", contrasena)
             };
 
             return Comprobar("USP_Comprobar_es", parametros);
         }
 
-
+        #endregion
     }
 }

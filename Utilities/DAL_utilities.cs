@@ -11,7 +11,8 @@ namespace Utilities
     {
         #region 🔹 LISTADOS
 
-        public DataTable Listado(string ctexto, string nombreSP, int IdEstudiate_Materia)
+        // Se cambió IdEstudiate_Materia por idEstudiante para mayor claridad
+        public DataTable Listado(string ctexto, string nombreSP, int idEstudiante)
         {
             SqlDataReader Resultado;
             DataTable Tabla = new DataTable();
@@ -24,7 +25,7 @@ namespace Utilities
                 comando.CommandType = CommandType.StoredProcedure;
 
                 comando.Parameters.Add("@cTexto", SqlDbType.VarChar).Value = ctexto;
-                comando.Parameters.Add("@IdEstudiante", SqlDbType.Int).Value = IdEstudiate_Materia;
+                comando.Parameters.Add("@idEstudiante", SqlDbType.Int).Value = idEstudiante;
 
                 SqlCon.Open();
                 Resultado = comando.ExecuteReader();
@@ -41,7 +42,8 @@ namespace Utilities
             }
         }
 
-        public DataTable ListadoRubro(string ctexto, string nombreSP, int IdEstudiate_Materia, int idMateria)
+        // Se estandarizó el nombre del parámetro a idEstudiante
+        public DataTable ListadoRubro(string ctexto, string nombreSP, int idEstudiante, int idMateria)
         {
             SqlDataReader Resultado;
             DataTable Tabla = new DataTable();
@@ -54,7 +56,7 @@ namespace Utilities
                 comando.CommandType = CommandType.StoredProcedure;
 
                 comando.Parameters.Add("@cTexto", SqlDbType.VarChar).Value = ctexto;
-                comando.Parameters.Add("@idEstudiante", SqlDbType.Int).Value = IdEstudiate_Materia;
+                comando.Parameters.Add("@idEstudiante", SqlDbType.Int).Value = idEstudiante;
                 comando.Parameters.Add("@idMateria", SqlDbType.Int).Value = idMateria;
 
                 SqlCon.Open();

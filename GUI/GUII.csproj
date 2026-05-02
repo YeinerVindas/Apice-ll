@@ -17,9 +17,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Compile Update="HorarioPrincipal.cs">
-      <SubType>Form</SubType>
-    </Compile>
+    <Compile Update="HorarioPrincipal.cs" />
     <Compile Update="LogIn.cs">
       <SubType>Form</SubType>
     </Compile>

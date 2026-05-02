@@ -9,6 +9,12 @@ using WinFormsApp1;
 
 namespace GUI
 {
+
+    /** <summary>
+     * Formulario principal que muestra el horario del estudiante y permite gestionar sus materias.
+     * Recibe el ID del estudiante para cargar su horario específico.
+     * Permite agregar, editar y eliminar materias, así como acceder a otras funcionalidades como notas y kanban.
+     */
     public partial class HorarioPrincipal : Form
     {
         #region ?? Variables Globales

@@ -196,7 +196,7 @@ namespace GUII
         private void DGVtareasPendientes_CellClick(object sender, DataGridViewCellEventArgs e)
         {
             Seleccionar_Tarea(DGVtareasPendientes);
-            MoverTareaPendiente.Location = DGVtareasPendientes.Location;
+            MoverTareaPendiente.Location = MoverTareaEnProceso.Location;
             MoverTareaPendiente.Visible = true;
         }
 
@@ -218,5 +218,10 @@ namespace GUII
             this.agregarTareaBTN.Enabled = true;
         }
         #endregion
+
+        private void SalirGestionRubrosbtn_Click(object sender, EventArgs e)
+        {
+            MoverTareaPendiente.Visible = false;
+        }
     }
 }

@@ -45,15 +45,19 @@ namespace WinFormsApp1
 
             if (rpta.ToUpper() == "OK")
             {
-                MessageBox.Show("Usuario creado exitosamente", "Éxito", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                MessageBox.Show("Usuario creado exitosamente", "Ã‰xito", MessageBoxButtons.OK, MessageBoxIcon.Information);
 
+                MessageBox.Show("Usuario creado exitosamente",
+                                "Ã‰xito",
+                                MessageBoxButtons.OK,
+                                MessageBoxIcon.Information);
                 this.Hide();
                 LogIn frm = new LogIn();
                 frm.Show();
             }
             else
             {
-                MessageBox.Show(rpta, "Atención", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                MessageBox.Show(rpta, "AtenciÃ³n", MessageBoxButtons.OK, MessageBoxIcon.Warning);
             }
         }
 

@@ -224,7 +224,7 @@ namespace GUII
             Controls.Add(btnIniciar_Click);
             Margin = new Padding(3, 4, 3, 4);
             Name = "FrmSesion";
-            Text = "Form2";
+            Text = "Sesión";
             ((System.ComponentModel.ISupportInitialize)pictureBox2).EndInit();
             ((System.ComponentModel.ISupportInitialize)pictureBox3).EndInit();
             panel1.ResumeLayout(false);

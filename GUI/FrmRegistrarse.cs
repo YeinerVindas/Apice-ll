@@ -43,10 +43,12 @@ namespace WinFormsApp1
                 RachaActual = 0
             });
 
-            if (rpta == "OK")
+            if (rpta.ToUpper() == "OK")
             {
+                MessageBox.Show("Usuario creado exitosamente", "Éxito", MessageBoxButtons.OK, MessageBoxIcon.Information);
+
                 MessageBox.Show("Usuario creado exitosamente",
-                                "�xito",
+                                "Éxito",
                                 MessageBoxButtons.OK,
                                 MessageBoxIcon.Information);
                 this.Hide();
@@ -55,10 +57,7 @@ namespace WinFormsApp1
             }
             else
             {
-                MessageBox.Show(rpta,
-                                "Error",
-                                MessageBoxButtons.OK,
-                                MessageBoxIcon.Error);
+                MessageBox.Show(rpta, "Atención", MessageBoxButtons.OK, MessageBoxIcon.Warning);
             }
         }
 

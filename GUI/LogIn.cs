@@ -57,11 +57,11 @@ public partial class LogIn : Form
     {
         DataTable tabla = BL_Estudiante.ComprobarES(txtUsername.Text, TxtPassword.Text);
 
-        if (tabla.Rows.Count > 0)
+        if (tabla != null && tabla.Rows.Count > 0)
         {
             int idEstudiante = Convert.ToInt32(tabla.Rows[0]["ID"]);
 
-            MessageBox.Show("Bienvenido");
+            MessageBox.Show("¡Bienvenido a Ápice!", "Acceso Exitoso", MessageBoxButtons.OK, MessageBoxIcon.Information);
 
             HorarioPrincipal frm = new HorarioPrincipal(idEstudiante);
             frm.Show();
@@ -69,7 +69,8 @@ public partial class LogIn : Form
         }
         else
         {
-            MessageBox.Show("Correo o contraseña incorrectos");
+            MessageBox.Show("Credenciales inválidas. Verifique su correo o contraseña.",
+                            "Error de Autenticación", MessageBoxButtons.OK, MessageBoxIcon.Stop);
         }
     }
 

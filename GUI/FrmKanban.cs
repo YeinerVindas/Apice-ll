@@ -1,4 +1,5 @@
 ﻿using BL;
+using ET;
 using GUI;
 using System;
 using System.Collections.Generic;
@@ -196,18 +197,24 @@ namespace GUII
         private void DGVtareasPendientes_CellClick(object sender, DataGridViewCellEventArgs e)
         {
             Seleccionar_Tarea(DGVtareasPendientes);
-            MoverTareaPendiente.Location = DGVtareasPendientes.Location;
+            MoverTareaPendiente.Location = panel1.Location;
+            MoverTareaPendiente.Location = MoverTareaEnProceso.Location;
             MoverTareaPendiente.Visible = true;
+
         }
 
         private void DGVtareasEnProceso_CellClick(object sender, DataGridViewCellEventArgs e)
         {
             Seleccionar_Tarea(DGVtareasEnProceso);
+            MoverTareaEnProceso.Location = panel2.Location;
+            MoverTareaEnProceso.Visible = true;
         }
 
         private void DGVtareasCompletado_CellClick(object sender, DataGridViewCellEventArgs e)
         {
             Seleccionar_Tarea(DGVtareasCompletado);
+            MoverTareaCompletado.Location = panel3.Location;
+            MoverTareaCompletado.Visible = true;
         }
         #endregion
 
@@ -218,5 +225,51 @@ namespace GUII
             this.agregarTareaBTN.Enabled = true;
         }
         #endregion
+
+        #region 🔹Mover Tareas
+        private void Btn_mover_a_progreso1_Click_1(object sender, EventArgs e)
+        {
+            BL_Kanban.ActualizarEstadoTarea(IdTarea, "En proceso");
+            listarKanban("%", IdEstudiante);
+            MoverTareaPendiente.Visible = false;
+        }
+
+        private void Btn_mover_a_completado_Click_1(object sender, EventArgs e)
+        {
+            BL_Kanban.ActualizarEstadoTarea(IdTarea, "Completada");
+            listarKanban("%", IdEstudiante);
+            MoverTareaEnProceso.Visible = false;
+        }
+
+        private void Btn_mover_a_pendiente_Click(object sender, EventArgs e)
+        {
+            BL_Kanban.ActualizarEstadoTarea(IdTarea, "Pendiente");
+            listarKanban("%", IdEstudiante);
+            MoverTareaEnProceso.Visible = false;
+        }
+
+        private void Btn_mover_a_proceso2_Click(object sender, EventArgs e)
+        {
+            BL_Kanban.ActualizarEstadoTarea(IdTarea, "En proceso");
+            listarKanban("%", IdEstudiante);
+            MoverTareaCompletado.Visible = false;
+        }
+        #endregion
+
+
+        private void SalirGestionRubrosbtn_Click(object sender, EventArgs e)
+        {
+            MoverTareaPendiente.Visible = false;
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            MoverTareaEnProceso.Visible = false;
+        }
+
+        private void button2_Click(object sender, EventArgs e)
+        {
+            MoverTareaCompletado.Visible = false;
+        }
     }
 }

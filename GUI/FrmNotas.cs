@@ -265,7 +265,7 @@ namespace GUII
         {
             if (ValidarCampos())
             {
-                string rpta = BL_Evaluacion.GuardarEva(EstadoGuarda, new ET.ET_Evaluacion
+                ET.ET_Evaluacion objetoEva = new ET.ET_Evaluacion
                 {
                     ID = IdRubro,
                     ID_Materia = IdMateria,
@@ -273,12 +273,21 @@ namespace GUII
                     NombreRubro = txtNombreRubro.Text,
                     ValorPorcentual = Convert.ToDecimal(txtValorPorcentual.Text),
                     CalificacionObtenida = Convert.ToDecimal(txtNotaObtenida.Text),
-                });
+                };
 
-                pnlAgregarRubro.Visible = false;
-                RefrescarVista();
-                agregarRubroBTN.Enabled = true;
-                MessageBox.Show(rpta);
+                string rpta = BL_Evaluacion.GuardarEva(EstadoGuarda, objetoEva);
+
+                if (rpta.Trim().ToUpper() == "OK")
+                {
+                    pnlAgregarRubro.Visible = false;
+                    RefrescarVista();
+                    agregarRubroBTN.Enabled = true;
+                    MessageBox.Show("Guardado con éxito");
+                }
+                else
+                {
+                    MessageBox.Show(rpta, "Error de Validación", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                }
             }
         }
 

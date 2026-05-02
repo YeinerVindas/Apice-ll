@@ -54,6 +54,16 @@ namespace DAL
             return Guardar("USP_Eliminar_tarea", parametros);
         }
 
+        public string ActualizarEstadoTarea(int idTarea, string nuevoEstado)
+        {
+            SqlParameter[] parametros = {
+                new SqlParameter("@ID", SqlDbType.Int) { Value = idTarea },
+                new SqlParameter("@NuevoEstado", SqlDbType.VarChar) { Value = nuevoEstado }
+            };
+
+            return Guardar("USP_Actualizar_Estado_Tarea", parametros);
+        }
+
         #endregion
     }
 }

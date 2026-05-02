@@ -115,7 +115,7 @@ namespace GUII
             // 
             pictureBox3.BackColor = Color.Transparent;
             pictureBox3.BackgroundImageLayout = ImageLayout.Zoom;
-            pictureBox3.Image = Properties.Resources.fondo_negro;
+            //pictureBox3.Image = Properties.Resources.fondo_negro;
             pictureBox3.Location = new Point(293, 62);
             pictureBox3.Margin = new Padding(3, 4, 3, 4);
             pictureBox3.Name = "pictureBox3";

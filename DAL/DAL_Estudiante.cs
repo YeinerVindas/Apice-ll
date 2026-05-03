@@ -1,58 +1,64 @@
-﻿using ET;
-using System;
+﻿using System;
 using System.Data;
 using Microsoft.Data.SqlClient;
+using ET;
 using Utilities;
 
 namespace DAL
 {
     public class DAL_Estudiante : DAL_utilities
     {
-        #region 🔹 Gestión de Estudiante (CRUD)
+        #region Métodos de Autenticación y Listado
 
-        // Método simplificado usando la herencia de DAL_utilities
-        public DataTable ListadoEstudiantes(string ctexto)
+        public DataTable Login(string correo, string contrasena)
         {
-            // Usamos 0 o un ID genérico si el SP no requiere filtrar por un ID específico de estudiante para el listado global
-            return this.Listado(ctexto, "USP_Listado_es", 0);
-        }
-
-        public string GuardarEstudiante(int nOpcion, ET_Estudiante es)
-        {
-            SqlParameter[] parametros = {
-                new SqlParameter("@nOpcion", nOpcion),
-                new SqlParameter("@idEstudiante", es.ID), // Estandarizado a idEstudiante
-                new SqlParameter("@Nombre", es.Nombre),
-                new SqlParameter("@Correo", es.Correo),
-                new SqlParameter("@Contrasena", es.Contrasena),
-                new SqlParameter("@FechaConexion", es.FechaConexion),
-                new SqlParameter("@RachaActual", es.RachaActual)
+            // Usamos el método Comprobar para validar credenciales
+            SqlParameter[] parametros =
+            {
+                new SqlParameter("@correo", SqlDbType.VarChar, 50) { Value = correo },
+                new SqlParameter("@contrasena", SqlDbType.VarChar, 50) { Value = contrasena }
             };
 
-            return Guardar("USP_Guardar_es", parametros);
-        }
-
-        public string EliminarEstudiante(int idEstudiante)
-        {
-            SqlParameter[] parametros = {
-                new SqlParameter("@idEstudiante", idEstudiante)
-            };
-
-            return Guardar("USP_Eliminar_es", parametros); // Cambiado a SP de estudiante
+            return Comprobar("USP_LoginEstudiante", parametros);
         }
 
         #endregion
 
-        #region 🔹 Seguridad y Autenticación
+        #region Métodos de Escritura
 
-        public DataTable ComprobarLogIn(string correo, string contrasena)
+        public string GuardarEstudiante(int nOpcion, ET_Estudiante oPropiedad)
         {
-            SqlParameter[] parametros = {
-                new SqlParameter("@correo", correo),
-                new SqlParameter("@contrasena", contrasena)
+            string rpta = "";
+            try
+            {
+                SqlParameter[] parametros =
+                {
+                    new SqlParameter("@nOpcion", SqlDbType.Int) { Value = nOpcion },
+                    new SqlParameter("@ID", SqlDbType.Int) { Value = oPropiedad.ID },
+                    new SqlParameter("@nombre", SqlDbType.VarChar, 50) { Value = oPropiedad.nombre },
+                    new SqlParameter("@correo", SqlDbType.VarChar, 50) { Value = oPropiedad.correo },
+                    new SqlParameter("@contrasena", SqlDbType.VarChar, 50) { Value = oPropiedad.contrasena },
+                    new SqlParameter("@fechaConexion", SqlDbType.VarChar, 50) { Value = oPropiedad.fechaConexion },
+                    new SqlParameter("@rachaActual", SqlDbType.Int) { Value = (object)oPropiedad.rachaActual ?? DBNull.Value }
+                };
+
+                rpta = Guardar("USP_GuardarEstudiante", parametros);
+            }
+            catch (Exception ex)
+            {
+                rpta = ex.Message;
+            }
+            return rpta;
+        }
+
+        public string EliminarEstudiante(int idEstudiante)
+        {
+            SqlParameter[] parametros =
+            {
+                new SqlParameter("@ID", SqlDbType.Int) { Value = idEstudiante }
             };
 
-            return Comprobar("USP_Comprobar_es", parametros);
+            return Eliminar("USP_EliminarEstudiante", parametros);
         }
 
         #endregion

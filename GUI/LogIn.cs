@@ -1,78 +1,100 @@
 ﻿using BL;
-using GUI;
-using System.Data;
-using System.Drawing.Drawing2D;
-using WinFormsApp1;
+using ET;
+using System;
+using System.Windows.Forms;
 
-namespace Mockup;
-
-public partial class LogIn : Form
+namespace GUI
 {
-    #region 🔹 Constructor
-    public LogIn()
+    public partial class LogIn : Form
     {
-        InitializeComponent();
-        BordesRedondeados(panel1, 25); // 25 = radio de las esquinas
-    }
-    #endregion
+        #region Variables
+        private readonly BL_Estudiante _blEstudiante = new BL_Estudiante();
+        #endregion
 
-    #region 🔹 Load
-    private void LogIn_Load(object sender, EventArgs e)
-    {
-        this.WindowState = FormWindowState.Maximized;
-        this.Show();
-        this.BringToFront();
-        this.Activate();
-    }
-    #endregion
-
-    #region 🔹 Métodos
-
-    private void BordesRedondeados(Panel panel, int radio)
-    {
-        GraphicsPath path = new GraphicsPath();
-
-        path.StartFigure();
-        path.AddArc(0, 0, radio, radio, 180, 90);
-        path.AddArc(panel.Width - radio, 0, radio, radio, 270, 90);
-        path.AddArc(panel.Width - radio, panel.Height - radio, radio, radio, 0, 90);
-        path.AddArc(0, panel.Height - radio, radio, radio, 90, 90);
-        path.CloseFigure();
-
-        panel.Region = new Region(path);
-    }
-
-    #endregion
-
-    #region 🔹 Eventos Botones
-
-    private void BtnRegistrarse_Click(object sender, EventArgs e)
-    {
-        this.Hide();
-        Form1 Frm = new Form1();
-        Frm.Show();
-    }
-
-    private void BtnLogin_Click(object sender, EventArgs e)
-    {
-        DataTable tabla = BL_Estudiante.ComprobarES(txtUsername.Text, TxtPassword.Text);
-
-        if (tabla != null && tabla.Rows.Count > 0)
+        #region Constructor
+        public LogIn()
         {
-            int idEstudiante = Convert.ToInt32(tabla.Rows[0]["ID"]);
-
-            MessageBox.Show("¡Bienvenido a Ápice!", "Acceso Exitoso", MessageBoxButtons.OK, MessageBoxIcon.Information);
-
-            HorarioPrincipal frm = new HorarioPrincipal(idEstudiante);
-            frm.Show();
-            this.Hide();
+            InitializeComponent();
         }
-        else
+        #endregion
+
+        #region Load
+        private void LogIn_Load(object sender, EventArgs e)
         {
-            MessageBox.Show("Credenciales inválidas. Verifique su correo o contraseña.",
-                            "Error de Autenticación", MessageBoxButtons.OK, MessageBoxIcon.Stop);
+            TxtPassword.PasswordChar = '*';
+            this.WindowState = FormWindowState.Maximized;
+            this.Show();
+            this.BringToFront();
+            this.Activate();
         }
-    }
+        #endregion
 
-    #endregion
+        #region Login
+
+        private void BtnLogin_Click(object sender, EventArgs e)
+        {
+            string correo = txtUsername.Text.Trim();
+            string contrasena = TxtPassword.Text.Trim();
+
+            if (string.IsNullOrWhiteSpace(correo) || string.IsNullOrWhiteSpace(contrasena))
+            {
+                MessageBox.Show("Por favor ingresa tu correo y contraseña.",
+                    "Campos requeridos", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+
+            try
+            {
+                // Obtener la fechaConexion anterior ANTES de que Login la actualice
+                // Se hace una consulta previa a la DAL para leer el valor actual
+                string fechaAnterior = ObtenerFechaAnterior(correo, contrasena);
+
+                // Login real — valida credenciales, actualiza racha y fechaConexion
+                // Retorna ET_Estudiante con los datos del estudiante autenticado
+                ET_Estudiante estudiante = _blEstudiante.Login(correo, contrasena);
+
+                // Abrir home pasando el ID y la fecha anterior para la regla de inactividad
+                HorarioPrincipal home = new HorarioPrincipal(estudiante.ID, fechaAnterior);
+                home.Show();
+                this.Hide();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message, "Error de acceso",
+                    MessageBoxButtons.OK, MessageBoxIcon.Warning);
+            }
+        }
+
+        /// <summary>
+        /// Lee la fechaConexion actual del estudiante antes de que Login la sobreescriba.
+        /// Así HorarioPrincipal puede calcular si hubo inactividad >= 3 días.
+        /// </summary>
+        private string ObtenerFechaAnterior(string correo, string contrasena)
+        {
+            try
+            {
+                // Usamos la DAL directamente para no disparar ActualizarRacha dos veces
+                DAL.DAL_Estudiante dal = new DAL.DAL_Estudiante();
+                System.Data.DataTable dt = dal.Login(correo, contrasena);
+
+                if (dt != null && dt.Rows.Count > 0)
+                    return dt.Rows[0]["fechaConexion"].ToString();
+            }
+            catch { }
+
+            return DateTime.Today.ToString("yyyy-MM-dd");
+        }
+
+        #endregion
+
+        #region Registro
+
+        private void BtnRegistrarse_Click(object sender, EventArgs e)
+        {
+            FrmRegistro frmRegistro = new FrmRegistro();
+            frmRegistro.ShowDialog();
+        }
+
+        #endregion
+    }
 }

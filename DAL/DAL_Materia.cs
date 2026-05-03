@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Data;
 using Microsoft.Data.SqlClient;
 using ET;
@@ -8,38 +9,60 @@ namespace DAL
 {
     public class DAL_Materia : DAL_utilities
     {
-        // Método unificado que reemplaza a los 7 anteriores
-        public DataTable ListarMaterias(int idEstudiante, string dia = "Todos", string filtro = "")
+        #region Métodos de Listado
+
+        public DataTable ListarMaterias(string cTexto, int idEstudiante)
         {
-            // Usamos el nuevo SP único
-            // Nota: Aquí 'Listado' ya usa el parámetro 'idEstudiante' corregido
-
-            // Si necesitas pasar el parámetro @DiaSemana a través de la utilidad Listado, 
-            // podrías necesitar una sobrecarga o usar el método 'Comprobar' que acepta parámetros libres.
-
-            SqlParameter[] parametros = {
-                new SqlParameter("@cTexto", filtro),
-                new SqlParameter("@idEstudiante", idEstudiante),
-                new SqlParameter("@DiaSemana", dia)
-            };
-
-            return this.Comprobar("USP_Listado_Materias_Por_Filtro", parametros);
+            // Utilizamos el método Listado de la clase base (DAL_utilities)
+            return Listado(cTexto, "USP_ListarMaterias", idEstudiante);
         }
 
-        public string GuardarMateria(ET_Materia mt, int opcion)
+        #endregion
+
+        #region Métodos de Escritura (Guardar/Eliminar)
+
+        public string GuardarMateria(int nOpcion, ET_Materia oPropiedad)
         {
-            SqlParameter[] parametros = {
-                new SqlParameter("@nOpcion", opcion),
-                new SqlParameter("@IdMateria", mt.IdMateria),
-                new SqlParameter("@idEstudiante", mt.IdEstudiante), // Nombre corregido
-                new SqlParameter("@Nombre", mt.Nombre),
-                new SqlParameter("@HoraInicio", mt.HoraInicio),
-                new SqlParameter("@HoraFinal", mt.HoraFinal),
-                new SqlParameter("@Prioridad", mt.Prioridad),
-                new SqlParameter("@DiaSemana", mt.DiaSemana)
+            string rpta = "";
+            try
+            {
+
+                SqlParameter[] parametros =
+                {
+                    new SqlParameter("@nOpcion", SqlDbType.Int) { Value = nOpcion },
+                    new SqlParameter("@ID", SqlDbType.Int) { Value = oPropiedad.ID },
+                    new SqlParameter("@ID_Estudiante", SqlDbType.Int) { Value = oPropiedad.ID_Estudiante },
+                    new SqlParameter("@nombre", SqlDbType.VarChar, 50) { Value = oPropiedad.nombre },
+                    new SqlParameter("@horaInicio", SqlDbType.VarChar, 50) { Value = oPropiedad.horaInicio },
+                    new SqlParameter("@horaFinal", SqlDbType.VarChar, 50) { Value = oPropiedad.horaFinal },
+                    new SqlParameter("@prioridad", SqlDbType.VarChar, 50) { Value = oPropiedad.prioridad },
+                    new SqlParameter("@diaSemana", SqlDbType.VarChar, 50) { Value = oPropiedad.diaSemana },
+                    new SqlParameter("@estado", SqlDbType.Bit) { Value = oPropiedad.estado },
+                    new SqlParameter("@notaMinima", SqlDbType.Decimal) { Value = (object)oPropiedad.notaMinima ?? DBNull.Value, Precision = 5, Scale = 2 }
+                };
+
+                // Llamamos al método protegido Guardar de la clase base
+                rpta = Guardar("USP_GuardarMateria", parametros);
+            }
+            catch (Exception ex)
+            {
+                rpta = ex.Message;
+            }
+            return rpta;
+        }
+
+        public string EliminarMateria(int idMateria)
+        {
+            // Preparamos el parámetro para la eliminación
+            SqlParameter[] parametros =
+            {
+                new SqlParameter("@ID", SqlDbType.Int) { Value = idMateria }
             };
 
-            return this.Guardar("USP_Guardar_Materia", parametros);
+            // Llamamos al método protegido Eliminar de la clase base
+            return Eliminar("USP_EliminarMateria", parametros);
         }
+
+        #endregion
     }
 }

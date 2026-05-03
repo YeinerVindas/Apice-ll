@@ -17,7 +17,7 @@ namespace Utilities
 
         private Conexion()
         {
-            this._Base = "ApicePrueba";
+            this._Base = "ApiceY";
             this._Server = "(localdb)\\MSSQLLocalDB"; //esto se cambia dependiendo de la maquina en uso
             this._seguridad = true;
         }

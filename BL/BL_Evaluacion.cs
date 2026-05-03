@@ -1,90 +1,173 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
+using System.Data;
 using ET;
 using DAL;
-using System.Data;
 
 namespace BL
 {
     public class BL_Evaluacion
     {
-        #region 🔹 Validaciones Privadas
+        // Instancia de la DAL para todas las operaciones sobre la tabla Evaluacion
+        private readonly DAL_Evaluacion _dalEvaluacion = new DAL_Evaluacion();
 
-        // Verifica que los datos de la evaluación sean lógicos antes de enviarlos a la base de datos.
-        private static string ValidarObjetoEvaluacion(ET_Evaluacion eva)
+        // ============================================================
+        //  LISTAR
+        // ============================================================
+
+        // Retorna los rubros de evaluación filtrados por estudiante y materia.
+        // Ambos IDs son obligatorios porque una evaluación siempre pertenece
+        // a una materia específica de un estudiante específico.
+        public DataTable ListarEvaluaciones(string cTexto, int idEstudiante, int idMateria)
         {
+            if (idEstudiante <= 0)
+                throw new Exception("ID de estudiante no válido.");
 
-            // Valida campos obligatorios y referencias a otras tablas.
-            if (string.IsNullOrWhiteSpace(eva.NombreRubro)) return "El nombre del rubro (ej. Examen) es obligatorio.";
-            if (eva.ID_Materia <= 0) return "Debe especificar una materia válida.";
-            if (eva.ID_Estudiante <= 0) return "La evaluación debe estar asignada a un estudiante.";
+            if (idMateria <= 0)
+                throw new Exception("ID de materia no válido.");
 
-            // Valida que el valor porcentual sea realista (rango 0.01 a 100).
-            if (eva.ValorPorcentual <= 0 || eva.ValorPorcentual > 100)
+            return _dalEvaluacion.ListarEvaluaciones(cTexto ?? "", idEstudiante, idMateria);
+        }
+
+        // ============================================================
+        //  INSERTAR
+        // ============================================================
+
+        // Valida el rubro y lo envía a la DAL con opción 1 (INSERT).
+        // El USP retorna el ID generado como string, por eso se usa int.TryParse
+        // en lugar de comparar contra "OK" como en los otros módulos.
+        public string InsertarEvaluacion(ET_Evaluacion oEvaluacion)
+        {
+            ValidarEvaluacion(oEvaluacion);
+
+            string rpta = _dalEvaluacion.GuardarEvaluacion(1, oEvaluacion);
+
+            if (int.TryParse(rpta, out _))
+                return "OK";
+
+            throw new Exception(rpta);
+        }
+
+        // ============================================================
+        //  ACTUALIZAR
+        // ============================================================
+
+        // Valida y actualiza un rubro existente usando opción 2 (UPDATE).
+        // Verifica que el ID sea válido antes de cualquier otra operación.
+        public string ActualizarEvaluacion(ET_Evaluacion oEvaluacion)
+        {
+            if (oEvaluacion.ID <= 0)
+                throw new Exception("ID de evaluación no válido.");
+
+            ValidarEvaluacion(oEvaluacion);
+
+            string rpta = _dalEvaluacion.GuardarEvaluacion(2, oEvaluacion);
+            if (rpta != "OK")
+                throw new Exception(rpta);
+
+            return rpta;
+        }
+
+        // ============================================================
+        //  ELIMINAR
+        // ============================================================
+
+        // Elimina un rubro por ID. Si el USP no retorna "OK" lanza excepción
+        // con el mensaje de error que devolvió la base de datos.
+        public string EliminarEvaluacion(int idEvaluacion)
+        {
+            if (idEvaluacion <= 0)
+                throw new Exception("ID de evaluación no válido.");
+
+            string rpta = _dalEvaluacion.EliminarEvaluacion(idEvaluacion);
+            if (rpta != "OK")
+                throw new Exception(rpta);
+
+            return rpta;
+        }
+
+        // ============================================================
+        //  CALCULOS
+        // ============================================================
+
+        // Calcula la nota acumulada actual sumando el aporte de cada rubro.
+        // El aporte de cada rubro es: nota * porcentaje / 100.
+        // Solo procesa filas que ya tienen nota asignada (ignora DBNull).
+        public decimal CalcularNotaActual(DataTable dtEvaluaciones)
+        {
+            decimal total = 0;
+
+            foreach (DataRow row in dtEvaluaciones.Rows)
             {
-                return "El valor porcentual debe estar entre 1% y 100%.";
+                if (row["nota"] != DBNull.Value)
+                {
+                    decimal nota = Convert.ToDecimal(row["nota"]);
+                    decimal porcentaje = Convert.ToDecimal(row["porcentaje"]);
+                    total += (nota * porcentaje / 100);
+                }
             }
 
-            // Valida que la calificación obtenida no sea negativa ni superior a 100.
-            if (eva.CalificacionObtenida < 0 || eva.CalificacionObtenida > 100)
-            {
-                return "La calificación debe ser un valor entre 0 y 100.";
-            }
-
-            // VALIDACIÓN DE SUMA TOTAL (El 100%)
-            DAL_Evaluacion dal = new DAL_Evaluacion();
-
-            // Obtiene el total del porcentaje ya registrado para el estudiante en la materia seleccionada.
-            decimal actualEnBase = dal.ObtenerPorcentajeAcumulado(eva.ID_Estudiante, eva.ID_Materia);
-
-            // Verifica si la suma del acumulado más el nuevo rubro sobrepasa el límite académico permitido.
-            if ((actualEnBase + eva.ValorPorcentual) > 100)
-            {
-                // Calcula el margen disponible para orientar al usuario en la corrección del dato.
-                decimal restante = 100 - actualEnBase;
-
-                // Retorna un mensaje de advertencia impidiendo la persistencia de datos inconsistentes.
-                return $"No puedes exceder el 100% de la materia. Actualmente llevas {actualEnBase}% acumulado. Solo puedes asignar un {restante}% más.";
-            }
-
-            return null;
+            return Math.Round(total, 2);
         }
 
-        #endregion
-
-        #region 🔹 Métodos CRUD
-
-        // Ejecuta el guardado o edición tras validar los rangos de notas y porcentajes.
-        public static string GuardarEva(int nOpcion, ET_Evaluacion ET_Evaluacion)
+        // Suma todos los porcentajes de los rubros registrados.
+        // Se usa para verificar que el total no supere el 100%
+        // y para mostrarle al estudiante cuánto porcentaje ya tiene asignado.
+        public decimal CalcularPorcentajeUsado(DataTable dtEvaluaciones)
         {
-            string error = ValidarObjetoEvaluacion(ET_Evaluacion);
-            if (error != null) return error;
+            decimal total = 0;
 
-            DAL_Evaluacion DAL_Evaluacion = new DAL_Evaluacion();
-            return DAL_Evaluacion.GuardarEva(nOpcion, ET_Evaluacion);
+            foreach (DataRow row in dtEvaluaciones.Rows)
+                total += Convert.ToDecimal(row["porcentaje"]);
+
+            return Math.Round(total, 2);
         }
 
-        // Valida que el ID del rubro sea correcto antes de proceder con la eliminación.
-        public static string EliminarEvaluacion(int IdEvaluacion)
+        // Compara la nota actual contra la nota mínima de aprobación de la materia
+        // y retorna un mensaje de estado legible para mostrar en la GUI.
+        // Si no hay nota mínima definida, informa que no aplica la comparación.
+        public string EstadoVsNotaMinima(decimal notaActual, decimal? notaMinima)
         {
-            if (IdEvaluacion <= 0) return "ID de evaluación no válido.";
+            if (notaMinima == null || notaMinima <= 0)
+                return "Sin nota mínima definida";
 
-            DAL_Evaluacion DAL_Evaluacion = new DAL_Evaluacion();
-            return DAL_Evaluacion.EliminarEVA(IdEvaluacion);
+            if (notaActual >= notaMinima)
+                return $"Aprobado (llevas {notaActual} de {notaMinima} mínimo)";
+            else
+                return $"En riesgo (llevas {notaActual} de {notaMinima} mínimo)";
         }
 
-        #endregion
+        // ============================================================
+        //  VALIDACIONES PRIVADAS
+        // ============================================================
 
-        #region 🔹 Listados
-
-        // Obtiene el desglose de rubros filtrado por estudiante y materia.
-        public static DataTable ListarRubro(string cTexto, int idEstudiante, int idMateria)
+        // Valida todos los campos del objeto ET_Evaluacion antes de insertar o actualizar.
+        // La nota es opcional (nullable) porque un rubro puede existir sin nota aún,
+        // pero si se ingresa debe estar en el rango 0-100.
+        // El porcentaje debe ser positivo y no puede superar 100 por sí solo.
+        private void ValidarEvaluacion(ET_Evaluacion oEvaluacion)
         {
-            DAL_Evaluacion DAL_Evaluacion = new DAL_Evaluacion();
-            return DAL_Evaluacion.ListadoRubro(cTexto ?? string.Empty, idEstudiante, idMateria);
-        }
+            if (oEvaluacion == null)
+                throw new Exception("La evaluación no puede ser nula.");
 
-        #endregion
+            if (oEvaluacion.ID_Estudiante <= 0)
+                throw new Exception("El estudiante asociado no es válido.");
+
+            if (oEvaluacion.ID_Materia <= 0)
+                throw new Exception("La materia asociada no es válida.");
+
+            if (string.IsNullOrWhiteSpace(oEvaluacion.nombre))
+                throw new Exception("El nombre del rubro es obligatorio.");
+
+            if (oEvaluacion.nombre.Length > 50)
+                throw new Exception("El nombre no puede superar los 50 caracteres.");
+
+            // El porcentaje debe ser un valor real entre 1 y 100
+            if (oEvaluacion.porcentaje <= 0 || oEvaluacion.porcentaje > 100)
+                throw new Exception("El porcentaje debe estar entre 1 y 100.");
+
+            // La nota es opcional, pero si fue ingresada se valida su rango
+            if (oEvaluacion.nota.HasValue && (oEvaluacion.nota < 0 || oEvaluacion.nota > 100))
+                throw new Exception("La nota debe estar entre 0 y 100.");
+        }
     }
 }

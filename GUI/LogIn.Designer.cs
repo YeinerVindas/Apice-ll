@@ -1,4 +1,4 @@
-﻿namespace Mockup
+﻿namespace GUI
 {
     partial class LogIn
     {
@@ -62,7 +62,7 @@
             // pictureBox1
             // 
             pictureBox1.BackColor = Color.Transparent;
-            pictureBox1.Image = GUII.Properties.Resources.Captura_de_pantalla_2026_04_22_183054;
+            pictureBox1.Image = GUI.Properties.Resources.Captura_de_pantalla_2026_04_22_183054;
             pictureBox1.Location = new Point(115, 41);
             pictureBox1.Name = "pictureBox1";
             pictureBox1.Size = new Size(327, 162);
@@ -150,7 +150,7 @@
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
-            BackgroundImage = GUII.Properties.Resources.verde_claro;
+            BackgroundImage = GUI.Properties.Resources.verde_claro;
             ClientSize = new Size(1578, 846);
             Controls.Add(panel1);
             Margin = new Padding(3, 4, 3, 4);

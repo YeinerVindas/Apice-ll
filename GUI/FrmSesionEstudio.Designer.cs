@@ -2,9 +2,9 @@
 using System.Xml.Linq;
 using static System.Net.Mime.MediaTypeNames;
 
-namespace GUII
+namespace GUI
 {
-    partial class FrmSesion
+    partial class FrmSesionEstudio
     {
         /// <summary>
         /// Required designer variable.
@@ -59,13 +59,11 @@ namespace GUII
             btnIniciar_Click.FlatAppearance.MouseDownBackColor = Color.Transparent;
             btnIniciar_Click.FlatAppearance.MouseOverBackColor = Color.Transparent;
             btnIniciar_Click.FlatStyle = FlatStyle.Flat;
-            btnIniciar_Click.Location = new Point(390, 520);
-            btnIniciar_Click.Margin = new Padding(3, 4, 3, 4);
+            btnIniciar_Click.Location = new Point(341, 390);
             btnIniciar_Click.Name = "btnIniciar_Click";
-            btnIniciar_Click.Size = new Size(107, 89);
+            btnIniciar_Click.Size = new Size(94, 67);
             btnIniciar_Click.TabIndex = 1;
             btnIniciar_Click.UseVisualStyleBackColor = false;
-            btnIniciar_Click.Click += btnIniciar_Click_Click;
             // 
             // btnPausar_Click
             // 
@@ -76,10 +74,9 @@ namespace GUII
             btnPausar_Click.FlatAppearance.MouseDownBackColor = Color.Transparent;
             btnPausar_Click.FlatAppearance.MouseOverBackColor = Color.Transparent;
             btnPausar_Click.FlatStyle = FlatStyle.Flat;
-            btnPausar_Click.Location = new Point(533, 509);
-            btnPausar_Click.Margin = new Padding(3, 4, 3, 4);
+            btnPausar_Click.Location = new Point(466, 382);
             btnPausar_Click.Name = "btnPausar_Click";
-            btnPausar_Click.Size = new Size(87, 91);
+            btnPausar_Click.Size = new Size(76, 68);
             btnPausar_Click.TabIndex = 2;
             btnPausar_Click.UseVisualStyleBackColor = false;
             btnPausar_Click.Click += btnPausar_Click_Click;
@@ -95,19 +92,18 @@ namespace GUII
             label1.BackColor = Color.Transparent;
             label1.Font = new System.Drawing.Font("Segoe UI Black", 30F);
             label1.ForeColor = SystemColors.ButtonHighlight;
-            label1.Location = new Point(513, 347);
+            label1.Location = new Point(449, 260);
             label1.Name = "label1";
-            label1.Size = new Size(165, 67);
+            label1.Size = new Size(132, 54);
             label1.TabIndex = 3;
             label1.Text = "00.00";
             // 
             // pictureBox2
             // 
             pictureBox2.Image = Properties.Resources.Reloj;
-            pictureBox2.Location = new Point(341, 311);
-            pictureBox2.Margin = new Padding(3, 4, 3, 4);
+            pictureBox2.Location = new Point(298, 233);
             pictureBox2.Name = "pictureBox2";
-            pictureBox2.Size = new Size(124, 127);
+            pictureBox2.Size = new Size(108, 95);
             pictureBox2.TabIndex = 4;
             pictureBox2.TabStop = false;
             // 
@@ -115,11 +111,9 @@ namespace GUII
             // 
             pictureBox3.BackColor = Color.Transparent;
             pictureBox3.BackgroundImageLayout = ImageLayout.Zoom;
-            //pictureBox3.Image = Properties.Resources.fondo_negro;
-            pictureBox3.Location = new Point(293, 62);
-            pictureBox3.Margin = new Padding(3, 4, 3, 4);
+            pictureBox3.Location = new Point(256, 46);
             pictureBox3.Name = "pictureBox3";
-            pictureBox3.Size = new Size(541, 189);
+            pictureBox3.Size = new Size(473, 142);
             pictureBox3.SizeMode = PictureBoxSizeMode.Zoom;
             pictureBox3.TabIndex = 5;
             pictureBox3.TabStop = false;
@@ -127,12 +121,12 @@ namespace GUII
             // label2
             // 
             label2.AutoSize = true;
-            label2.BackColor = SystemColors.ActiveCaptionText;
+            label2.BackColor = Color.Transparent;
             label2.Font = new System.Drawing.Font("Segoe UI", 20F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            label2.ForeColor = SystemColors.ButtonHighlight;
-            label2.Location = new Point(478, 131);
+            label2.ForeColor = Color.Black;
+            label2.Location = new Point(418, 98);
             label2.Name = "label2";
-            label2.Size = new Size(159, 46);
+            label2.Size = new Size(130, 37);
             label2.TabIndex = 6;
             label2.Text = "Materias";
             label2.Click += label2_Click;
@@ -143,10 +137,9 @@ namespace GUII
             button3.FlatAppearance.BorderSize = 0;
             button3.FlatStyle = FlatStyle.Flat;
             button3.Font = new System.Drawing.Font("Segoe UI Emoji", 9F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            button3.Location = new Point(808, 656);
-            button3.Margin = new Padding(3, 4, 3, 4);
+            button3.Location = new Point(707, 492);
             button3.Name = "button3";
-            button3.Size = new Size(206, 71);
+            button3.Size = new Size(180, 53);
             button3.TabIndex = 9;
             button3.Text = "Salir de sesión";
             button3.UseVisualStyleBackColor = false;
@@ -154,14 +147,13 @@ namespace GUII
             // 
             // panel1
             // 
-            panel1.BackColor = SystemColors.ControlDark;
+            panel1.BackColor = Color.LightCyan;
             panel1.Controls.Add(button2);
             panel1.Controls.Add(button1);
             panel1.Controls.Add(label3);
-            panel1.Location = new Point(642, 503);
-            panel1.Margin = new Padding(3, 4, 3, 4);
+            panel1.Location = new Point(584, 389);
             panel1.Name = "panel1";
-            panel1.Size = new Size(445, 236);
+            panel1.Size = new Size(389, 177);
             panel1.TabIndex = 10;
             panel1.Visible = false;
             panel1.Paint += panel1_Paint;
@@ -172,10 +164,9 @@ namespace GUII
             button2.FlatAppearance.BorderSize = 0;
             button2.FlatStyle = FlatStyle.Flat;
             button2.Font = new System.Drawing.Font("Tahoma", 9F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            button2.Location = new Point(146, 100);
-            button2.Margin = new Padding(3, 4, 3, 4);
+            button2.Location = new Point(200, 75);
             button2.Name = "button2";
-            button2.Size = new Size(74, 43);
+            button2.Size = new Size(65, 32);
             button2.TabIndex = 2;
             button2.Text = "No";
             button2.UseVisualStyleBackColor = false;
@@ -187,10 +178,9 @@ namespace GUII
             button1.FlatAppearance.BorderSize = 0;
             button1.FlatStyle = FlatStyle.Flat;
             button1.Font = new System.Drawing.Font("Tahoma", 9F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            button1.Location = new Point(50, 100);
-            button1.Margin = new Padding(3, 4, 3, 4);
+            button1.Location = new Point(115, 75);
             button1.Name = "button1";
-            button1.Size = new Size(74, 43);
+            button1.Size = new Size(65, 32);
             button1.TabIndex = 1;
             button1.Text = "Si";
             button1.UseVisualStyleBackColor = false;
@@ -199,21 +189,22 @@ namespace GUII
             // label3
             // 
             label3.AutoSize = true;
-            label3.BackColor = SystemColors.ControlDark;
+            label3.BackColor = Color.Transparent;
             label3.Font = new System.Drawing.Font("Segoe UI Symbol", 9F, FontStyle.Bold, GraphicsUnit.Point, 0);
             label3.ForeColor = SystemColors.ActiveCaptionText;
-            label3.Location = new Point(3, 27);
+            label3.Location = new Point(18, 20);
             label3.Name = "label3";
-            label3.Size = new Size(437, 20);
+            label3.Size = new Size(353, 15);
             label3.TabIndex = 0;
             label3.Text = "¿Está seguro (a) que desea salir de la sesion de estudio?";
             // 
-            // FrmSesion
+            // FrmSesionEstudio
             // 
-            AutoScaleDimensions = new SizeF(8F, 20F);
+            AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
+            BackColor = Color.LightCyan;
             BackgroundImage = Properties.Resources.Captura_de_pantalla_2026_04_23_0826164;
-            ClientSize = new Size(1110, 752);
+            ClientSize = new Size(971, 564);
             Controls.Add(panel1);
             Controls.Add(button3);
             Controls.Add(label2);
@@ -222,8 +213,7 @@ namespace GUII
             Controls.Add(label1);
             Controls.Add(btnPausar_Click);
             Controls.Add(btnIniciar_Click);
-            Margin = new Padding(3, 4, 3, 4);
-            Name = "FrmSesion";
+            Name = "FrmSesionEstudio";
             Text = "Form2";
             ((System.ComponentModel.ISupportInitialize)pictureBox2).EndInit();
             ((System.ComponentModel.ISupportInitialize)pictureBox3).EndInit();

@@ -95,9 +95,10 @@ namespace GUII
             BtnNotas.FlatStyle = FlatStyle.Flat;
             BtnNotas.Font = new Font("MS Reference Sans Serif", 9F, FontStyle.Bold, GraphicsUnit.Point, 0);
             BtnNotas.ForeColor = SystemColors.HighlightText;
-            BtnNotas.Location = new Point(14, 267);
+            BtnNotas.Location = new Point(16, 356);
+            BtnNotas.Margin = new Padding(3, 4, 3, 4);
             BtnNotas.Name = "BtnNotas";
-            BtnNotas.Size = new Size(245, 90);
+            BtnNotas.Size = new Size(280, 120);
             BtnNotas.TabIndex = 43;
             BtnNotas.UseVisualStyleBackColor = true;
             BtnNotas.Click += BtnNotas_Click;
@@ -110,9 +111,10 @@ namespace GUII
             BtnKanban.FlatStyle = FlatStyle.Flat;
             BtnKanban.Font = new Font("MS Reference Sans Serif", 9F, FontStyle.Bold, GraphicsUnit.Point, 0);
             BtnKanban.ForeColor = SystemColors.HighlightText;
-            BtnKanban.Location = new Point(14, 163);
+            BtnKanban.Location = new Point(16, 217);
+            BtnKanban.Margin = new Padding(3, 4, 3, 4);
             BtnKanban.Name = "BtnKanban";
-            BtnKanban.Size = new Size(245, 75);
+            BtnKanban.Size = new Size(280, 100);
             BtnKanban.TabIndex = 42;
             BtnKanban.UseVisualStyleBackColor = true;
             // 
@@ -121,10 +123,9 @@ namespace GUII
             pictureBoxLogo.BackColor = Color.Transparent;
             pictureBoxLogo.BackgroundImageLayout = ImageLayout.Zoom;
             pictureBoxLogo.Image = Properties.Resources.Captura_de_pantalla_2026_04_22_183054;
-            pictureBoxLogo.Location = new Point(29, 20);
-            pictureBoxLogo.Margin = new Padding(3, 2, 3, 2);
+            pictureBoxLogo.Location = new Point(33, 27);
             pictureBoxLogo.Name = "pictureBoxLogo";
-            pictureBoxLogo.Size = new Size(195, 127);
+            pictureBoxLogo.Size = new Size(223, 169);
             pictureBoxLogo.SizeMode = PictureBoxSizeMode.Zoom;
             pictureBoxLogo.TabIndex = 41;
             pictureBoxLogo.TabStop = false;
@@ -141,25 +142,23 @@ namespace GUII
             tableLayoutPanel1.Controls.Add(label2, 1, 0);
             tableLayoutPanel1.Controls.Add(label1, 0, 0);
             tableLayoutPanel1.Controls.Add(DGVtareasPendientes, 0, 1);
-            tableLayoutPanel1.Location = new Point(330, 135);
-            tableLayoutPanel1.Margin = new Padding(3, 2, 3, 2);
+            tableLayoutPanel1.Location = new Point(377, 180);
             tableLayoutPanel1.Name = "tableLayoutPanel1";
             tableLayoutPanel1.RowCount = 2;
             tableLayoutPanel1.RowStyles.Add(new RowStyle(SizeType.Percent, 16.666666F));
             tableLayoutPanel1.RowStyles.Add(new RowStyle(SizeType.Percent, 83.3333359F));
-            tableLayoutPanel1.RowStyles.Add(new RowStyle(SizeType.Absolute, 20F));
-            tableLayoutPanel1.Size = new Size(1109, 520);
+            tableLayoutPanel1.RowStyles.Add(new RowStyle(SizeType.Absolute, 27F));
+            tableLayoutPanel1.Size = new Size(1267, 693);
             tableLayoutPanel1.TabIndex = 44;
             // 
             // DGVtareasCompletado
             // 
             DGVtareasCompletado.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             DGVtareasCompletado.Dock = DockStyle.Fill;
-            DGVtareasCompletado.Location = new Point(741, 88);
-            DGVtareasCompletado.Margin = new Padding(3, 2, 3, 2);
+            DGVtareasCompletado.Location = new Point(847, 118);
             DGVtareasCompletado.Name = "DGVtareasCompletado";
             DGVtareasCompletado.RowHeadersWidth = 51;
-            DGVtareasCompletado.Size = new Size(365, 430);
+            DGVtareasCompletado.Size = new Size(417, 572);
             DGVtareasCompletado.TabIndex = 9;
             DGVtareasCompletado.CellClick += DGVtareasCompletado_CellClick;
             // 
@@ -167,11 +166,10 @@ namespace GUII
             // 
             DGVtareasEnProceso.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             DGVtareasEnProceso.Dock = DockStyle.Fill;
-            DGVtareasEnProceso.Location = new Point(372, 88);
-            DGVtareasEnProceso.Margin = new Padding(3, 2, 3, 2);
+            DGVtareasEnProceso.Location = new Point(425, 118);
             DGVtareasEnProceso.Name = "DGVtareasEnProceso";
             DGVtareasEnProceso.RowHeadersWidth = 51;
-            DGVtareasEnProceso.Size = new Size(363, 430);
+            DGVtareasEnProceso.Size = new Size(416, 572);
             DGVtareasEnProceso.TabIndex = 8;
             DGVtareasEnProceso.CellClick += DGVtareasEnProceso_CellClick;
             // 
@@ -181,9 +179,9 @@ namespace GUII
             label3.BackColor = Color.MediumSeaGreen;
             label3.Dock = DockStyle.Fill;
             label3.Font = new Font("MS Reference Sans Serif", 13.8F, FontStyle.Bold);
-            label3.Location = new Point(741, 0);
+            label3.Location = new Point(847, 0);
             label3.Name = "label3";
-            label3.Size = new Size(365, 86);
+            label3.Size = new Size(417, 115);
             label3.TabIndex = 6;
             label3.Text = "Completado";
             label3.TextAlign = ContentAlignment.MiddleCenter;
@@ -194,9 +192,9 @@ namespace GUII
             label2.BackColor = Color.Gold;
             label2.Dock = DockStyle.Fill;
             label2.Font = new Font("MS Reference Sans Serif", 13.8F, FontStyle.Bold);
-            label2.Location = new Point(372, 0);
+            label2.Location = new Point(425, 0);
             label2.Name = "label2";
-            label2.Size = new Size(363, 86);
+            label2.Size = new Size(416, 115);
             label2.TabIndex = 5;
             label2.Text = "En Proceso";
             label2.TextAlign = ContentAlignment.MiddleCenter;
@@ -209,7 +207,7 @@ namespace GUII
             label1.Font = new Font("MS Reference Sans Serif", 13.8F, FontStyle.Bold);
             label1.Location = new Point(3, 0);
             label1.Name = "label1";
-            label1.Size = new Size(363, 86);
+            label1.Size = new Size(416, 115);
             label1.TabIndex = 3;
             label1.Text = "Pendiente";
             label1.TextAlign = ContentAlignment.MiddleCenter;
@@ -218,11 +216,10 @@ namespace GUII
             // 
             DGVtareasPendientes.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             DGVtareasPendientes.Dock = DockStyle.Fill;
-            DGVtareasPendientes.Location = new Point(3, 88);
-            DGVtareasPendientes.Margin = new Padding(3, 2, 3, 2);
+            DGVtareasPendientes.Location = new Point(3, 118);
             DGVtareasPendientes.Name = "DGVtareasPendientes";
             DGVtareasPendientes.RowHeadersWidth = 51;
-            DGVtareasPendientes.Size = new Size(363, 430);
+            DGVtareasPendientes.Size = new Size(416, 572);
             DGVtareasPendientes.TabIndex = 7;
             DGVtareasPendientes.CellClick += DGVtareasPendientes_CellClick;
             // 
@@ -231,9 +228,9 @@ namespace GUII
             label4.AutoSize = true;
             label4.BackColor = Color.Transparent;
             label4.Font = new Font("MS Reference Sans Serif", 13.8F, FontStyle.Bold);
-            label4.Location = new Point(338, 33);
+            label4.Location = new Point(386, 44);
             label4.Name = "label4";
-            label4.Size = new Size(88, 24);
+            label4.Size = new Size(104, 28);
             label4.TabIndex = 59;
             label4.Text = "Horario";
             // 
@@ -246,9 +243,10 @@ namespace GUII
             btnHorario.FlatStyle = FlatStyle.Flat;
             btnHorario.Font = new Font("MS Reference Sans Serif", 9F, FontStyle.Bold, GraphicsUnit.Point, 0);
             btnHorario.ForeColor = SystemColors.HighlightText;
-            btnHorario.Location = new Point(283, 20);
+            btnHorario.Location = new Point(323, 27);
+            btnHorario.Margin = new Padding(3, 4, 3, 4);
             btnHorario.Name = "btnHorario";
-            btnHorario.Size = new Size(50, 42);
+            btnHorario.Size = new Size(57, 56);
             btnHorario.TabIndex = 58;
             btnHorario.UseVisualStyleBackColor = false;
             btnHorario.Click += btnHorario_Click;
@@ -262,9 +260,10 @@ namespace GUII
             BtnSalir.FlatStyle = FlatStyle.Flat;
             BtnSalir.Font = new Font("MS Reference Sans Serif", 9F, FontStyle.Bold, GraphicsUnit.Point, 0);
             BtnSalir.ForeColor = SystemColors.HighlightText;
-            BtnSalir.Location = new Point(1249, 20);
+            BtnSalir.Location = new Point(1427, 27);
+            BtnSalir.Margin = new Padding(3, 4, 3, 4);
             BtnSalir.Name = "BtnSalir";
-            BtnSalir.Size = new Size(50, 42);
+            BtnSalir.Size = new Size(57, 56);
             BtnSalir.TabIndex = 60;
             BtnSalir.UseVisualStyleBackColor = false;
             BtnSalir.Click += BtnSalir_Click;
@@ -274,9 +273,10 @@ namespace GUII
             btnEliminarTarea.BackgroundImage = Properties.Resources.Captura_de_pantalla_2026_04_22_084415;
             btnEliminarTarea.Font = new Font("MS Reference Sans Serif", 9F, FontStyle.Bold, GraphicsUnit.Point, 0);
             btnEliminarTarea.ForeColor = SystemColors.HighlightText;
-            btnEliminarTarea.Location = new Point(551, 634);
+            btnEliminarTarea.Location = new Point(630, 845);
+            btnEliminarTarea.Margin = new Padding(3, 4, 3, 4);
             btnEliminarTarea.Name = "btnEliminarTarea";
-            btnEliminarTarea.Size = new Size(128, 40);
+            btnEliminarTarea.Size = new Size(146, 53);
             btnEliminarTarea.TabIndex = 63;
             btnEliminarTarea.Text = "Eliminar Tarea";
             btnEliminarTarea.UseVisualStyleBackColor = true;
@@ -287,9 +287,10 @@ namespace GUII
             btnEditarTarea.BackgroundImage = Properties.Resources.Captura_de_pantalla_2026_04_22_084415;
             btnEditarTarea.Font = new Font("MS Reference Sans Serif", 9F, FontStyle.Bold, GraphicsUnit.Point, 0);
             btnEditarTarea.ForeColor = SystemColors.HighlightText;
-            btnEditarTarea.Location = new Point(418, 634);
+            btnEditarTarea.Location = new Point(478, 845);
+            btnEditarTarea.Margin = new Padding(3, 4, 3, 4);
             btnEditarTarea.Name = "btnEditarTarea";
-            btnEditarTarea.Size = new Size(128, 40);
+            btnEditarTarea.Size = new Size(146, 53);
             btnEditarTarea.TabIndex = 62;
             btnEditarTarea.Text = "Editar Tarea";
             btnEditarTarea.UseVisualStyleBackColor = true;
@@ -300,9 +301,10 @@ namespace GUII
             agregarTareaBTN.BackgroundImage = Properties.Resources.Captura_de_pantalla_2026_04_22_084415;
             agregarTareaBTN.Font = new Font("MS Reference Sans Serif", 9F, FontStyle.Bold, GraphicsUnit.Point, 0);
             agregarTareaBTN.ForeColor = SystemColors.HighlightText;
-            agregarTareaBTN.Location = new Point(285, 634);
+            agregarTareaBTN.Location = new Point(326, 845);
+            agregarTareaBTN.Margin = new Padding(3, 4, 3, 4);
             agregarTareaBTN.Name = "agregarTareaBTN";
-            agregarTareaBTN.Size = new Size(128, 40);
+            agregarTareaBTN.Size = new Size(146, 53);
             agregarTareaBTN.TabIndex = 61;
             agregarTareaBTN.Text = "Agregar Tarea";
             agregarTareaBTN.UseVisualStyleBackColor = true;
@@ -320,9 +322,11 @@ namespace GUII
             pnlAgregarTarea.Controls.Add(btnGuardarTarea);
             pnlAgregarTarea.Controls.Add(btnCancelarCuenta);
             pnlAgregarTarea.ForeColor = SystemColors.Control;
-            pnlAgregarTarea.Location = new Point(270, 364);
+            pnlAgregarTarea.Location = new Point(309, 485);
+            pnlAgregarTarea.Margin = new Padding(3, 4, 3, 4);
             pnlAgregarTarea.Name = "pnlAgregarTarea";
-            pnlAgregarTarea.Size = new Size(238, 250);
+            pnlAgregarTarea.Padding = new Padding(3, 4, 3, 4);
+            pnlAgregarTarea.Size = new Size(272, 333);
             pnlAgregarTarea.TabIndex = 64;
             pnlAgregarTarea.TabStop = false;
             pnlAgregarTarea.Text = "Tarea";
@@ -330,19 +334,17 @@ namespace GUII
             // 
             // DTPtarea
             // 
-            DTPtarea.Location = new Point(5, 160);
-            DTPtarea.Margin = new Padding(3, 2, 3, 2);
+            DTPtarea.Location = new Point(6, 213);
             DTPtarea.Name = "DTPtarea";
-            DTPtarea.Size = new Size(219, 23);
+            DTPtarea.Size = new Size(250, 27);
             DTPtarea.TabIndex = 24;
             DTPtarea.Value = new DateTime(2026, 4, 26, 18, 12, 13, 0);
             // 
             // txtDescripcionTarea
             // 
-            txtDescripcionTarea.Location = new Point(13, 35);
-            txtDescripcionTarea.Margin = new Padding(3, 2, 3, 2);
+            txtDescripcionTarea.Location = new Point(15, 47);
             txtDescripcionTarea.Name = "txtDescripcionTarea";
-            txtDescripcionTarea.Size = new Size(211, 99);
+            txtDescripcionTarea.Size = new Size(241, 131);
             txtDescripcionTarea.TabIndex = 23;
             txtDescripcionTarea.Text = "";
             // 
@@ -350,18 +352,18 @@ namespace GUII
             // 
             label14.AutoSize = true;
             label14.BackColor = SystemColors.ActiveCaptionText;
-            label14.Location = new Point(66, 232);
+            label14.Location = new Point(75, 309);
             label14.Name = "label14";
-            label14.Size = new Size(0, 15);
+            label14.Size = new Size(0, 20);
             label14.TabIndex = 22;
             // 
             // label13
             // 
             label13.AutoSize = true;
             label13.BackColor = SystemColors.ActiveCaptionText;
-            label13.Location = new Point(60, 143);
+            label13.Location = new Point(69, 191);
             label13.Name = "label13";
-            label13.Size = new Size(97, 15);
+            label13.Size = new Size(123, 20);
             label13.TabIndex = 20;
             label13.Text = "Fecha de entrega";
             // 
@@ -369,9 +371,9 @@ namespace GUII
             // 
             label17.AutoSize = true;
             label17.BackColor = SystemColors.ActiveCaptionText;
-            label17.Location = new Point(80, 18);
+            label17.Location = new Point(91, 24);
             label17.Name = "label17";
-            label17.Size = new Size(69, 15);
+            label17.Size = new Size(87, 20);
             label17.TabIndex = 18;
             label17.Text = "Descripcion";
             // 
@@ -380,9 +382,10 @@ namespace GUII
             btnGuardarTarea.BackgroundImage = Properties.Resources.verde_claro;
             btnGuardarTarea.Font = new Font("MS Reference Sans Serif", 9F, FontStyle.Bold, GraphicsUnit.Point, 0);
             btnGuardarTarea.ForeColor = SystemColors.HighlightText;
-            btnGuardarTarea.Location = new Point(126, 198);
+            btnGuardarTarea.Location = new Point(144, 264);
+            btnGuardarTarea.Margin = new Padding(3, 4, 3, 4);
             btnGuardarTarea.Name = "btnGuardarTarea";
-            btnGuardarTarea.Size = new Size(90, 35);
+            btnGuardarTarea.Size = new Size(103, 47);
             btnGuardarTarea.TabIndex = 16;
             btnGuardarTarea.Text = "Guardar";
             btnGuardarTarea.UseVisualStyleBackColor = true;
@@ -393,9 +396,10 @@ namespace GUII
             btnCancelarCuenta.BackgroundImage = Properties.Resources.verde_claro;
             btnCancelarCuenta.Font = new Font("MS Reference Sans Serif", 9F, FontStyle.Bold, GraphicsUnit.Point, 0);
             btnCancelarCuenta.ForeColor = SystemColors.HighlightText;
-            btnCancelarCuenta.Location = new Point(13, 198);
+            btnCancelarCuenta.Location = new Point(15, 264);
+            btnCancelarCuenta.Margin = new Padding(3, 4, 3, 4);
             btnCancelarCuenta.Name = "btnCancelarCuenta";
-            btnCancelarCuenta.Size = new Size(90, 35);
+            btnCancelarCuenta.Size = new Size(103, 47);
             btnCancelarCuenta.TabIndex = 15;
             btnCancelarCuenta.Text = "Cancelar";
             btnCancelarCuenta.UseVisualStyleBackColor = true;
@@ -409,11 +413,11 @@ namespace GUII
             MoverTareaPendiente.Controls.Add(Btn_mover_a_progreso1);
             MoverTareaPendiente.Controls.Add(label5);
             MoverTareaPendiente.ForeColor = SystemColors.Control;
-            MoverTareaPendiente.Location = new Point(342, 693);
-            MoverTareaPendiente.Location = new Point(425, 920);
-            MoverTareaPendiente.Margin = new Padding(3, 4, 3, 4);
+            MoverTareaPendiente.Location = new Point(486, 1227);
+            MoverTareaPendiente.Margin = new Padding(3, 5, 3, 5);
             MoverTareaPendiente.Name = "MoverTareaPendiente";
-            MoverTareaPendiente.Size = new Size(115, 71);
+            MoverTareaPendiente.Padding = new Padding(3, 4, 3, 4);
+            MoverTareaPendiente.Size = new Size(131, 95);
             MoverTareaPendiente.TabIndex = 65;
             MoverTareaPendiente.TabStop = false;
             MoverTareaPendiente.Text = "Mover tarea";
@@ -424,9 +428,10 @@ namespace GUII
             SalirGestionRubrosbtn.BackgroundImage = Properties.Resources.Captura_de_pantalla_2026_04_22_084415;
             SalirGestionRubrosbtn.Font = new Font("MS Reference Sans Serif", 9F, FontStyle.Bold, GraphicsUnit.Point, 0);
             SalirGestionRubrosbtn.ForeColor = SystemColors.HighlightText;
-            SalirGestionRubrosbtn.Location = new Point(72, 25);
+            SalirGestionRubrosbtn.Location = new Point(82, 33);
+            SalirGestionRubrosbtn.Margin = new Padding(3, 4, 3, 4);
             SalirGestionRubrosbtn.Name = "SalirGestionRubrosbtn";
-            SalirGestionRubrosbtn.Size = new Size(26, 23);
+            SalirGestionRubrosbtn.Size = new Size(30, 31);
             SalirGestionRubrosbtn.TabIndex = 67;
             SalirGestionRubrosbtn.Text = "X";
             SalirGestionRubrosbtn.UseVisualStyleBackColor = true;
@@ -437,9 +442,10 @@ namespace GUII
             Btn_mover_a_progreso1.BackgroundImage = Properties.Resources.Captura_de_pantalla_2026_04_22_084415;
             Btn_mover_a_progreso1.Font = new Font("MS Reference Sans Serif", 9F, FontStyle.Bold, GraphicsUnit.Point, 0);
             Btn_mover_a_progreso1.ForeColor = SystemColors.HighlightText;
-            Btn_mover_a_progreso1.Location = new Point(17, 21);
+            Btn_mover_a_progreso1.Location = new Point(19, 28);
+            Btn_mover_a_progreso1.Margin = new Padding(3, 4, 3, 4);
             Btn_mover_a_progreso1.Name = "Btn_mover_a_progreso1";
-            Btn_mover_a_progreso1.Size = new Size(49, 40);
+            Btn_mover_a_progreso1.Size = new Size(56, 53);
             Btn_mover_a_progreso1.TabIndex = 65;
             Btn_mover_a_progreso1.Text = "--->";
             Btn_mover_a_progreso1.UseVisualStyleBackColor = true;
@@ -449,9 +455,9 @@ namespace GUII
             // 
             label5.AutoSize = true;
             label5.BackColor = SystemColors.ActiveCaptionText;
-            label5.Location = new Point(66, 233);
+            label5.Location = new Point(75, 311);
             label5.Name = "label5";
-            label5.Size = new Size(0, 15);
+            label5.Size = new Size(0, 20);
             label5.TabIndex = 22;
             // 
             // MoverTareaEnProceso
@@ -463,14 +469,11 @@ namespace GUII
             MoverTareaEnProceso.Controls.Add(Btn_mover_a_completado);
             MoverTareaEnProceso.Controls.Add(label6);
             MoverTareaEnProceso.ForeColor = SystemColors.Control;
-            MoverTareaEnProceso.Location = new Point(755, 683);
+            MoverTareaEnProceso.Location = new Point(992, 1169);
+            MoverTareaEnProceso.Margin = new Padding(3, 5, 3, 5);
             MoverTareaEnProceso.Name = "MoverTareaEnProceso";
-            MoverTareaEnProceso.Size = new Size(191, 71);
-            MoverTareaEnProceso.Location = new Point(868, 877);
-            MoverTareaEnProceso.Margin = new Padding(3, 4, 3, 4);
-            MoverTareaEnProceso.Name = "MoverTareaEnProceso";
-            MoverTareaEnProceso.Padding = new Padding(3, 4, 3, 4);
-            MoverTareaEnProceso.Size = new Size(209, 95);
+            MoverTareaEnProceso.Padding = new Padding(3, 5, 3, 5);
+            MoverTareaEnProceso.Size = new Size(239, 127);
             MoverTareaEnProceso.TabIndex = 66;
             MoverTareaEnProceso.TabStop = false;
             MoverTareaEnProceso.Text = "Mover tarea";
@@ -481,9 +484,10 @@ namespace GUII
             button1.BackgroundImage = Properties.Resources.Captura_de_pantalla_2026_04_22_084415;
             button1.Font = new Font("MS Reference Sans Serif", 9F, FontStyle.Bold, GraphicsUnit.Point, 0);
             button1.ForeColor = SystemColors.HighlightText;
-            button1.Location = new Point(149, 28);
+            button1.Location = new Point(170, 37);
+            button1.Margin = new Padding(3, 4, 3, 4);
             button1.Name = "button1";
-            button1.Size = new Size(26, 23);
+            button1.Size = new Size(30, 31);
             button1.TabIndex = 67;
             button1.Text = "X";
             button1.UseVisualStyleBackColor = true;
@@ -494,9 +498,10 @@ namespace GUII
             Btn_mover_a_pendiente.BackgroundImage = Properties.Resources.Captura_de_pantalla_2026_04_22_084415;
             Btn_mover_a_pendiente.Font = new Font("MS Reference Sans Serif", 9F, FontStyle.Bold, GraphicsUnit.Point, 0);
             Btn_mover_a_pendiente.ForeColor = SystemColors.HighlightText;
-            Btn_mover_a_pendiente.Location = new Point(17, 21);
+            Btn_mover_a_pendiente.Location = new Point(19, 28);
+            Btn_mover_a_pendiente.Margin = new Padding(3, 4, 3, 4);
             Btn_mover_a_pendiente.Name = "Btn_mover_a_pendiente";
-            Btn_mover_a_pendiente.Size = new Size(49, 40);
+            Btn_mover_a_pendiente.Size = new Size(56, 53);
             Btn_mover_a_pendiente.TabIndex = 66;
             Btn_mover_a_pendiente.Text = "<---";
             Btn_mover_a_pendiente.UseVisualStyleBackColor = true;
@@ -507,9 +512,10 @@ namespace GUII
             Btn_mover_a_completado.BackgroundImage = Properties.Resources.Captura_de_pantalla_2026_04_22_084415;
             Btn_mover_a_completado.Font = new Font("MS Reference Sans Serif", 9F, FontStyle.Bold, GraphicsUnit.Point, 0);
             Btn_mover_a_completado.ForeColor = SystemColors.HighlightText;
-            Btn_mover_a_completado.Location = new Point(85, 21);
+            Btn_mover_a_completado.Location = new Point(97, 28);
+            Btn_mover_a_completado.Margin = new Padding(3, 4, 3, 4);
             Btn_mover_a_completado.Name = "Btn_mover_a_completado";
-            Btn_mover_a_completado.Size = new Size(49, 40);
+            Btn_mover_a_completado.Size = new Size(56, 53);
             Btn_mover_a_completado.TabIndex = 65;
             Btn_mover_a_completado.Text = "--->";
             Btn_mover_a_completado.UseVisualStyleBackColor = true;
@@ -519,9 +525,9 @@ namespace GUII
             // 
             label6.AutoSize = true;
             label6.BackColor = SystemColors.ActiveCaptionText;
-            label6.Location = new Point(66, 234);
+            label6.Location = new Point(75, 312);
             label6.Name = "label6";
-            label6.Size = new Size(0, 15);
+            label6.Size = new Size(0, 20);
             label6.TabIndex = 22;
             // 
             // MoverTareaCompletado
@@ -532,9 +538,11 @@ namespace GUII
             MoverTareaCompletado.Controls.Add(Btn_mover_a_proceso2);
             MoverTareaCompletado.Controls.Add(label7);
             MoverTareaCompletado.ForeColor = SystemColors.Control;
-            MoverTareaCompletado.Location = new Point(1097, 673);
+            MoverTareaCompletado.Location = new Point(1387, 877);
+            MoverTareaCompletado.Margin = new Padding(3, 4, 3, 4);
             MoverTareaCompletado.Name = "MoverTareaCompletado";
-            MoverTareaCompletado.Size = new Size(114, 71);
+            MoverTareaCompletado.Padding = new Padding(3, 4, 3, 4);
+            MoverTareaCompletado.Size = new Size(130, 95);
             MoverTareaCompletado.TabIndex = 67;
             MoverTareaCompletado.TabStop = false;
             MoverTareaCompletado.Text = "Mover tarea";
@@ -545,9 +553,10 @@ namespace GUII
             button2.BackgroundImage = Properties.Resources.Captura_de_pantalla_2026_04_22_084415;
             button2.Font = new Font("MS Reference Sans Serif", 9F, FontStyle.Bold, GraphicsUnit.Point, 0);
             button2.ForeColor = SystemColors.HighlightText;
-            button2.Location = new Point(72, 30);
+            button2.Location = new Point(82, 40);
+            button2.Margin = new Padding(3, 4, 3, 4);
             button2.Name = "button2";
-            button2.Size = new Size(26, 23);
+            button2.Size = new Size(30, 31);
             button2.TabIndex = 66;
             button2.Text = "X";
             button2.UseVisualStyleBackColor = true;
@@ -558,9 +567,10 @@ namespace GUII
             Btn_mover_a_proceso2.BackgroundImage = Properties.Resources.Captura_de_pantalla_2026_04_22_084415;
             Btn_mover_a_proceso2.Font = new Font("MS Reference Sans Serif", 9F, FontStyle.Bold, GraphicsUnit.Point, 0);
             Btn_mover_a_proceso2.ForeColor = SystemColors.HighlightText;
-            Btn_mover_a_proceso2.Location = new Point(17, 21);
+            Btn_mover_a_proceso2.Location = new Point(19, 28);
+            Btn_mover_a_proceso2.Margin = new Padding(3, 4, 3, 4);
             Btn_mover_a_proceso2.Name = "Btn_mover_a_proceso2";
-            Btn_mover_a_proceso2.Size = new Size(49, 40);
+            Btn_mover_a_proceso2.Size = new Size(56, 53);
             Btn_mover_a_proceso2.TabIndex = 65;
             Btn_mover_a_proceso2.Text = "<---";
             Btn_mover_a_proceso2.UseVisualStyleBackColor = true;
@@ -570,32 +580,35 @@ namespace GUII
             // 
             label7.AutoSize = true;
             label7.BackColor = SystemColors.ActiveCaptionText;
-            label7.Location = new Point(66, 234);
+            label7.Location = new Point(75, 312);
             label7.Name = "label7";
-            label7.Size = new Size(0, 15);
+            label7.Size = new Size(0, 20);
             label7.TabIndex = 22;
             // 
             // panel1
             // 
-            panel1.Location = new Point(500, 135);
+            panel1.Location = new Point(571, 180);
+            panel1.Margin = new Padding(3, 4, 3, 4);
             panel1.Name = "panel1";
-            panel1.Size = new Size(23, 23);
+            panel1.Size = new Size(26, 31);
             panel1.TabIndex = 68;
             panel1.Visible = false;
             // 
             // panel2
             // 
-            panel2.Location = new Point(876, 135);
+            panel2.Location = new Point(1001, 180);
+            panel2.Margin = new Padding(3, 4, 3, 4);
             panel2.Name = "panel2";
-            panel2.Size = new Size(23, 23);
+            panel2.Size = new Size(26, 31);
             panel2.TabIndex = 69;
             panel2.Visible = false;
             // 
             // panel3
             // 
-            panel3.Location = new Point(1232, 135);
+            panel3.Location = new Point(1408, 180);
+            panel3.Margin = new Padding(3, 4, 3, 4);
             panel3.Name = "panel3";
-            panel3.Size = new Size(23, 23);
+            panel3.Size = new Size(26, 31);
             panel3.TabIndex = 69;
             panel3.Visible = false;
             // 
@@ -607,9 +620,11 @@ namespace GUII
             groupBox2.Controls.Add(label8);
             groupBox2.Controls.Add(button3);
             groupBox2.ForeColor = SystemColors.Control;
-            groupBox2.Location = new Point(582, 251);
+            groupBox2.Location = new Point(827, 896);
+            groupBox2.Margin = new Padding(3, 4, 3, 4);
             groupBox2.Name = "groupBox2";
-            groupBox2.Size = new Size(238, 250);
+            groupBox2.Padding = new Padding(3, 4, 3, 4);
+            groupBox2.Size = new Size(272, 333);
             groupBox2.TabIndex = 70;
             groupBox2.TabStop = false;
             groupBox2.Text = "Recordatorio";
@@ -620,9 +635,9 @@ namespace GUII
             label9.AutoSize = true;
             label9.BackColor = Color.Transparent;
             label9.Font = new Font("MS Reference Sans Serif", 13.8F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            label9.Location = new Point(75, 113);
+            label9.Location = new Point(86, 151);
             label9.Name = "label9";
-            label9.Size = new Size(88, 24);
+            label9.Size = new Size(104, 28);
             label9.TabIndex = 61;
             label9.Text = "Horario";
             // 
@@ -630,9 +645,9 @@ namespace GUII
             // 
             label8.AutoSize = true;
             label8.BackColor = SystemColors.ActiveCaptionText;
-            label8.Location = new Point(66, 232);
+            label8.Location = new Point(75, 309);
             label8.Name = "label8";
-            label8.Size = new Size(0, 15);
+            label8.Size = new Size(0, 20);
             label8.TabIndex = 22;
             // 
             // button3
@@ -640,19 +655,20 @@ namespace GUII
             button3.BackgroundImage = Properties.Resources.verde_claro;
             button3.Font = new Font("MS Reference Sans Serif", 9F, FontStyle.Bold, GraphicsUnit.Point, 0);
             button3.ForeColor = SystemColors.HighlightText;
-            button3.Location = new Point(75, 172);
+            button3.Location = new Point(86, 229);
+            button3.Margin = new Padding(3, 4, 3, 4);
             button3.Name = "button3";
-            button3.Size = new Size(90, 35);
+            button3.Size = new Size(103, 47);
             button3.TabIndex = 16;
             button3.Text = "Aceptar";
             button3.UseVisualStyleBackColor = true;
             // 
             // FrmKanban
             // 
-            AutoScaleDimensions = new SizeF(7F, 15F);
+            AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
             BackgroundImage = Properties.Resources.Presentación_diapositivas_cosmética_natural_negocio_elegante_minimalista_beige;
-            ClientSize = new Size(1402, 753);
+            ClientSize = new Size(1602, 1004);
             Controls.Add(groupBox2);
             Controls.Add(panel3);
             Controls.Add(panel2);
@@ -671,7 +687,6 @@ namespace GUII
             Controls.Add(BtnNotas);
             Controls.Add(BtnKanban);
             Controls.Add(pictureBoxLogo);
-            Margin = new Padding(3, 2, 3, 2);
             Name = "FrmKanban";
             Text = "FrmKanban";
             Load += FrmKanban_Load;

@@ -1,10 +1,8 @@
-﻿using System.Drawing.Printing;
-using System.Windows.Forms;
-using System.Xml.Linq;
+﻿using System.Windows.Forms;
 
-namespace WinFormsApp1
+namespace GUI
 {
-    partial class Form1
+    partial class FrmRegistro
     {
         /// <summary>
         ///  Required designer variable.
@@ -52,9 +50,9 @@ namespace WinFormsApp1
             Agregar_Nombre.AutoSize = true;
             Agregar_Nombre.BackColor = Color.Transparent;
             Agregar_Nombre.Font = new Font("Segoe UI", 15F);
-            Agregar_Nombre.Location = new Point(228, 146);
+            Agregar_Nombre.Location = new Point(200, 110);
             Agregar_Nombre.Name = "Agregar_Nombre";
-            Agregar_Nombre.Size = new Size(92, 35);
+            Agregar_Nombre.Size = new Size(73, 28);
             Agregar_Nombre.TabIndex = 0;
             Agregar_Nombre.Text = "Cuenta";
             // 
@@ -62,43 +60,40 @@ namespace WinFormsApp1
             // 
             label1.AutoSize = true;
             label1.BackColor = Color.Transparent;
-            label1.Location = new Point(29, 219);
+            label1.Location = new Point(25, 164);
             label1.Name = "label1";
-            label1.Size = new Size(64, 20);
+            label1.Size = new Size(51, 15);
             label1.TabIndex = 1;
             label1.Text = "Nombre";
             // 
             // txtNombre
             // 
-            txtNombre.Location = new Point(29, 243);
-            txtNombre.Margin = new Padding(3, 4, 3, 4);
+            txtNombre.Location = new Point(25, 182);
             txtNombre.Name = "txtNombre";
-            txtNombre.Size = new Size(492, 27);
+            txtNombre.Size = new Size(431, 23);
             txtNombre.TabIndex = 3;
             // 
             // txtCorreo
             // 
-            txtCorreo.Location = new Point(29, 324);
-            txtCorreo.Margin = new Padding(3, 4, 3, 4);
+            txtCorreo.Location = new Point(25, 243);
             txtCorreo.Name = "txtCorreo";
-            txtCorreo.Size = new Size(498, 27);
+            txtCorreo.Size = new Size(436, 23);
             txtCorreo.TabIndex = 5;
             // 
             // txtContrasena
             // 
-            txtContrasena.Location = new Point(29, 407);
-            txtContrasena.Margin = new Padding(3, 4, 3, 4);
+            txtContrasena.Location = new Point(25, 305);
             txtContrasena.Name = "txtContrasena";
-            txtContrasena.Size = new Size(498, 27);
+            txtContrasena.Size = new Size(436, 23);
             txtContrasena.TabIndex = 6;
             // 
             // label2
             // 
             label2.AutoSize = true;
             label2.BackColor = Color.Transparent;
-            label2.Location = new Point(29, 383);
+            label2.Location = new Point(25, 287);
             label2.Name = "label2";
-            label2.Size = new Size(151, 20);
+            label2.Size = new Size(120, 15);
             label2.TabIndex = 7;
             label2.Text = "Ingrese la Contraseña";
             // 
@@ -106,18 +101,17 @@ namespace WinFormsApp1
             // 
             label3.AutoSize = true;
             label3.BackColor = Color.Transparent;
-            label3.Location = new Point(29, 300);
+            label3.Location = new Point(25, 225);
             label3.Name = "label3";
-            label3.Size = new Size(132, 20);
+            label3.Size = new Size(105, 15);
             label3.TabIndex = 8;
             label3.Text = "Correo Electrónico";
             // 
             // BtnCrear
             // 
-            BtnCrear.Location = new Point(284, 583);
-            BtnCrear.Margin = new Padding(3, 4, 3, 4);
+            BtnCrear.Location = new Point(248, 437);
             BtnCrear.Name = "BtnCrear";
-            BtnCrear.Size = new Size(103, 31);
+            BtnCrear.Size = new Size(90, 23);
             BtnCrear.TabIndex = 12;
             BtnCrear.Text = "Crear";
             BtnCrear.UseVisualStyleBackColor = true;
@@ -125,21 +119,19 @@ namespace WinFormsApp1
             // 
             // pictureBox2
             // 
-            pictureBox2.Image = GUII.Properties.Resources.user;
-            pictureBox2.Location = new Point(211, 22);
-            pictureBox2.Margin = new Padding(3, 4, 3, 4);
+            pictureBox2.Image = Properties.Resources.user;
+            pictureBox2.Location = new Point(185, 16);
             pictureBox2.Name = "pictureBox2";
-            pictureBox2.Size = new Size(125, 120);
+            pictureBox2.Size = new Size(109, 90);
             pictureBox2.SizeMode = PictureBoxSizeMode.StretchImage;
             pictureBox2.TabIndex = 13;
             pictureBox2.TabStop = false;
             // 
             // btnCancelar
             // 
-            btnCancelar.Location = new Point(154, 583);
-            btnCancelar.Margin = new Padding(3, 4, 3, 4);
+            btnCancelar.Location = new Point(135, 437);
             btnCancelar.Name = "btnCancelar";
-            btnCancelar.Size = new Size(103, 31);
+            btnCancelar.Size = new Size(90, 23);
             btnCancelar.TabIndex = 14;
             btnCancelar.Text = "Cancelar";
             btnCancelar.UseVisualStyleBackColor = true;
@@ -147,7 +139,7 @@ namespace WinFormsApp1
             // 
             // panel1
             // 
-            panel1.BackColor = SystemColors.Menu;
+            panel1.BackColor = Color.LightCyan;
             panel1.Controls.Add(btnCancelar);
             panel1.Controls.Add(pictureBox2);
             panel1.Controls.Add(BtnCrear);
@@ -158,23 +150,21 @@ namespace WinFormsApp1
             panel1.Controls.Add(txtNombre);
             panel1.Controls.Add(label1);
             panel1.Controls.Add(Agregar_Nombre);
-            panel1.Location = new Point(604, 170);
-            panel1.Margin = new Padding(3, 4, 3, 4);
+            panel1.Location = new Point(528, 128);
             panel1.Name = "panel1";
-            panel1.Size = new Size(549, 697);
+            panel1.Size = new Size(480, 523);
             panel1.TabIndex = 1;
             // 
-            // Form1
+            // FrmRegistro
             // 
-            AutoScaleDimensions = new SizeF(8F, 20F);
+            AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
-            BackgroundImage = GUII.Properties.Resources.verde_oscuro;
-            ClientSize = new Size(1213, 797);
+            BackgroundImage = Properties.Resources.verde_oscuro;
+            ClientSize = new Size(1061, 598);
             Controls.Add(panel1);
-            Margin = new Padding(3, 4, 3, 4);
-            Name = "Form1";
+            Name = "FrmRegistro";
             Text = "Form1";
-            Load += Form1_Load;
+            Load += FrmRegistro_Load;
             ((System.ComponentModel.ISupportInitialize)pictureBox2).EndInit();
             panel1.ResumeLayout(false);
             panel1.PerformLayout();

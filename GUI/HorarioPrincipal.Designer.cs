@@ -148,69 +148,70 @@ namespace GUI
             // 
             // DGVmateriasDomingo
             // 
+            DGVmateriasDomingo.BackgroundColor = Color.LightCyan;
             DGVmateriasDomingo.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             DGVmateriasDomingo.Location = new Point(893, 61);
             DGVmateriasDomingo.Name = "DGVmateriasDomingo";
             DGVmateriasDomingo.RowHeadersWidth = 51;
             DGVmateriasDomingo.Size = new Size(136, 496);
             DGVmateriasDomingo.TabIndex = 13;
-            DGVmateriasDomingo.CellClick += DGVmateriasDomingo_CellClick;
             // 
             // DGVmateriasSabado
             // 
+            DGVmateriasSabado.BackgroundColor = Color.LightCyan;
             DGVmateriasSabado.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             DGVmateriasSabado.Location = new Point(745, 61);
             DGVmateriasSabado.Name = "DGVmateriasSabado";
             DGVmateriasSabado.RowHeadersWidth = 51;
             DGVmateriasSabado.Size = new Size(136, 496);
             DGVmateriasSabado.TabIndex = 12;
-            DGVmateriasSabado.CellClick += DGVmateriasSabado_CellClick;
             // 
             // DGVmateriasViernes
             // 
+            DGVmateriasViernes.BackgroundColor = Color.LightCyan;
             DGVmateriasViernes.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             DGVmateriasViernes.Location = new Point(597, 61);
             DGVmateriasViernes.Name = "DGVmateriasViernes";
             DGVmateriasViernes.RowHeadersWidth = 51;
             DGVmateriasViernes.Size = new Size(136, 496);
             DGVmateriasViernes.TabIndex = 11;
-            DGVmateriasViernes.CellClick += DGVmateriasViernes_CellClick;
             // 
             // DGVmateriasJueves
             // 
+            DGVmateriasJueves.BackgroundColor = Color.LightCyan;
             DGVmateriasJueves.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             DGVmateriasJueves.Location = new Point(449, 61);
             DGVmateriasJueves.Name = "DGVmateriasJueves";
             DGVmateriasJueves.RowHeadersWidth = 51;
             DGVmateriasJueves.Size = new Size(136, 496);
             DGVmateriasJueves.TabIndex = 10;
-            DGVmateriasJueves.CellClick += DGVmateriasJueves_CellClick;
             // 
             // DGVmateriasMiercoles
             // 
+            DGVmateriasMiercoles.BackgroundColor = Color.LightCyan;
             DGVmateriasMiercoles.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             DGVmateriasMiercoles.Location = new Point(301, 61);
             DGVmateriasMiercoles.Name = "DGVmateriasMiercoles";
             DGVmateriasMiercoles.RowHeadersWidth = 51;
             DGVmateriasMiercoles.Size = new Size(136, 496);
             DGVmateriasMiercoles.TabIndex = 9;
-            DGVmateriasMiercoles.CellClick += DGVmateriasMiercoles_CellClick;
             // 
             // DGVmateriasMartes
             // 
+            DGVmateriasMartes.BackgroundColor = Color.LightCyan;
             DGVmateriasMartes.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             DGVmateriasMartes.Location = new Point(153, 61);
             DGVmateriasMartes.Name = "DGVmateriasMartes";
             DGVmateriasMartes.RowHeadersWidth = 51;
             DGVmateriasMartes.Size = new Size(136, 496);
             DGVmateriasMartes.TabIndex = 8;
-            DGVmateriasMartes.CellClick += DGVmateriasMartes_CellClick;
             // 
             // label6
             // 
             label6.AutoSize = true;
-            label6.BackColor = SystemColors.ButtonShadow;
+            label6.BackColor = Color.CadetBlue;
             label6.Dock = DockStyle.Fill;
+            label6.Font = new Font("Segoe UI", 18F, FontStyle.Regular, GraphicsUnit.Point, 0);
             label6.Location = new Point(890, 2);
             label6.Margin = new Padding(0);
             label6.Name = "label6";
@@ -222,8 +223,9 @@ namespace GUI
             // label5
             // 
             label5.AutoSize = true;
-            label5.BackColor = SystemColors.ButtonShadow;
+            label5.BackColor = Color.CadetBlue;
             label5.Dock = DockStyle.Fill;
+            label5.Font = new Font("Segoe UI", 18F, FontStyle.Regular, GraphicsUnit.Point, 0);
             label5.Location = new Point(742, 2);
             label5.Margin = new Padding(0);
             label5.Name = "label5";
@@ -235,8 +237,9 @@ namespace GUI
             // label4
             // 
             label4.AutoSize = true;
-            label4.BackColor = SystemColors.ButtonShadow;
+            label4.BackColor = Color.CadetBlue;
             label4.Dock = DockStyle.Fill;
+            label4.Font = new Font("Segoe UI", 18F, FontStyle.Regular, GraphicsUnit.Point, 0);
             label4.Location = new Point(594, 2);
             label4.Margin = new Padding(0);
             label4.Name = "label4";
@@ -248,8 +251,9 @@ namespace GUI
             // label3
             // 
             label3.AutoSize = true;
-            label3.BackColor = SystemColors.ButtonShadow;
+            label3.BackColor = Color.CadetBlue;
             label3.Dock = DockStyle.Fill;
+            label3.Font = new Font("Segoe UI", 18F, FontStyle.Regular, GraphicsUnit.Point, 0);
             label3.Location = new Point(446, 2);
             label3.Margin = new Padding(0);
             label3.Name = "label3";
@@ -261,8 +265,9 @@ namespace GUI
             // label2
             // 
             label2.AutoSize = true;
-            label2.BackColor = SystemColors.ButtonShadow;
+            label2.BackColor = Color.CadetBlue;
             label2.Dock = DockStyle.Fill;
+            label2.Font = new Font("Segoe UI", 18F, FontStyle.Regular, GraphicsUnit.Point, 0);
             label2.Location = new Point(298, 2);
             label2.Margin = new Padding(0);
             label2.Name = "label2";
@@ -274,8 +279,9 @@ namespace GUI
             // label1
             // 
             label1.AutoSize = true;
-            label1.BackColor = SystemColors.ButtonShadow;
+            label1.BackColor = Color.CadetBlue;
             label1.Dock = DockStyle.Fill;
+            label1.Font = new Font("Segoe UI", 18F, FontStyle.Regular, GraphicsUnit.Point, 0);
             label1.Location = new Point(150, 2);
             label1.Margin = new Padding(0);
             label1.Name = "label1";
@@ -287,8 +293,9 @@ namespace GUI
             // labelLunes
             // 
             labelLunes.AutoSize = true;
-            labelLunes.BackColor = Color.DarkGray;
+            labelLunes.BackColor = Color.CadetBlue;
             labelLunes.Dock = DockStyle.Fill;
+            labelLunes.Font = new Font("Segoe UI", 18F, FontStyle.Regular, GraphicsUnit.Point, 0);
             labelLunes.Location = new Point(2, 2);
             labelLunes.Margin = new Padding(0);
             labelLunes.Name = "labelLunes";
@@ -296,20 +303,21 @@ namespace GUI
             labelLunes.TabIndex = 0;
             labelLunes.Text = "Lunes";
             labelLunes.TextAlign = ContentAlignment.MiddleCenter;
+            labelLunes.Click += labelLunes_Click;
             // 
             // DGVmateriasLunes
             // 
+            DGVmateriasLunes.BackgroundColor = Color.LightCyan;
             DGVmateriasLunes.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             DGVmateriasLunes.Location = new Point(5, 61);
             DGVmateriasLunes.Name = "DGVmateriasLunes";
             DGVmateriasLunes.RowHeadersWidth = 51;
             DGVmateriasLunes.Size = new Size(140, 496);
             DGVmateriasLunes.TabIndex = 7;
-            DGVmateriasLunes.CellClick += DGVmateriasLunes_CellClick;
             // 
             // agregarMateriaBTN
             // 
-            agregarMateriaBTN.BackgroundImage = GUII.Properties.Resources.Captura_de_pantalla_2026_04_22_084415;
+            agregarMateriaBTN.BackgroundImage = Properties.Resources.Captura_de_pantalla_2026_04_22_084415;
             agregarMateriaBTN.Font = new Font("MS Reference Sans Serif", 9F, FontStyle.Bold, GraphicsUnit.Point, 0);
             agregarMateriaBTN.ForeColor = SystemColors.HighlightText;
             agregarMateriaBTN.Location = new Point(330, 704);
@@ -318,7 +326,6 @@ namespace GUI
             agregarMateriaBTN.TabIndex = 2;
             agregarMateriaBTN.Text = "Agregar Materia";
             agregarMateriaBTN.UseVisualStyleBackColor = true;
-            agregarMateriaBTN.Click += agregarMateriaBTN_Click;
             // 
             // Pnl_Cliente
             // 
@@ -391,7 +398,7 @@ namespace GUI
             // pnlMateria
             // 
             pnlMateria.BackColor = Color.AliceBlue;
-            pnlMateria.BackgroundImage = GUII.Properties.Resources.verde_claro;
+            pnlMateria.BackgroundImage = Properties.Resources.verde_claro;
             pnlMateria.Controls.Add(cancelarMateriaBTN);
             pnlMateria.Controls.Add(button3);
             pnlMateria.Controls.Add(btnEliminarMateria);
@@ -408,7 +415,7 @@ namespace GUI
             // 
             // cancelarMateriaBTN
             // 
-            cancelarMateriaBTN.BackgroundImage = GUII.Properties.Resources.verde_oscuro;
+            cancelarMateriaBTN.BackgroundImage = Properties.Resources.verde_oscuro;
             cancelarMateriaBTN.Font = new Font("MS Reference Sans Serif", 9F, FontStyle.Bold, GraphicsUnit.Point, 0);
             cancelarMateriaBTN.ForeColor = SystemColors.HighlightText;
             cancelarMateriaBTN.Location = new Point(307, 133);
@@ -417,11 +424,10 @@ namespace GUI
             cancelarMateriaBTN.TabIndex = 18;
             cancelarMateriaBTN.Text = "X";
             cancelarMateriaBTN.UseVisualStyleBackColor = true;
-            cancelarMateriaBTN.Click += cancelarMateriaBTN_Click;
             // 
             // button3
             // 
-            button3.BackgroundImage = GUII.Properties.Resources.verde_oscuro;
+            button3.BackgroundImage = Properties.Resources.verde_oscuro;
             button3.Font = new Font("MS Reference Sans Serif", 9F, FontStyle.Bold, GraphicsUnit.Point, 0);
             button3.ForeColor = SystemColors.HighlightText;
             button3.Location = new Point(5, 177);
@@ -430,11 +436,10 @@ namespace GUI
             button3.TabIndex = 17;
             button3.Text = "Comenzar Sesión de estudio\r\n";
             button3.UseVisualStyleBackColor = true;
-            button3.Click += button3_Click;
             // 
             // btnEliminarMateria
             // 
-            btnEliminarMateria.BackgroundImage = GUII.Properties.Resources.verde_oscuro;
+            btnEliminarMateria.BackgroundImage = Properties.Resources.verde_oscuro;
             btnEliminarMateria.Font = new Font("MS Reference Sans Serif", 9F, FontStyle.Bold, GraphicsUnit.Point, 0);
             btnEliminarMateria.ForeColor = SystemColors.HighlightText;
             btnEliminarMateria.Location = new Point(146, 127);
@@ -443,11 +448,10 @@ namespace GUI
             btnEliminarMateria.TabIndex = 16;
             btnEliminarMateria.Text = "Eliminar Materia";
             btnEliminarMateria.UseVisualStyleBackColor = true;
-            btnEliminarMateria.Click += btnEliminarMateria_Click;
             // 
             // btnEditarMateria
             // 
-            btnEditarMateria.BackgroundImage = GUII.Properties.Resources.verde_oscuro;
+            btnEditarMateria.BackgroundImage = Properties.Resources.verde_oscuro;
             btnEditarMateria.Font = new Font("MS Reference Sans Serif", 9F, FontStyle.Bold, GraphicsUnit.Point, 0);
             btnEditarMateria.ForeColor = SystemColors.HighlightText;
             btnEditarMateria.Location = new Point(14, 127);
@@ -456,10 +460,10 @@ namespace GUI
             btnEditarMateria.TabIndex = 15;
             btnEditarMateria.Text = "Editar Materia";
             btnEditarMateria.UseVisualStyleBackColor = true;
-            btnEditarMateria.Click += btnEditarMateria_Click;
             // 
             // DGVgestionMateria
             // 
+            DGVgestionMateria.BackgroundColor = Color.LightCyan;
             DGVgestionMateria.CellBorderStyle = DataGridViewCellBorderStyle.None;
             DGVgestionMateria.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             DGVgestionMateria.GridColor = SystemColors.InactiveCaptionText;
@@ -473,7 +477,7 @@ namespace GUI
             // 
             pictureBoxLogo.BackColor = Color.Transparent;
             pictureBoxLogo.BackgroundImageLayout = ImageLayout.Zoom;
-            pictureBoxLogo.Image = GUII.Properties.Resources.Captura_de_pantalla_2026_04_22_183054;
+            pictureBoxLogo.Image = Properties.Resources.Captura_de_pantalla_2026_04_22_183054;
             pictureBoxLogo.Location = new Point(24, 19);
             pictureBoxLogo.Margin = new Padding(3, 2, 3, 2);
             pictureBoxLogo.Name = "pictureBoxLogo";
@@ -485,7 +489,7 @@ namespace GUI
             // pnlGestionarMateria
             // 
             pnlGestionarMateria.BackColor = Color.AliceBlue;
-            pnlGestionarMateria.BackgroundImage = GUII.Properties.Resources.verde_oscuro;
+            pnlGestionarMateria.BackgroundImage = Properties.Resources.verde_oscuro;
             pnlGestionarMateria.Controls.Add(CBprioridad);
             pnlGestionarMateria.Controls.Add(label12);
             pnlGestionarMateria.Controls.Add(CBdiaSemana);
@@ -521,7 +525,7 @@ namespace GUI
             // label12
             // 
             label12.AutoSize = true;
-            label12.BackColor = SystemColors.ActiveCaptionText;
+            label12.BackColor = Color.Transparent;
             label12.Location = new Point(298, 191);
             label12.Name = "label12";
             label12.Size = new Size(55, 15);
@@ -541,7 +545,7 @@ namespace GUI
             // label10
             // 
             label10.AutoSize = true;
-            label10.BackColor = SystemColors.ActiveCaptionText;
+            label10.BackColor = Color.Transparent;
             label10.Location = new Point(66, 191);
             label10.Name = "label10";
             label10.Size = new Size(96, 15);
@@ -571,7 +575,7 @@ namespace GUI
             // label9
             // 
             label9.AutoSize = true;
-            label9.BackColor = SystemColors.ActiveCaptionText;
+            label9.BackColor = Color.Transparent;
             label9.Location = new Point(312, 128);
             label9.Name = "label9";
             label9.Size = new Size(98, 15);
@@ -581,7 +585,7 @@ namespace GUI
             // label8
             // 
             label8.AutoSize = true;
-            label8.BackColor = SystemColors.ActiveCaptionText;
+            label8.BackColor = Color.Transparent;
             label8.Location = new Point(190, 128);
             label8.Name = "label8";
             label8.Size = new Size(65, 15);
@@ -591,7 +595,7 @@ namespace GUI
             // label7
             // 
             label7.AutoSize = true;
-            label7.BackColor = SystemColors.ActiveCaptionText;
+            label7.BackColor = Color.Transparent;
             label7.Location = new Point(44, 128);
             label7.Name = "label7";
             label7.Size = new Size(51, 15);
@@ -608,7 +612,7 @@ namespace GUI
             // 
             // btnGuardarGestionMateria
             // 
-            btnGuardarGestionMateria.BackgroundImage = GUII.Properties.Resources.verde_claro;
+            btnGuardarGestionMateria.BackgroundImage = Properties.Resources.verde_claro;
             btnGuardarGestionMateria.Font = new Font("MS Reference Sans Serif", 9F, FontStyle.Bold, GraphicsUnit.Point, 0);
             btnGuardarGestionMateria.ForeColor = SystemColors.HighlightText;
             btnGuardarGestionMateria.Location = new Point(257, 254);
@@ -621,7 +625,7 @@ namespace GUI
             // 
             // btnCancelarGestionMateria
             // 
-            btnCancelarGestionMateria.BackgroundImage = GUII.Properties.Resources.verde_claro;
+            btnCancelarGestionMateria.BackgroundImage = Properties.Resources.verde_claro;
             btnCancelarGestionMateria.Font = new Font("MS Reference Sans Serif", 9F, FontStyle.Bold, GraphicsUnit.Point, 0);
             btnCancelarGestionMateria.ForeColor = SystemColors.HighlightText;
             btnCancelarGestionMateria.Location = new Point(102, 254);
@@ -630,10 +634,10 @@ namespace GUI
             btnCancelarGestionMateria.TabIndex = 15;
             btnCancelarGestionMateria.Text = "Cancelar";
             btnCancelarGestionMateria.UseVisualStyleBackColor = true;
-            btnCancelarGestionMateria.Click += btnCancelarGestionMateria_Click;
             // 
             // DGVgestionarMateria
             // 
+            DGVgestionarMateria.BackgroundColor = Color.LightCyan;
             DGVgestionarMateria.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             DGVgestionarMateria.Location = new Point(5, 21);
             DGVgestionarMateria.Name = "DGVgestionarMateria";
@@ -643,7 +647,7 @@ namespace GUI
             // 
             // BtnKanban
             // 
-            BtnKanban.BackgroundImage = GUII.Properties.Resources.sd;
+            BtnKanban.BackgroundImage = Properties.Resources.sd;
             BtnKanban.BackgroundImageLayout = ImageLayout.Stretch;
             BtnKanban.FlatAppearance.BorderSize = 0;
             BtnKanban.FlatStyle = FlatStyle.Flat;
@@ -654,11 +658,10 @@ namespace GUI
             BtnKanban.Size = new Size(245, 75);
             BtnKanban.TabIndex = 39;
             BtnKanban.UseVisualStyleBackColor = true;
-            BtnKanban.Click += BtnKanban_Click;
             // 
             // BtnNotas
             // 
-            BtnNotas.BackgroundImage = GUII.Properties.Resources.Captura_de_pantalla_2026_04_23_215949;
+            BtnNotas.BackgroundImage = Properties.Resources.Captura_de_pantalla_2026_04_23_215949;
             BtnNotas.BackgroundImageLayout = ImageLayout.Stretch;
             BtnNotas.FlatAppearance.BorderSize = 0;
             BtnNotas.FlatStyle = FlatStyle.Flat;
@@ -669,12 +672,11 @@ namespace GUI
             BtnNotas.Size = new Size(245, 90);
             BtnNotas.TabIndex = 40;
             BtnNotas.UseVisualStyleBackColor = true;
-            BtnNotas.Click += BtnNotas_Click;
             // 
             // pictureBox1
             // 
             pictureBox1.BackColor = Color.Transparent;
-            pictureBox1.Image = GUII.Properties.Resources.user;
+            pictureBox1.Image = Properties.Resources.user;
             pictureBox1.Location = new Point(27, 674);
             pictureBox1.Margin = new Padding(3, 2, 3, 2);
             pictureBox1.Name = "pictureBox1";
@@ -685,7 +687,7 @@ namespace GUI
             // 
             // btnEditarUsuario
             // 
-            btnEditarUsuario.BackgroundImage = GUII.Properties.Resources.verde_oscuro;
+            btnEditarUsuario.BackgroundImage = Properties.Resources.verde_oscuro;
             btnEditarUsuario.Font = new Font("MS Reference Sans Serif", 9F, FontStyle.Bold, GraphicsUnit.Point, 0);
             btnEditarUsuario.ForeColor = SystemColors.HighlightText;
             btnEditarUsuario.Location = new Point(94, 685);
@@ -694,12 +696,11 @@ namespace GUI
             btnEditarUsuario.TabIndex = 42;
             btnEditarUsuario.Text = "Editar Usuario";
             btnEditarUsuario.UseVisualStyleBackColor = true;
-            btnEditarUsuario.Click += btnEditarUsuario_Click;
             // 
             // pnlEditarCuenta
             // 
             pnlEditarCuenta.BackColor = Color.AliceBlue;
-            pnlEditarCuenta.BackgroundImage = GUII.Properties.Resources.verde_oscuro;
+            pnlEditarCuenta.BackgroundImage = Properties.Resources.verde_oscuro;
             pnlEditarCuenta.Controls.Add(label14);
             pnlEditarCuenta.Controls.Add(txtContrasenaCuenta);
             pnlEditarCuenta.Controls.Add(label13);
@@ -709,7 +710,7 @@ namespace GUI
             pnlEditarCuenta.Controls.Add(btnEditarCuenta);
             pnlEditarCuenta.Controls.Add(btnCancelarCuenta);
             pnlEditarCuenta.ForeColor = SystemColors.Control;
-            pnlEditarCuenta.Location = new Point(291, 304);
+            pnlEditarCuenta.Location = new Point(304, 418);
             pnlEditarCuenta.Name = "pnlEditarCuenta";
             pnlEditarCuenta.Size = new Size(238, 244);
             pnlEditarCuenta.TabIndex = 43;
@@ -720,7 +721,7 @@ namespace GUI
             // label14
             // 
             label14.AutoSize = true;
-            label14.BackColor = SystemColors.ActiveCaptionText;
+            label14.BackColor = Color.Transparent;
             label14.Location = new Point(77, 135);
             label14.Name = "label14";
             label14.Size = new Size(67, 15);
@@ -729,6 +730,7 @@ namespace GUI
             // 
             // txtContrasenaCuenta
             // 
+            txtContrasenaCuenta.BackColor = Color.LightCyan;
             txtContrasenaCuenta.Location = new Point(60, 152);
             txtContrasenaCuenta.Margin = new Padding(3, 2, 3, 2);
             txtContrasenaCuenta.Name = "txtContrasenaCuenta";
@@ -738,7 +740,7 @@ namespace GUI
             // label13
             // 
             label13.AutoSize = true;
-            label13.BackColor = SystemColors.ActiveCaptionText;
+            label13.BackColor = Color.Transparent;
             label13.Location = new Point(86, 81);
             label13.Name = "label13";
             label13.Size = new Size(43, 15);
@@ -747,6 +749,7 @@ namespace GUI
             // 
             // txtCorreoCuenta
             // 
+            txtCorreoCuenta.BackColor = Color.LightCyan;
             txtCorreoCuenta.Location = new Point(60, 98);
             txtCorreoCuenta.Margin = new Padding(3, 2, 3, 2);
             txtCorreoCuenta.Name = "txtCorreoCuenta";
@@ -756,7 +759,7 @@ namespace GUI
             // label17
             // 
             label17.AutoSize = true;
-            label17.BackColor = SystemColors.ActiveCaptionText;
+            label17.BackColor = Color.Transparent;
             label17.Location = new Point(86, 27);
             label17.Name = "label17";
             label17.Size = new Size(51, 15);
@@ -765,6 +768,7 @@ namespace GUI
             // 
             // txtNombreCuenta
             // 
+            txtNombreCuenta.BackColor = Color.LightCyan;
             txtNombreCuenta.Location = new Point(60, 44);
             txtNombreCuenta.Margin = new Padding(3, 2, 3, 2);
             txtNombreCuenta.Name = "txtNombreCuenta";
@@ -773,7 +777,7 @@ namespace GUI
             // 
             // btnEditarCuenta
             // 
-            btnEditarCuenta.BackgroundImage = GUII.Properties.Resources.verde_claro;
+            btnEditarCuenta.BackgroundImage = Properties.Resources.verde_claro;
             btnEditarCuenta.Font = new Font("MS Reference Sans Serif", 9F, FontStyle.Bold, GraphicsUnit.Point, 0);
             btnEditarCuenta.ForeColor = SystemColors.HighlightText;
             btnEditarCuenta.Location = new Point(126, 190);
@@ -782,11 +786,10 @@ namespace GUI
             btnEditarCuenta.TabIndex = 16;
             btnEditarCuenta.Text = "Guardar";
             btnEditarCuenta.UseVisualStyleBackColor = true;
-            btnEditarCuenta.Click += btnEditarCuenta_Click;
             // 
             // btnCancelarCuenta
             // 
-            btnCancelarCuenta.BackgroundImage = GUII.Properties.Resources.verde_claro;
+            btnCancelarCuenta.BackgroundImage = Properties.Resources.verde_claro;
             btnCancelarCuenta.Font = new Font("MS Reference Sans Serif", 9F, FontStyle.Bold, GraphicsUnit.Point, 0);
             btnCancelarCuenta.ForeColor = SystemColors.HighlightText;
             btnCancelarCuenta.Location = new Point(13, 190);
@@ -795,12 +798,11 @@ namespace GUI
             btnCancelarCuenta.TabIndex = 15;
             btnCancelarCuenta.Text = "Cancelar";
             btnCancelarCuenta.UseVisualStyleBackColor = true;
-            btnCancelarCuenta.Click += btnCancelarCuenta_Click;
             // 
             // BtnSalir
             // 
             BtnSalir.BackColor = Color.Transparent;
-            BtnSalir.BackgroundImage = GUII.Properties.Resources.salir;
+            BtnSalir.BackgroundImage = Properties.Resources.salir;
             BtnSalir.BackgroundImageLayout = ImageLayout.Stretch;
             BtnSalir.FlatAppearance.BorderSize = 0;
             BtnSalir.FlatStyle = FlatStyle.Flat;
@@ -811,17 +813,17 @@ namespace GUI
             BtnSalir.Size = new Size(50, 42);
             BtnSalir.TabIndex = 45;
             BtnSalir.UseVisualStyleBackColor = false;
-            BtnSalir.Click += BtnSalir_Click;
+            BtnSalir.Click += BtnSalir_Click_1;
             // 
             // groupBox2
             // 
             groupBox2.BackColor = Color.AliceBlue;
-            groupBox2.BackgroundImage = GUII.Properties.Resources.verde_oscuro;
+            groupBox2.BackgroundImage = Properties.Resources.verde_oscuro;
             groupBox2.Controls.Add(label15);
             groupBox2.Controls.Add(label16);
             groupBox2.Controls.Add(button1);
             groupBox2.ForeColor = SystemColors.Control;
-            groupBox2.Location = new Point(582, 251);
+            groupBox2.Location = new Point(582, 685);
             groupBox2.Name = "groupBox2";
             groupBox2.Size = new Size(238, 250);
             groupBox2.TabIndex = 71;
@@ -851,7 +853,7 @@ namespace GUI
             // 
             // button1
             // 
-            button1.BackgroundImage = GUII.Properties.Resources.verde_claro;
+            button1.BackgroundImage = Properties.Resources.verde_claro;
             button1.Font = new Font("MS Reference Sans Serif", 9F, FontStyle.Bold, GraphicsUnit.Point, 0);
             button1.ForeColor = SystemColors.HighlightText;
             button1.Location = new Point(75, 172);
@@ -865,8 +867,10 @@ namespace GUI
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
-            BackgroundImage = GUII.Properties.Resources.Presentación_diapositivas_cosmética_natural_negocio_elegante_minimalista_beige;
-            ClientSize = new Size(1402, 753);
+            BackgroundImage = Properties.Resources.Presentación_diapositivas_cosmética_natural_negocio_elegante_minimalista_beige;
+            ClientSize = new Size(1402, 661);
+            Controls.Add(pnlMateria);
+            Controls.Add(pnlGestionarMateria);
             Controls.Add(groupBox2);
             Controls.Add(BtnSalir);
             Controls.Add(pnlEditarCuenta);
@@ -874,9 +878,7 @@ namespace GUI
             Controls.Add(pictureBox1);
             Controls.Add(BtnNotas);
             Controls.Add(BtnKanban);
-            Controls.Add(pnlGestionarMateria);
             Controls.Add(pictureBoxLogo);
-            Controls.Add(pnlMateria);
             Controls.Add(Pnl_Cliente);
             Controls.Add(agregarMateriaBTN);
             Controls.Add(tableLayoutPanel1);

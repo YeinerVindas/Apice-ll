@@ -1,67 +1,82 @@
-﻿using ET;
-using Microsoft.Data.SqlClient;
-using System;
-using System.Collections.Generic;
+﻿using System;
 using System.Data;
-using System.Text;
+using Microsoft.Data.SqlClient;
+using ET;
 using Utilities;
 
 namespace DAL
 {
     public class DAL_Kanban : DAL_utilities
     {
-        #region 🔹 Listados de Tareas
+        #region Métodos de Listado
 
-        public DataTable ListadoTareasPendientes(string cTexto, int IdEstudiate_Materia)
+        public DataTable ListarKanban(int idEstudiante)
         {
-            return Listado(cTexto, "USP_Listado_tareas_pendientes", IdEstudiate_Materia);
-        }
+            SqlParameter[] parametros =
+            {
+                new SqlParameter("@ID_Estudiante", SqlDbType.Int) { Value = idEstudiante }
+            };
 
-        public DataTable ListadoTareasEnProceso(string cTexto, int IdEstudiate_Materia)
-        {
-            return Listado(cTexto, "USP_Listado_tareas_enproceso", IdEstudiate_Materia);
-        }
-
-        public DataTable ListadoTareasCompletadas(string cTexto, int IdEstudiate_Materia)
-        {
-            return Listado(cTexto, "USP_Listado_tareas_completadas", IdEstudiate_Materia);
+            return ListadoSimple("USP_ListarKanban", idEstudiante);
         }
 
         #endregion
 
-        #region 🔹 Gestión de Tareas
+        #region Métodos de Escritura (Guardar/Eliminar)
 
-        public string GuardarTarea(int nOpcion, ET_Kanban tr)
+        public string GuardarKanban(int nOpcion, ET_Kanban oPropiedad)
         {
-            SqlParameter[] parametros = {
-                new SqlParameter("@ID", SqlDbType.Int) { Value = tr.ID },
-                new SqlParameter("@nOpcion", SqlDbType.Int) { Value = nOpcion },
-                new SqlParameter("@ID_Estudiante", SqlDbType.Int) { Value = tr.ID_Estudiante },
-                new SqlParameter("@Descripcion", SqlDbType.VarChar) { Value = tr.Descripcion },
-                new SqlParameter("@FechaEntrega", SqlDbType.DateTime) { Value = tr.FechaEntrega },
-                new SqlParameter("@Avance", SqlDbType.VarChar) { Value = tr.Dificultad },
-            };
+            string rpta = "";
+            try
+            {
+                SqlParameter[] parametros =
+                {
+                    new SqlParameter("@nOpcion",       SqlDbType.Int)          { Value = nOpcion },
+                    new SqlParameter("@ID",            SqlDbType.Int)          { Value = oPropiedad.ID },
+                    new SqlParameter("@ID_Estudiante", SqlDbType.Int)          { Value = oPropiedad.ID_Estudiante },
+                    new SqlParameter("@titulo",        SqlDbType.VarChar, 100) { Value = oPropiedad.titulo },
+                    new SqlParameter("@descripcion",   SqlDbType.VarChar, 500) { Value = (object)oPropiedad.descripcion ?? DBNull.Value },
+                    new SqlParameter("@estado",        SqlDbType.VarChar, 20)  { Value = oPropiedad.estado },
+                    new SqlParameter("@fechaEntrega",  SqlDbType.Date)         { Value = oPropiedad.fechaEntrega }
+                };
 
-            return Guardar("USP_Guardar_tarea", parametros);
+                rpta = Guardar("USP_GuardarKanban", parametros);
+            }
+            catch (Exception ex)
+            {
+                rpta = ex.Message;
+            }
+            return rpta;
         }
 
-        public string EliminarTarea(int IdMateria)
+        public string EliminarKanban(int idKanban)
         {
-            SqlParameter[] parametros = {
-                new SqlParameter("@ID", SqlDbType.Int) { Value = IdMateria }
+            SqlParameter[] parametros =
+            {
+                new SqlParameter("@ID", SqlDbType.Int) { Value = idKanban }
             };
 
-            return Guardar("USP_Eliminar_tarea", parametros);
+            return Guardar("USP_EliminarKanban", parametros);
         }
 
-        public string ActualizarEstadoTarea(int idTarea, string nuevoEstado)
+        public string ActualizarEstadoKanban(int idKanban, string estado)
         {
-            SqlParameter[] parametros = {
-                new SqlParameter("@ID", SqlDbType.Int) { Value = idTarea },
-                new SqlParameter("@NuevoEstado", SqlDbType.VarChar) { Value = nuevoEstado }
-            };
+            string rpta = "";
+            try
+            {
+                SqlParameter[] parametros =
+                {
+                    new SqlParameter("@ID",     SqlDbType.Int)         { Value = idKanban },
+                    new SqlParameter("@estado", SqlDbType.VarChar, 20) { Value = estado }
+                };
 
-            return Guardar("USP_Actualizar_Estado_Tarea", parametros);
+                rpta = Guardar("USP_ActualizarEstadoKanban", parametros);
+            }
+            catch (Exception ex)
+            {
+                rpta = ex.Message;
+            }
+            return rpta;
         }
 
         #endregion

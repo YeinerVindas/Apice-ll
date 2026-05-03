@@ -1,107 +1,57 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Data;
-using System.Text;
+using Microsoft.Data.SqlClient;
 using ET;
 using Utilities;
-using Microsoft.Data.SqlClient;
 
 namespace DAL
 {
     public class DAL_Evaluacion : DAL_utilities
     {
-        #region 🔹 Gestión de Evaluaciones
+        #region Métodos de Listado
 
-        public string GuardarEva(int nOpcion, ET_Evaluacion et)
+        public DataTable ListarEvaluaciones(string cTexto, int idEstudiante, int idMateria)
         {
-            SqlParameter[] parametros = {
-                new SqlParameter("@nOpcion", SqlDbType.Int) { Value = nOpcion },
-                new SqlParameter("@ID", SqlDbType.Int) { Value = et.ID },
-                new SqlParameter("@ID_materia", SqlDbType.Int) { Value = et.ID_Materia },
-                new SqlParameter("@ID_estudiante", SqlDbType.Int) { Value = et.ID_Estudiante },
-                new SqlParameter("@Nombre", SqlDbType.VarChar) { Value = et.NombreRubro },
-                new SqlParameter("@ValorPorcentual", SqlDbType.Decimal)
-                {
-                    Precision = 5,
-                    Scale = 2,
-                    Value = et.ValorPorcentual
-                },
-                new SqlParameter("@CalificacionObtenida", SqlDbType.Decimal)
-                {
-                    Precision = 5,
-                    Scale = 2,
-                    Value = et.CalificacionObtenida
-                },
-            };
-
-            return Guardar("USP_Guardar_eva", parametros);
+            return ListadoRubro(cTexto, "USP_ListarEvaluaciones", idEstudiante, idMateria);
         }
 
-        public string EditarEvaluacion(ET_Evaluacion eva)
-        {
-            SqlConnection sqlConnection = new SqlConnection();
-            string confirmacion = "";
+        #endregion
 
+        #region Métodos de Escritura (Guardar/Eliminar)
+
+        public string GuardarEvaluacion(int nOpcion, ET_Evaluacion oPropiedad)
+        {
+            string rpta = "";
             try
             {
-                // sqlConnection = Conexion.GetInstancia().CrearConexion; 
+                SqlParameter[] parametros =
+                {
+                    new SqlParameter("@nOpcion",       SqlDbType.Int)          { Value = nOpcion },
+                    new SqlParameter("@ID",            SqlDbType.Int)          { Value = oPropiedad.ID },
+                    new SqlParameter("@ID_Materia",    SqlDbType.Int)          { Value = oPropiedad.ID_Materia },
+                    new SqlParameter("@ID_Estudiante", SqlDbType.Int)          { Value = oPropiedad.ID_Estudiante },
+                    new SqlParameter("@nombre",        SqlDbType.VarChar, 50)  { Value = oPropiedad.nombre },
+                    new SqlParameter("@porcentaje",    SqlDbType.Decimal)      { Value = oPropiedad.porcentaje, Precision = 5, Scale = 2 },
+                    new SqlParameter("@nota",          SqlDbType.Decimal)      { Value = (object)oPropiedad.nota ?? DBNull.Value, Precision = 5, Scale = 2 }
+                };
 
-                SqlCommand sqlCommand = new SqlCommand("USP_Editar_eva", sqlConnection);
-                sqlCommand.CommandType = CommandType.StoredProcedure;
-
-                sqlCommand.Parameters.Add("@Id", SqlDbType.Int).Value = eva.ID;
-                sqlCommand.Parameters.Add("@IdMateria", SqlDbType.Int).Value = eva.ID_Materia;
-                sqlCommand.Parameters.Add("@NombreRubro", SqlDbType.VarChar).Value = eva.NombreRubro;
-                sqlCommand.Parameters.Add("@ValorPorcentual", SqlDbType.Decimal).Value = eva.ValorPorcentual;
-                sqlCommand.Parameters.Add("@CalificacionObtenida", SqlDbType.Decimal).Value = eva.CalificacionObtenida;
-
-                sqlConnection.Open();
-
-                confirmacion = sqlCommand.ExecuteNonQuery() == 1 ? "OK" : "No se pudo actualizar la evaluación";
+                rpta = Guardar("USP_GuardarEvaluacion", parametros);
             }
             catch (Exception ex)
             {
-                confirmacion = ex.Message;
+                rpta = ex.Message;
             }
-            finally
+            return rpta;
+        }
+
+        public string EliminarEvaluacion(int idEvaluacion)
+        {
+            SqlParameter[] parametros =
             {
-                if (sqlConnection.State == ConnectionState.Open) sqlConnection.Close();
-            }
+        new SqlParameter("@ID", SqlDbType.Int) { Value = idEvaluacion }
+        };
 
-            return confirmacion;
-        }
-
-        public string EliminarEVA(int IdRubro)
-        {
-            SqlParameter[] parametros = {
-                new SqlParameter("@IdRubro", SqlDbType.Int) { Value = IdRubro }
-            };
-
-            return Guardar("USP_Eliminar_eva", parametros);
-        }
-
-        #endregion
-
-        #region 🔹 Listados
-
-        public DataTable ListadoRubro(string ctexto, int idEstudiante, int idMateria)
-        {
-            return ListadoRubro(ctexto, "USP_Listado_eva", idEstudiante, idMateria);
-        }
-
-        #endregion
-
-        #region 🔹 Validaciones
-        public decimal ObtenerPorcentajeAcumulado(int idEstudiante, int idMateria)
-        {
-            // Reutilizamos el método ListadoRubro que ya existe en Utilities
-            DataTable dt = ListadoRubro("", "USP_Obtener_Porcentaje_Acumulado", idEstudiante, idMateria);
-
-            if (dt.Rows.Count > 0 && dt.Rows[0]["Acumulado"] != DBNull.Value)
-            {
-                return Convert.ToDecimal(dt.Rows[0]["Acumulado"]);
-            }
-            return 0;
+            return Guardar("USP_EliminarEvaluacion", parametros);
         }
 
         #endregion

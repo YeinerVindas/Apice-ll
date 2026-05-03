@@ -1,7 +1,7 @@
-using GUI;
-using Mockup;
+﻿using GUI;
+using Microsoft.VisualBasic.Logging;
 
-namespace GUII
+namespace GUI
 {
     internal static class Program
     {

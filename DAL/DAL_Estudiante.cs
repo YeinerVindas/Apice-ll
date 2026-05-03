@@ -1,87 +1,66 @@
-﻿using ET;
+﻿using System;
 using System.Data;
-using System.Data.SqlClient;
 using Microsoft.Data.SqlClient;
+using ET;
 using Utilities;
 
 namespace DAL
 {
     public class DAL_Estudiante : DAL_utilities
     {
-        #region 🔹 Listados
+        #region Métodos de Autenticación y Listado
 
-        public DataTable ListadoES(string ctexto)
+        public DataTable Login(string correo, string contrasena)
         {
-            SqlDataReader Resultado;
-            DataTable Tabla = new DataTable();
-            SqlConnection SqlCon = new SqlConnection();
+            // Usamos el método Comprobar para validar credenciales
+            SqlParameter[] parametros =
+            {
+                new SqlParameter("@correo", SqlDbType.VarChar, 50) { Value = correo },
+                new SqlParameter("@contrasena", SqlDbType.VarChar, 50) { Value = contrasena }
+            };
 
+            return Comprobar("USP_LoginEstudiante", parametros);
+        }
+
+        #endregion
+
+        #region Métodos de Escritura
+
+        public string GuardarEstudiante(int nOpcion, ET_Estudiante oPropiedad)
+        {
+            string rpta = "";
             try
             {
-                SqlCon = Conexion.GetInstancia().CrearConexion();
+                SqlParameter[] parametros =
+                {
+                    new SqlParameter("@nOpcion", SqlDbType.Int) { Value = nOpcion },
+                    new SqlParameter("@ID", SqlDbType.Int) { Value = oPropiedad.ID },
+                    new SqlParameter("@nombre", SqlDbType.VarChar, 50) { Value = oPropiedad.nombre },
+                    new SqlParameter("@correo", SqlDbType.VarChar, 50) { Value = oPropiedad.correo },
+                    new SqlParameter("@contrasena", SqlDbType.VarChar, 50) { Value = oPropiedad.contrasena },
+                    new SqlParameter("@fechaConexion", SqlDbType.VarChar, 50) { Value = oPropiedad.fechaConexion },
+                    new SqlParameter("@rachaActual", SqlDbType.Int) { Value = (object)oPropiedad.rachaActual ?? DBNull.Value }
+                };
 
-                SqlCommand comando = new SqlCommand("USP_Listado_es", SqlCon);
-                comando.CommandType = CommandType.StoredProcedure;
-                comando.Parameters.Add("@cTexto", SqlDbType.VarChar).Value = ctexto;
-
-                SqlCon.Open();
-                Resultado = comando.ExecuteReader();
-                Tabla.Load(Resultado);
-
-                return Tabla;
+                rpta = Guardar("USP_GuardarEstudiante", parametros);
             }
             catch (Exception ex)
             {
-                throw ex;
+                rpta = ex.Message;
             }
-            finally
+            return rpta;
+        }
+
+        public string EliminarEstudiante(int idEstudiante)
+        {
+            SqlParameter[] parametros =
             {
-                if (SqlCon.State == ConnectionState.Open) SqlCon.Close();
-            }
+                new SqlParameter("@ID", SqlDbType.Int) { Value = idEstudiante }
+            };
+
+            return Eliminar("USP_EliminarEstudiante", parametros);
         }
 
         #endregion
-
-        #region 🔹 Gestión de Estudiante
-
-        public string GuardarES(int nOpcion, ET_Estudiante es)
-        {
-            SqlParameter[] parametros = {
-                new SqlParameter("@nOpcion", SqlDbType.Int) { Value = nOpcion },
-                new SqlParameter("@ID", SqlDbType.Int) { Value = es.ID },
-                new SqlParameter("@Nombre", SqlDbType.VarChar) { Value = es.Nombre },
-                new SqlParameter("@Correo", SqlDbType.VarChar) { Value = es.Correo },
-                new SqlParameter("@Contrasena", SqlDbType.VarChar) { Value = es.Contrasena },
-                new SqlParameter("@FechaConexion", SqlDbType.DateTime) { Value = es.FechaConexion },
-                new SqlParameter("@RachaActual", SqlDbType.VarChar) { Value = es.RachaActual }
-            };
-
-            return Guardar("USP_Guardar_es", parametros);
-        }
-
-        public string EliminarES(int IdMateria)
-        {
-            SqlParameter[] parametros = {
-                new SqlParameter("@nIdMateria", SqlDbType.Int) { Value = IdMateria }
-            };
-
-            return Guardar("USP_Eliminar_mt", parametros);
-        }
-
-        #endregion
-
-
-
-        public DataTable ComprobarLogIn(string correo, string contrasena)
-        {
-            SqlParameter[] parametros = {
-                new SqlParameter("@correo", SqlDbType.VarChar) { Value = correo },
-                new SqlParameter("@contrasena", SqlDbType.VarChar) { Value = contrasena }
-            };
-
-            return Comprobar("USP_Comprobar_es", parametros);
-        }
-
-
     }
 }

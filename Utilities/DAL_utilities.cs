@@ -9,9 +9,9 @@ namespace Utilities
 {
     public class DAL_utilities
     {
-        #region 🔹 LISTADOS
+        #region LISTADOS
 
-        public DataTable Listado(string ctexto, string nombreSP, int IdEstudiate_Materia)
+        public DataTable Listado(string ctexto, string nombreSP, int idEstudiante)
         {
             SqlDataReader Resultado;
             DataTable Tabla = new DataTable();
@@ -24,7 +24,7 @@ namespace Utilities
                 comando.CommandType = CommandType.StoredProcedure;
 
                 comando.Parameters.Add("@cTexto", SqlDbType.VarChar).Value = ctexto;
-                comando.Parameters.Add("@IdEstudiante", SqlDbType.Int).Value = IdEstudiate_Materia;
+                comando.Parameters.Add("@idEstudiante", SqlDbType.Int).Value = idEstudiante;
 
                 SqlCon.Open();
                 Resultado = comando.ExecuteReader();
@@ -41,7 +41,7 @@ namespace Utilities
             }
         }
 
-        public DataTable ListadoRubro(string ctexto, string nombreSP, int IdEstudiate_Materia, int idMateria)
+        public DataTable ListadoRubro(string ctexto, string nombreSP, int idEstudiante, int idMateria)
         {
             SqlDataReader Resultado;
             DataTable Tabla = new DataTable();
@@ -54,7 +54,7 @@ namespace Utilities
                 comando.CommandType = CommandType.StoredProcedure;
 
                 comando.Parameters.Add("@cTexto", SqlDbType.VarChar).Value = ctexto;
-                comando.Parameters.Add("@idEstudiante", SqlDbType.Int).Value = IdEstudiate_Materia;
+                comando.Parameters.Add("@idEstudiante", SqlDbType.Int).Value = idEstudiante;
                 comando.Parameters.Add("@idMateria", SqlDbType.Int).Value = idMateria;
 
                 SqlCon.Open();
@@ -74,7 +74,7 @@ namespace Utilities
 
         #endregion
 
-        #region 🔹 GUARDAR
+        #region GUARDAR
 
         protected string Guardar(string nombreSP, params SqlParameter[] parametros)
         {
@@ -86,21 +86,55 @@ namespace Utilities
                 comando.CommandType = CommandType.StoredProcedure;
 
                 if (parametros != null)
-                {
                     comando.Parameters.AddRange(parametros);
-                }
 
                 sqlCon.Open();
 
-                rpta = comando.ExecuteNonQuery() >= 1 ? "OK" : "No se logró registrar el dato";
+                // Los USPs retornan SELECT 'OK' o SELECT 'mensaje error'
+                // ExecuteScalar lee ese valor en lugar de contar filas
+                object resultado = comando.ExecuteScalar();
+                rpta = resultado != null ? resultado.ToString() : "No se logró registrar el dato";
             }
 
             return rpta;
         }
-
         #endregion
 
-        #region 🔹 CONSULTAS (COMPROBAR)
+        #region Eliminar
+        protected string Eliminar(string nombreSP, params SqlParameter[] parametros)
+        {
+            string rpta = "";
+
+            try
+            {
+                using (SqlConnection sqlCon = Conexion.GetInstancia().CrearConexion())
+                using (SqlCommand comando = new SqlCommand(nombreSP, sqlCon))
+                {
+                    comando.CommandType = CommandType.StoredProcedure;
+
+                    if (parametros != null)
+                    {
+                        comando.Parameters.AddRange(parametros);
+                    }
+
+                    sqlCon.Open();
+
+                    // Si devuelve >= 1, es que encontró el registro y lo borró.
+                    // Si devuelve 0, el ID no existía o no se afectaron filas.
+                    rpta = comando.ExecuteNonQuery() >= 1 ? "OK" : "No se encontró el registro para eliminar";
+                }
+            }
+            catch (Exception ex)
+            {
+                rpta = "Error en la base de datos: " + ex.Message;
+            }
+
+            return rpta;
+        }
+        #endregion
+
+
+        #region CONSULTAS (COMPROBAR)
 
         protected DataTable Comprobar(string nombreSP, params SqlParameter[] parametros)
         {
@@ -126,5 +160,35 @@ namespace Utilities
         }
 
         #endregion
+        public DataTable ListadoSimple(string nombreSP, int idEstudiante)
+        {
+            SqlDataReader Resultado;
+            DataTable Tabla = new DataTable();
+            SqlConnection SqlCon = new SqlConnection();
+
+            try
+            {
+                SqlCon = Conexion.GetInstancia().CrearConexion();
+                SqlCommand comando = new SqlCommand(nombreSP, SqlCon);
+                comando.CommandType = CommandType.StoredProcedure;
+
+                comando.Parameters.Add("@ID_Estudiante", SqlDbType.Int).Value = idEstudiante;
+
+                SqlCon.Open();
+                Resultado = comando.ExecuteReader();
+                Tabla.Load(Resultado);
+                return Tabla;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            finally
+            {
+                if (SqlCon.State == ConnectionState.Open) SqlCon.Close();
+            }
+        }
+
+
     }
 }

@@ -1,476 +1,535 @@
-using BL;
-using GUII;
-using Mockup;
+﻿using BL;
+using ET;
 using System;
 using System.Data;
 using System.Drawing;
 using System.Windows.Forms;
-using WinFormsApp1;
 
 namespace GUI
 {
-
-    /** <summary>
-     * Formulario principal que muestra el horario del estudiante y permite gestionar sus materias.
-     * Recibe el ID del estudiante para cargar su horario espec�fico.
-     * Permite agregar, editar y eliminar materias, as� como acceder a otras funcionalidades como notas y kanban.
-     */
     public partial class HorarioPrincipal : Form
     {
-        #region ?? Variables Globales
+        #region Variables Globales
+        // ID del estudiante activo, recibido desde el login
+        private int _idEstudiante;
 
-        int EstadoGuarda = 0;
-        string nombreMateria = "";
-        int IdMateria = 0;
-        int IdEstudiate_Materia = 0;
+        // ID y objeto completo de la materia seleccionada en cualquier DGV del horario
+        private int _idMateriaSeleccionada = 0;
+        private int _estadoGuardar = 0; // 1 = Insertar, 2 = Actualizar
+        private ET_Materia _materiaSeleccionada = null;
 
+        // Instancias de BL reutilizadas en todo el form
+        private readonly BL_Materia _blMateria = new BL_Materia();
+        private readonly BL_Estudiante _blEstudiante = new BL_Estudiante();
+        private readonly BL_SesionEstudio _blSesion = new BL_SesionEstudio();
         #endregion
 
-        #region ?? Constructor
-
-        public HorarioPrincipal(int idEstudiante_materia)// Recibe el ID del estudiante para cargar su horario
+        #region Constructor
+        // Recibe el ID del estudiante y la fecha de conexión anterior para
+        // verificar inactividad (Regla 3) antes de que cargue el form.
+        // La fecha anterior se pasa aquí porque después del login ya se actualizó
+        // la fechaConexion en BD, por lo que se debe guardar el valor previo.
+        public HorarioPrincipal(int idEstudiante, string fechaConexionAnterior)
         {
             InitializeComponent();
-            this.IdEstudiate_Materia = idEstudiante_materia;// Asignar el ID del estudiante a la variable global
-            listadoMateriasSemana(IdEstudiate_Materia);
-        }
+            _idEstudiante = idEstudiante;
 
+            VerificarInactividad(fechaConexionAnterior);
+        }
         #endregion
 
-        #region ?? Load
-
+        #region Load
         private void HorarioPrincipal_Load(object sender, EventArgs e)
         {
-            listadoMateriasSemana(IdEstudiate_Materia);
+            this.WindowState = FormWindowState.Maximized;
+            InicializarComboBoxHoras();
+
+            // Todos los eventos de botones y DGVs se registran aquí en código
+            // porque estaban comentados en el designer
+            ConfigurarEventosDGV();
+
+            RefrescarTodoElHorario();
+            OcultarTodosLosPaneles();
+
+            // Verifica si hay tareas Kanban próximas a vencer y muestra el aviso
+            string recordatorio = RecordatorioKanban.ObtenerMensajeRecordatorio(_idEstudiante);
+            if (recordatorio != null)
+                MessageBox.Show(recordatorio, "Recordatorio de tareas",
+                    MessageBoxButtons.OK, MessageBoxIcon.Warning);
 
             this.WindowState = FormWindowState.Maximized;
             this.Show();
             this.BringToFront();
             this.Activate();
         }
-
         #endregion
 
-        #region ?? Listados
+        #region Inicialización
 
-        public void ListadoDGV_materiasLunes(string cTexto, int IdEstudiate_Materia)
+        // Rellena los ComboBox de horas con intervalos de 30 minutos (00:00 a 23:30)
+        // y los de prioridad y día con sus valores fijos permitidos
+        private void InicializarComboBoxHoras()
         {
-            try
+            CBhoraInicio.Items.Clear();
+            CBhoraFinal.Items.Clear();
+            for (int h = 0; h < 24; h++)
             {
-                DGVmateriasLunes.DataSource = BL_Materia.ListadoMateriaLunes(cTexto, IdEstudiate_Materia);
-                Formato_Materia(DGVmateriasLunes);
+                CBhoraInicio.Items.Add(h.ToString("00") + ":00");
+                CBhoraInicio.Items.Add(h.ToString("00") + ":30");
+                CBhoraFinal.Items.Add(h.ToString("00") + ":00");
+                CBhoraFinal.Items.Add(h.ToString("00") + ":30");
             }
-            catch (Exception ex)
+
+            CBprioridad.Items.Clear();
+            CBprioridad.Items.AddRange(new object[] { "Alta", "Media", "Baja" });
+
+            CBdiaSemana.Items.Clear();
+            CBdiaSemana.Items.AddRange(new object[]
             {
-                MessageBox.Show(ex.Message);
-            }
+                "Lunes", "Martes", "Miércoles", "Jueves", "Viernes", "Sábado", "Domingo"
+            });
         }
 
-        public void ListadoDGV_materiasMartes(string cTexto, int IdEstudiate_Materia)
+        // Registra el mismo handler DGV_CellClick en los siete DGVs del horario
+        // y conecta todos los botones que el designer dejó sin evento asignado
+        private void ConfigurarEventosDGV()
         {
-            try
-            {
-                DGVmateriasMartes.DataSource = BL_Materia.ListadoMateriaMartes(cTexto, IdEstudiate_Materia);
-                Formato_Materia(DGVmateriasMartes);
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show(ex.Message);
-            }
+            DGVmateriasLunes.CellClick += DGV_CellClick;
+            DGVmateriasMartes.CellClick += DGV_CellClick;
+            DGVmateriasMiercoles.CellClick += DGV_CellClick;
+            DGVmateriasJueves.CellClick += DGV_CellClick;
+            DGVmateriasViernes.CellClick += DGV_CellClick;
+            DGVmateriasSabado.CellClick += DGV_CellClick;
+            DGVmateriasDomingo.CellClick += DGV_CellClick;
+
+            // Los DGVs del horario son de solo lectura — el usuario no puede editar celdas
+            DGVmateriasLunes.ReadOnly = true;
+            DGVmateriasMartes.ReadOnly = true;
+            DGVmateriasMiercoles.ReadOnly = true;
+            DGVmateriasJueves.ReadOnly = true;
+            DGVmateriasViernes.ReadOnly = true;
+            DGVmateriasSabado.ReadOnly = true;
+            DGVmateriasDomingo.ReadOnly = true;
+
+            agregarMateriaBTN.Click += agregarMateriaBTN_Click;
+            btnCancelarGestionMateria.Click += btnCancelarGestionMateria_Click;
+            cancelarMateriaBTN.Click += cancelarMateriaBTN_Click;
+            btnEditarMateria.Click += btnEditarMateria_Click;
+            btnEliminarMateria.Click += btnEliminarMateria_Click;
+            button3.Click += button3_Click;       // Comenzar sesión de estudio
+            button1.Click += button1_Click;       // Aceptar alerta de inactividad
+            btnEditarUsuario.Click += btnEditarUsuario_Click;
+            btnEditarCuenta.Click += btnEditarCuenta_Click;
+            btnCancelarCuenta.Click += btnCancelarCuenta_Click;
+            BtnSalir.Click += BtnSalir_Click;
+            BtnKanban.Click += BtnKanban_Click;
+            BtnNotas.Click += BtnNotas_Click;
         }
 
-        public void ListadoDGV_materiasMiercoles(string cTexto, int IdEstudiate_Materia)
-        {
-            try
-            {
-                DGVmateriasMiercoles.DataSource = BL_Materia.ListadoMateriaMiercoles(cTexto, IdEstudiate_Materia);
-                Formato_Materia(DGVmateriasMiercoles);
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show(ex.Message);
-            }
-        }
-
-        public void ListadoDGV_materiasJueves(string cTexto, int IdEstudiate_Materia)
-        {
-            try
-            {
-                DGVmateriasJueves.DataSource = BL_Materia.ListadoMateriaJueves(cTexto, IdEstudiate_Materia);
-                Formato_Materia(DGVmateriasJueves);
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show(ex.Message);
-            }
-        }
-
-        public void ListadoDGV_materiasViernes(string cTexto, int IdEstudiate_Materia)
-        {
-            try
-            {
-                DGVmateriasViernes.DataSource = BL_Materia.ListadoMateriaViernes(cTexto, IdEstudiate_Materia);
-                Formato_Materia(DGVmateriasViernes);
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show(ex.Message);
-            }
-        }
-
-        public void ListadoDGV_materiasSabado(string cTexto, int IdEstudiate_Materia)
-        {
-            try
-            {
-                DGVmateriasSabado.DataSource = BL_Materia.ListadoMateriaSabado(cTexto, IdEstudiate_Materia);
-                Formato_Materia(DGVmateriasSabado);
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show(ex.Message);
-            }
-        }
-
-        public void ListadoDGV_materiasDomingo(string cTexto, int IdEstudiate_Materia)
-        {
-            try
-            {
-                DGVmateriasDomingo.DataSource = BL_Materia.ListadoMateriaDomingo(cTexto, IdEstudiate_Materia);
-                Formato_Materia(DGVmateriasDomingo);
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show(ex.Message);
-            }
-        }
-
-        public void ListadoDGV_GestionarMateria(string cTexto, int IdEstudiate_Materia)
-        {
-            try
-            {
-                DGVgestionMateria.DataSource = BL_Materia.ListadoGestionMaterias(cTexto, IdEstudiate_Materia);
-                DGVgestionMateria.DefaultCellStyle.ForeColor = Color.Black;
-                Formato_GestionarMateria();
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show(ex.Message);
-            }
-        }
-
-        public void ListadoDGV_GestionaMateriaAgregar(string cTexto, int IdEstudiate_Materia)
-        {
-            try
-            {
-                DGVgestionarMateria.DataSource = BL_Materia.ListadoGestionMaterias(cTexto, IdEstudiate_Materia);
-                DGVgestionarMateria.DefaultCellStyle.ForeColor = Color.Black;
-                Formato_GestionarMateria();
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show(ex.Message);
-            }
-        }
-
-        private void listadoMateriasSemana(int IdEstudiate_Materia)
-        {
-            ListadoDGV_materiasLunes("%", IdEstudiate_Materia);
-            ListadoDGV_materiasMartes("%", IdEstudiate_Materia);
-            ListadoDGV_materiasMiercoles("%", IdEstudiate_Materia);
-            ListadoDGV_materiasJueves("%", IdEstudiate_Materia);
-            ListadoDGV_materiasViernes("%", IdEstudiate_Materia);
-            ListadoDGV_materiasSabado("%", IdEstudiate_Materia);
-            ListadoDGV_materiasDomingo("%", IdEstudiate_Materia);
-        }
-
-        #endregion
-
-        #region ?? Formatos
-
-        private void Formato_Materia(DataGridView DGV)
-        {
-            if (DGV.Columns.Count == 0) return;
-
-            DGV.Columns[0].Width = 85;
-            DGV.Columns[0].HeaderText = "MATERIA";
-            DGV.Columns[1].Visible = false;
-            DGV.Columns[2].Visible = false;
-        }
-
-        private void Formato_GestionarMateria()
-        {
-            if (DGVgestionMateria.Columns.Count == 0) return;
-
-            DGVgestionMateria.Columns[0].Width = 85;
-            DGVgestionMateria.Columns[0].HeaderText = "MATERIA";
-
-            DGVgestionMateria.Columns[1].Width = 90;
-            DGVgestionMateria.Columns[1].HeaderText = "PRIORIDAD";
-
-            DGVgestionMateria.Columns[2].Width = 70;
-            DGVgestionMateria.Columns[2].HeaderText = "HORA INICIO";
-
-            DGVgestionMateria.Columns[3].Width = 70;
-            DGVgestionMateria.Columns[3].HeaderText = "HORA FINAL";
-
-            DGVgestionMateria.Columns[4].Width = 70;
-            DGVgestionMateria.Columns[4].HeaderText = "DIA SEMANA";
-        }
-
-        #endregion
-
-        #region ?? Eventos Botones
-
-        private void cancelarMateriaBTN_Click(object sender, EventArgs e)
+        // Oculta todos los paneles flotantes al cargar para que el horario
+        // arranque limpio sin ningún panel superpuesto
+        private void OcultarTodosLosPaneles()
         {
             pnlMateria.Visible = false;
-            LimpiarSeleccion();
-        }
-
-        private void agregarMateriaBTN_Click(object sender, EventArgs e)
-        {
-            EstadoGuarda = 1;
-            MostrarPanelGestion();
-        }
-
-        private void btnEditarMateria_Click(object sender, EventArgs e)
-        {
-            EstadoGuarda = 2;
-            ListadoDGV_GestionaMateriaAgregar("%", IdEstudiate_Materia);
-            MostrarPanelGestion();
-
-            txtNombreMateria.Text = nombreMateria;
-            CBhoraInicio.Text = DGVgestionMateria.CurrentRow.Cells["HoraInicio"].Value?.ToString() ?? "";
-            CBhoraFinal.Text = DGVgestionMateria.CurrentRow.Cells["HoraFinal"].Value?.ToString() ?? "";
-            CBdiaSemana.Text = DGVgestionMateria.CurrentRow.Cells["DiaSemana"].Value?.ToString() ?? "";
-            CBprioridad.Text = DGVgestionMateria.CurrentRow.Cells["Prioridad"].Value?.ToString() ?? "";
-        }
-
-        private void btnCancelarGestionMateria_Click(object sender, EventArgs e)
-        {
             pnlGestionarMateria.Visible = false;
-            agregarMateriaBTN.Enabled = true;
-            DGVgestionarMateria.DataSource = null;
+            pnlEditarCuenta.Visible = false;
+            groupBox2.Visible = false;
         }
-
-        private void btnGuardarGestionMateria_Click(object sender, EventArgs e)
-        {
-            if (!ValidarCampos()) return;
-
-            BL_Materia.GuardarMT(EstadoGuarda, new ET.ET_Materia
-            {
-                ID = IdMateria,
-                ID_Estudiante = IdEstudiate_Materia,
-                Nombre = txtNombreMateria.Text,
-                Prioridad = CBprioridad.Text,
-                HoraInicio = CBhoraInicio.Text,
-                HoraFinal = CBhoraFinal.Text,
-                DiaSemana = CBdiaSemana.Text
-            });
-
-            pnlMateria.Visible = false;
-            RefrescarVista();
-            agregarMateriaBTN.Enabled = true;
-        }
-
-        private void btnEliminarMateria_Click(object sender, EventArgs e)
-        {
-            if (MessageBox.Show("�Eliminar materia?", "Confirmar",
-                MessageBoxButtons.YesNo) == DialogResult.Yes)
-            {
-                BL_Materia.EliminarMT(IdMateria);
-                RefrescarVista();
-                pnlMateria.Visible = false;
-            }
-        }
-
         #endregion
 
-        #region ?? Eventos DataGridView
+        #region Regla 3 — Alerta de Inactividad
 
-        private void DGV_CellClick(object sender, DataGridViewCellEventArgs e)
+        // Verifica si el estudiante lleva 3 o más días sin conectarse.
+        // Si es así, consulta la materia menos estudiada y muestra el mensaje
+        // de recomendación en el groupBox2. El catch silencioso evita que un
+        // error en esta validación impida abrir el form.
+        private void VerificarInactividad(string fechaConexionAnterior)
         {
-            DataGridView dgv = sender as DataGridView;
-            if (dgv == null) return;
-
-            Seleccionar_Materia(dgv);
-            ListadoDGV_GestionarMateria(nombreMateria, IdEstudiate_Materia);
-
-            pnlMateria.Location = DGVmateriasDomingo.Location;
-            pnlMateria.Visible = true;
-        }
-
-        private void DGVmateriasLunes_CellClick(object sender, DataGridViewCellEventArgs e) => ManejarClickDGV(sender, e);
-        private void DGVmateriasMartes_CellClick(object sender, DataGridViewCellEventArgs e) => ManejarClickDGV(sender, e);
-        private void DGVmateriasMiercoles_CellClick(object sender, DataGridViewCellEventArgs e) => ManejarClickDGV(sender, e);
-        private void DGVmateriasJueves_CellClick(object sender, DataGridViewCellEventArgs e) => ManejarClickDGV(sender, e);
-        private void DGVmateriasViernes_CellClick(object sender, DataGridViewCellEventArgs e) => ManejarClickDGV(sender, e);
-        private void DGVmateriasSabado_CellClick(object sender, DataGridViewCellEventArgs e) => ManejarClickDGV(sender, e);
-        private void DGVmateriasDomingo_CellClick(object sender, DataGridViewCellEventArgs e) => ManejarClickDGV(sender, e);
-
-        private void ManejarClickDGV(object sender, DataGridViewCellEventArgs e)
-        {
-            if (e.RowIndex < 0) return;
-
-            DataGridView dgv = sender as DataGridView;
-            if (dgv == null) return;
-
-            var fila = dgv.Rows[e.RowIndex];
-
-            if (fila.IsNewRow)
+            try
             {
-                MessageBox.Show("No hay datos en esta fila",
-                                "Aviso",
-                                MessageBoxButtons.OK,
-                                MessageBoxIcon.Warning);
-                return;
+                if (!_blEstudiante.VerificarInactividad(fechaConexionAnterior))
+                    return;
+
+                DataTable dt = _blSesion.ObtenerMateriaMenosEstudiada(_idEstudiante);
+                if (dt == null || dt.Rows.Count == 0) return;
+
+                string nombreMateria = dt.Rows[0]["nombre"].ToString();
+                string prioridad = dt.Rows[0]["prioridad"].ToString();
+                string mensaje = _blSesion.ConstruirMensajeRecomendacion(nombreMateria, prioridad);
+
+                label15.Text = mensaje;
+                groupBox2.Visible = true;
+                groupBox2.BringToFront();
             }
-
-            Seleccionar_Materia(dgv);
-            ListadoDGV_GestionarMateria(nombreMateria, IdEstudiate_Materia);
-
-            pnlMateria.Location = DGVmateriasMiercoles.Location;
-            pnlMateria.Visible = true;
+            catch { }
         }
 
+        // Cierra el panel de alerta de inactividad al presionar Aceptar
+        private void button1_Click(object sender, EventArgs e)
+        {
+            groupBox2.Visible = false;
+        }
         #endregion
 
-        #region ?? L�gica Interna
+        #region Horario — Listado y Formateo
 
-        private void Seleccionar_Materia(DataGridView dgv)
+        // Recarga los siete DGVs del horario semanal desde la BD
+        private void RefrescarTodoElHorario()
         {
-            if (dgv.CurrentRow == null) return;
-
-            var fila = dgv.CurrentRow;
-
-            IdMateria = fila.Cells["IdMateria"].Value as int? ?? 0;// Asignar el valor de IdMateria, asegur�ndose de manejar posibles valores nulos
-            IdEstudiate_Materia = fila.Cells["IdEstudiante"].Value as int? ?? 0;// Asignar el valor de IdEstudiate_Materia, asegur�ndose de manejar posibles valores nulos
-            nombreMateria = fila.Cells["nombre"].Value?.ToString() ?? "";// Asignar el valor de nombreMateria, asegur�ndose de manejar posibles valores nulos
+            CargarDGVDia(DGVmateriasLunes, "Lunes");
+            CargarDGVDia(DGVmateriasMartes, "Martes");
+            CargarDGVDia(DGVmateriasMiercoles, "Miércoles");
+            CargarDGVDia(DGVmateriasJueves, "Jueves");
+            CargarDGVDia(DGVmateriasViernes, "Viernes");
+            CargarDGVDia(DGVmateriasSabado, "Sábado");
+            CargarDGVDia(DGVmateriasDomingo, "Domingo");
         }
 
-        private bool ValidarCampos()
+        // Carga todas las materias del estudiante y filtra las del día indicado
+        // para mostrarlas en el DGV correspondiente. El filtrado se hace en memoria
+        // porque ya se tiene el DataTable completo desde el USP.
+        private void CargarDGVDia(DataGridView dgv, string dia)
         {
-            if (string.IsNullOrEmpty(txtNombreMateria.Text) ||
-                string.IsNullOrEmpty(CBprioridad.Text) ||
-                string.IsNullOrEmpty(CBhoraInicio.Text) ||
-                string.IsNullOrEmpty(CBhoraFinal.Text) ||
-                string.IsNullOrEmpty(CBdiaSemana.Text))
+            try
             {
-                MessageBox.Show("Complete todos los campos");
-                return false;
+                DataTable todas = _blMateria.ListarMaterias("", _idEstudiante);
+                DataTable filtrada = todas.Clone();
+
+                foreach (DataRow row in todas.Rows)
+                    if (row["diaSemana"].ToString() == dia)
+                        filtrada.ImportRow(row);
+
+                dgv.DataSource = filtrada;
+                FormatearDGVHorario(dgv);
             }
-            return true;
-        }
-
-        #endregion
-
-        #region ?? Helpers
-
-        private void MostrarPanelGestion()
-        {
-            pnlGestionarMateria.Location = DGVmateriasMiercoles.Location;
-            pnlGestionarMateria.Visible = true;
-            agregarMateriaBTN.Enabled = false;
-        }
-
-        private void LimpiarSeleccion()
-        {
-            nombreMateria = "";
-            IdMateria = 0;
-            IdEstudiate_Materia = 0;
-        }
-
-        private void vaciarInputsGestionMateria()
-        {
-            txtNombreMateria.Clear();
-            CBprioridad.Text = "";
-            CBhoraInicio.Text = "";
-            CBhoraFinal.Text = "";
-            CBdiaSemana.Text = "";
-        }
-
-        private void RefrescarVista()
-        {
-            ListadoDGV_GestionaMateriaAgregar("%", IdEstudiate_Materia);
-            listadoMateriasSemana(IdEstudiate_Materia);
-            vaciarInputsGestionMateria();
-            pnlGestionarMateria.Visible = false;
-        }
-
-        #endregion
-
-        #region ?? Eventos Extra
-
-        private void btnEditarUsuario_Click(object sender, EventArgs e)
-        {
-            pnlEditarCuenta.Visible = true;
-            pnlEditarCuenta.Location = DGVmateriasMiercoles.Location;
-        }
-
-        private void btnCancelarCuenta_Click(object sender, EventArgs e)
-        {
-            this.pnlEditarCuenta.Visible = false;
-        }
-
-        private void btnEditarCuenta_Click(object sender, EventArgs e)
-        {
-            string rpta = BL_Estudiante.GuardarES(2, new ET.ET_Estudiante
+            catch (Exception ex)
             {
-                ID = IdEstudiate_Materia,
-                Nombre = txtNombreCuenta.Text,
-                Correo = txtCorreoCuenta.Text,
-                Contrasena = txtContrasenaCuenta.Text,
-                FechaConexion = DateTime.Now,
-                RachaActual = 0
-            });
-
-            if (rpta == "OK")
-            {
-                MessageBox.Show("Actualizado exitosamente", "�xito",
-                    MessageBoxButtons.OK, MessageBoxIcon.Information);
-            }
-            else
-            {
-                MessageBox.Show(rpta, "Error",
+                MessageBox.Show($"Error al cargar {dia}: {ex.Message}", "Error",
                     MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 
-        private void BtnSalir_Click(object sender, EventArgs e)
+        // Oculta columnas internas, renombra headers y ajusta el ancho de columnas
+        // para que el horario sea legible. Se aplica a cualquier DGV del horario,
+        // incluyendo el DGVgestionMateria del panel flotante.
+        private void FormatearDGVHorario(DataGridView dgv)
         {
-            List<Form> formulariosAbiertos = new List<Form>();
-            foreach (Form f in Application.OpenForms)
+            if (dgv.Columns.Count == 0) return;
+
+            // Oculta campos que no son relevantes para el usuario en la vista del horario
+            string[] ocultas = { "ID", "ID_Estudiante", "diaSemana", "estado" };
+            foreach (string col in ocultas)
+                if (dgv.Columns.Contains(col))
+                    dgv.Columns[col].Visible = false;
+
+            if (dgv.Columns.Contains("nombre"))
             {
-                formulariosAbiertos.Add(f);
+                dgv.Columns["nombre"].HeaderText = "Materia";
+                dgv.Columns["nombre"].Width = 100;
+            }
+            if (dgv.Columns.Contains("horaInicio")) dgv.Columns["horaInicio"].HeaderText = "Inicio";
+            if (dgv.Columns.Contains("horaFinal")) dgv.Columns["horaFinal"].HeaderText = "Fin";
+            if (dgv.Columns.Contains("prioridad")) dgv.Columns["prioridad"].HeaderText = "Prioridad";
+
+            dgv.AllowUserToAddRows = false;
+            dgv.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
+            dgv.MultiSelect = false;
+        }
+        #endregion
+
+        #region Horario — Click en materia
+
+        // Handler compartido por los siete DGVs del horario.
+        // Al hacer clic en una fila, construye el ET_Materia completo desde el DataSource
+        // del DGV (sin hacer otra consulta a BD) y posiciona el panel flotante
+        // justo debajo de la celda seleccionada para que aparezca contextualmente.
+        private void DGV_CellClick(object sender, DataGridViewCellEventArgs e)
+        {
+            if (e.RowIndex < 0) return;
+
+            DataGridView dgv = sender as DataGridView;
+            DataRow row = ((DataTable)dgv.DataSource).Rows[e.RowIndex];
+
+            _idMateriaSeleccionada = Convert.ToInt32(row["ID"]);
+            _materiaSeleccionada = new ET_Materia
+            {
+                ID = Convert.ToInt32(row["ID"]),
+                ID_Estudiante = _idEstudiante,
+                nombre = row["nombre"].ToString(),
+                horaInicio = row["horaInicio"].ToString(),
+                horaFinal = row["horaFinal"].ToString(),
+                prioridad = row["prioridad"].ToString(),
+                diaSemana = row["diaSemana"].ToString(),
+                estado = Convert.ToBoolean(row["estado"])
+            };
+
+            // Muestra solo la fila seleccionada en el DGV interno del panel flotante
+            DataTable fila = ((DataTable)dgv.DataSource).Clone();
+            fila.ImportRow(row);
+            DGVgestionMateria.DataSource = fila;
+            FormatearDGVHorario(DGVgestionMateria);
+
+            // Posiciona el panel flotante relativo al DGV y al tableLayoutPanel
+            Point pos = tableLayoutPanel1.Location;
+            pnlMateria.Location = new Point(pos.X + dgv.Location.X,
+                                            pos.Y + dgv.Location.Y + 40);
+            pnlMateria.Visible = true;
+            pnlMateria.BringToFront();
+            pnlGestionarMateria.Visible = false;
+        }
+        #endregion
+
+        #region CRUD Materia
+
+        // Prepara el formulario para insertar una nueva materia
+        private void agregarMateriaBTN_Click(object sender, EventArgs e)
+        {
+            _estadoGuardar = 1;
+            _idMateriaSeleccionada = 0;
+            LimpiarFormularioMateria();
+            pnlGestionarMateria.Text = "Agregar Materia";
+            pnlGestionarMateria.Visible = true;
+            pnlGestionarMateria.BringToFront();
+            pnlMateria.Visible = false;
+        }
+
+        // Precarga los datos de la materia seleccionada en el formulario para edición
+        private void btnEditarMateria_Click(object sender, EventArgs e)
+        {
+            if (_materiaSeleccionada == null) return;
+
+            _estadoGuardar = 2;
+            txtNombreMateria.Text = _materiaSeleccionada.nombre;
+            CBhoraInicio.Text = _materiaSeleccionada.horaInicio;
+            CBhoraFinal.Text = _materiaSeleccionada.horaFinal;
+            CBdiaSemana.Text = _materiaSeleccionada.diaSemana;
+            CBprioridad.Text = _materiaSeleccionada.prioridad;
+
+            pnlGestionarMateria.Text = "Editar Materia";
+            pnlGestionarMateria.Visible = true;
+            pnlGestionarMateria.BringToFront();
+            pnlMateria.Visible = false;
+        }
+
+        // Guarda la materia en modo inserción o actualización según _estadoGuardar.
+        // Si la BL lanza excepción (validación o solapamiento) se muestra como advertencia.
+        private void btnGuardarGestionMateria_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                ET_Materia oMateria = new ET_Materia
+                {
+                    ID = _idMateriaSeleccionada,
+                    ID_Estudiante = _idEstudiante,
+                    nombre = txtNombreMateria.Text.Trim(),
+                    horaInicio = CBhoraInicio.Text,
+                    horaFinal = CBhoraFinal.Text,
+                    diaSemana = CBdiaSemana.Text,
+                    prioridad = CBprioridad.Text,
+                    estado = true
+                };
+
+                string rpta = _estadoGuardar == 1
+                    ? _blMateria.InsertarMateria(oMateria)
+                    : _blMateria.ActualizarMateria(oMateria);
+
+                if (rpta == "OK")
+                {
+                    MessageBox.Show(_estadoGuardar == 1
+                        ? "Materia agregada correctamente."
+                        : "Materia actualizada correctamente.",
+                        "Apice", MessageBoxButtons.OK, MessageBoxIcon.Information);
+
+                    pnlGestionarMateria.Visible = false;
+                    RefrescarTodoElHorario();
+                    LimpiarFormularioMateria();
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message, "Error de validación",
+                    MessageBoxButtons.OK, MessageBoxIcon.Warning);
+            }
+        }
+
+        // Pide confirmación antes de eliminar porque la acción también borra
+        // en cascada las sesiones y disponibilidad asociadas a la materia
+        private void btnEliminarMateria_Click(object sender, EventArgs e)
+        {
+            if (_idMateriaSeleccionada == 0) return;
+
+            if (MessageBox.Show("¿Deseas eliminar esta materia? Se eliminarán también sus sesiones y disponibilidad.",
+                "Apice", MessageBoxButtons.YesNo, MessageBoxIcon.Warning) == DialogResult.Yes)
+            {
+                try
+                {
+                    string rpta = _blMateria.EliminarMateria(_idMateriaSeleccionada);
+                    if (rpta == "OK")
+                    {
+                        MessageBox.Show("Materia eliminada correctamente.", "Apice",
+                            MessageBoxButtons.OK, MessageBoxIcon.Information);
+                        pnlMateria.Visible = false;
+                        _idMateriaSeleccionada = 0;
+                        _materiaSeleccionada = null;
+                        RefrescarTodoElHorario();
+                    }
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show(ex.Message, "Error",
+                        MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+            }
+        }
+
+        // Cancela la operación de agregar/editar sin guardar cambios
+        private void btnCancelarGestionMateria_Click(object sender, EventArgs e)
+        {
+            pnlGestionarMateria.Visible = false;
+            LimpiarFormularioMateria();
+        }
+
+        // Cierra el panel flotante de detalle de materia y limpia la selección
+        private void cancelarMateriaBTN_Click(object sender, EventArgs e)
+        {
+            pnlMateria.Visible = false;
+            _idMateriaSeleccionada = 0;
+            _materiaSeleccionada = null;
+        }
+
+        // Resetea todos los campos del formulario de materia
+        private void LimpiarFormularioMateria()
+        {
+            txtNombreMateria.Text = "";
+            CBhoraInicio.SelectedIndex = -1;
+            CBhoraFinal.SelectedIndex = -1;
+            CBdiaSemana.SelectedIndex = -1;
+            CBprioridad.SelectedIndex = -1;
+        }
+        #endregion
+
+        #region Sesión de Estudio — Botón "Comenzar"
+
+        // Calcula la duración de la materia a partir de su horario y abre el
+        // FrmSesionEstudio con esos datos. Usa ShowDialog para que la sesión
+        // bloquee el HorarioPrincipal mientras está activa.
+        private void button3_Click(object sender, EventArgs e)
+        {
+            if (_materiaSeleccionada == null) return;
+
+            int duracionMinutos = CalcularDuracionMinutos(
+                _materiaSeleccionada.horaInicio,
+                _materiaSeleccionada.horaFinal);
+
+            if (duracionMinutos <= 0)
+            {
+                MessageBox.Show("No se pudo calcular la duración de la materia.",
+                    "Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
             }
 
-            foreach (Form f in formulariosAbiertos)
+            FrmSesionEstudio frmSesion = new FrmSesionEstudio(
+                _idEstudiante,
+                _materiaSeleccionada.ID,
+                _materiaSeleccionada.nombre,
+                duracionMinutos);
+
+            pnlMateria.Visible = false;
+            frmSesion.ShowDialog();
+        }
+
+        // Convierte dos strings de hora en minutos de diferencia.
+        // Retorna 0 si alguna de las horas no tiene formato válido.
+        private int CalcularDuracionMinutos(string horaInicio, string horaFinal)
+        {
+            if (TimeSpan.TryParse(horaInicio, out TimeSpan inicio) &&
+                TimeSpan.TryParse(horaFinal, out TimeSpan fin))
+                return (int)(fin - inicio).TotalMinutes;
+            return 0;
+        }
+        #endregion
+
+        #region Editar Cuenta
+
+        // Muestra el panel de edición de cuenta del estudiante
+        private void btnEditarUsuario_Click(object sender, EventArgs e)
+        {
+            pnlEditarCuenta.Visible = true;
+            pnlEditarCuenta.BringToFront();
+        }
+
+        // Construye el ET_Estudiante con los datos del formulario y llama a la BL.
+        // No actualiza la racha ni la fechaConexion — eso solo ocurre en el Login.
+        private void btnEditarCuenta_Click(object sender, EventArgs e)
+        {
+            try
             {
-                f.Close();
+                ET_Estudiante oEstudiante = new ET_Estudiante
+                {
+                    ID = _idEstudiante,
+                    nombre = txtNombreCuenta.Text.Trim(),
+                    correo = txtCorreoCuenta.Text.Trim(),
+                    contrasena = txtContrasenaCuenta.Text.Trim()
+                };
+
+                string rpta = _blEstudiante.ActualizarEstudiante(oEstudiante);
+                if (rpta == "OK")
+                {
+                    MessageBox.Show("Cuenta actualizada correctamente.", "Apice",
+                        MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    pnlEditarCuenta.Visible = false;
+                }
             }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message, "Error de validación",
+                    MessageBoxButtons.OK, MessageBoxIcon.Warning);
+            }
+        }
+
+        // Cancela la edición de cuenta y limpia los campos del formulario
+        private void btnCancelarCuenta_Click(object sender, EventArgs e)
+        {
+            pnlEditarCuenta.Visible = false;
+            txtNombreCuenta.Text = "";
+            txtCorreoCuenta.Text = "";
+            txtContrasenaCuenta.Text = "";
+        }
+        #endregion
+
+        #region Navegación
+
+        // Pide confirmación antes de cerrar sesión para evitar cierres accidentales
+        private void BtnSalir_Click(object sender, EventArgs e)
+        {
+            if (MessageBox.Show("¿Deseas cerrar sesión?", "Apice",
+                MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
+                this.Close();
+        }
+
+        // Usa Hide en lugar de Close para no destruir el HorarioPrincipal al navegar
+        private void BtnKanban_Click(object sender, EventArgs e)
+        {
+            FrmKanban frmKanban = new FrmKanban(_idEstudiante);
+            frmKanban.Show();
+            this.Hide();
         }
 
         private void BtnNotas_Click(object sender, EventArgs e)
         {
+            FrmEvaluacion frmEvaluacion = new FrmEvaluacion(_idEstudiante);
+            frmEvaluacion.Show();
             this.Hide();
-            FrmNotas frm = new FrmNotas(IdEstudiate_Materia);
-            frm.Show();
         }
-
-        private void BtnKanban_Click(object sender, EventArgs e)
-        {
-            this.Hide();
-            FrmKanban frm = new FrmKanban(IdEstudiate_Materia);
-            frm.Show();
-        }
-
         #endregion
 
-        private void button3_Click(object sender, EventArgs e)
+        // Cierra la aplicación completamente — botón alternativo al cerrar sesión
+        private void BtnSalir_Click_1(object sender, EventArgs e)
         {
-            this.Hide();
-            FrmSesion frm = new FrmSesion(IdEstudiate_Materia, nombreMateria);
-            frm.Show();
+            Application.Exit();
         }
+
+        // Evento generado automáticamente por el designer, sin lógica asociada
+        private void labelLunes_Click(object sender, EventArgs e) { }
     }
 }

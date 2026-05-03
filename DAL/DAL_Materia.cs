@@ -1,82 +1,66 @@
-﻿using ET;
+﻿using System;
+using System.Collections.Generic;
 using System.Data;
-using System.Data.SqlClient;
 using Microsoft.Data.SqlClient;
+using ET;
 using Utilities;
 
 namespace DAL
 {
     public class DAL_Materia : DAL_utilities
     {
-        #region 🔹 Listados por Día
+        #region Métodos de Listado
 
-        public DataTable ListadoMateriaLunes(string cTexto, int IdEstudiate_Materia)
+        public DataTable ListarMaterias(string cTexto, int idEstudiante)
         {
-            return Listado(cTexto, "USP_Listado_materias_lunes", IdEstudiate_Materia);
-        }
-
-        public DataTable ListadoMateriaMartes(string cTexto, int IdEstudiate_Materia)
-        {
-            return Listado(cTexto, "USP_Listado_materias_martes", IdEstudiate_Materia);
-        }
-
-        public DataTable ListadoMateriaMiercoles(string cTexto, int IdEstudiate_Materia)
-        {
-            return Listado(cTexto, "USP_Listado_materias_miercoles", IdEstudiate_Materia);
-        }
-
-        public DataTable ListadoMateriaJueves(string cTexto, int IdEstudiate_Materia)
-        {
-            return Listado(cTexto, "USP_Listado_materias_jueves", IdEstudiate_Materia);
-        }
-
-        public DataTable ListadoMateriaViernes(string cTexto, int IdEstudiate_Materia)
-        {
-            return Listado(cTexto, "USP_Listado_materias_viernes", IdEstudiate_Materia);
-        }
-
-        public DataTable ListadoMateriaSabado(string cTexto, int IdEstudiate_Materia)
-        {
-            return Listado(cTexto, "USP_Listado_materias_sabado", IdEstudiate_Materia);
-        }
-
-        public DataTable ListadoMateriaDomingo(string cTexto, int IdEstudiate_Materia)
-        {
-            return Listado(cTexto, "USP_Listado_materias_domingo", IdEstudiate_Materia);
+            // Utilizamos el método Listado de la clase base (DAL_utilities)
+            return Listado(cTexto, "USP_ListarMaterias", idEstudiante);
         }
 
         #endregion
 
-        #region 🔹 Gestión de Materias
+        #region Métodos de Escritura (Guardar/Eliminar)
 
-        public DataTable ListadoGestionMaterias(string cTexto, int IdEstudiate_Materia)
+        public string GuardarMateria(int nOpcion, ET_Materia oPropiedad)
         {
-            return Listado(cTexto, "USP_Listado_GestionarMateria", IdEstudiate_Materia);
+            string rpta = "";
+            try
+            {
+
+                SqlParameter[] parametros =
+                {
+                    new SqlParameter("@nOpcion", SqlDbType.Int) { Value = nOpcion },
+                    new SqlParameter("@ID", SqlDbType.Int) { Value = oPropiedad.ID },
+                    new SqlParameter("@ID_Estudiante", SqlDbType.Int) { Value = oPropiedad.ID_Estudiante },
+                    new SqlParameter("@nombre", SqlDbType.VarChar, 50) { Value = oPropiedad.nombre },
+                    new SqlParameter("@horaInicio", SqlDbType.VarChar, 50) { Value = oPropiedad.horaInicio },
+                    new SqlParameter("@horaFinal", SqlDbType.VarChar, 50) { Value = oPropiedad.horaFinal },
+                    new SqlParameter("@prioridad", SqlDbType.VarChar, 50) { Value = oPropiedad.prioridad },
+                    new SqlParameter("@diaSemana", SqlDbType.VarChar, 50) { Value = oPropiedad.diaSemana },
+                    new SqlParameter("@estado", SqlDbType.Bit) { Value = oPropiedad.estado },
+                    new SqlParameter("@notaMinima", SqlDbType.Decimal) { Value = (object)oPropiedad.notaMinima ?? DBNull.Value, Precision = 5, Scale = 2 }
+                };
+
+                // Llamamos al método protegido Guardar de la clase base
+                rpta = Guardar("USP_GuardarMateria", parametros);
+            }
+            catch (Exception ex)
+            {
+                rpta = ex.Message;
+            }
+            return rpta;
         }
 
-        public string GuardarMT(int nOpcion, ET_Materia mt)
+        public string EliminarMateria(int idMateria)
         {
-            SqlParameter[] parametros = {
-                new SqlParameter("@nOpcion", SqlDbType.Int) { Value = nOpcion },
-                new SqlParameter("@ID_materia", SqlDbType.Int) { Value = mt.ID },
-                new SqlParameter("@ID_Estudiante", SqlDbType.Int) { Value = mt.ID_Estudiante },
-                new SqlParameter("@Nombre", SqlDbType.VarChar) { Value = mt.Nombre },
-                new SqlParameter("@HoraInicio", SqlDbType.VarChar) { Value = mt.HoraInicio },
-                new SqlParameter("@HoraFinal", SqlDbType.VarChar) { Value = mt.HoraFinal },
-                new SqlParameter("@Prioridad", SqlDbType.VarChar) { Value = mt.Prioridad },
-                new SqlParameter("@DiaSemana", SqlDbType.VarChar) { Value = mt.DiaSemana }
+            // Preparamos el parámetro para la eliminación
+            SqlParameter[] parametros =
+            {
+                new SqlParameter("@ID", SqlDbType.Int) { Value = idMateria }
             };
 
-            return Guardar("USP_Guardar_Materia", parametros);
-        }
-
-        public string EliminarMT(int IdMateria)
-        {
-            SqlParameter[] parametros = {
-                new SqlParameter("@nIdMateria", SqlDbType.Int) { Value = IdMateria }
-            };
-
-            return Guardar("USP_Eliminar_mt", parametros);
+            // Llamamos al método protegido Eliminar de la clase base
+            return Eliminar("USP_EliminarMateria", parametros);
         }
 
         #endregion
